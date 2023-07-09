@@ -4,11 +4,12 @@ import "./index.css";
 import App from "./App";
 import { AuthProvider } from "react-oidc-context";
 
+const authServerUrl = "https://euc1.auth.ac/auth/";
 const realm = "shared-deployment-001";
 const client = "reg-example-1";
 
 const oidcConfig = {
-  authority: `https://euc1.auth.ac/auth/realms/${realm}`,
+  authority: `${authServerUrl}realms/${realm}`,
   client_id: client,
   redirect_uri: "http://localhost:3000/authenticated",
   onSigninCallback: (args: any) =>
