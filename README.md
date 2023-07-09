@@ -4,4 +4,4 @@ This is a repo for code examples showing how to integrate Keycloak with various 
 
 ## Frameworks
 
-- [ReactJS](./frameworks/nextjs/)
+- [ReactJS](./frameworks/reactjs/)
