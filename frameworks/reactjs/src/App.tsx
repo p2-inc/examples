@@ -23,7 +23,11 @@ function App() {
               alt="Phase Two"
             />
           </a>
-          <a href="#" target="_blank" rel="noreferrer">
+          <a
+            href="https://github.com/p2-inc/examples/tree/main/frameworks/reactjs"
+            target="_blank"
+            rel="noreferrer"
+          >
             <p className="text-xl font-semibold leading-7 text-p2blue-500 mt-6">
               React App Example
             </p>
