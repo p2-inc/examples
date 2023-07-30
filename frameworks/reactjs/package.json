@@ -1,5 +1,6 @@
 {
-  "name": "reactjs",
+  "name": "phase_two_keycloak_reactjs_example",
+  "description": "Phase Two Keycloak + reactjs example",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
