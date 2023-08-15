@@ -1,6 +1,6 @@
-import Image from "next/image";
+import { User } from "@/components/user.component";
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className="page-bg min-h-screen">
       <picture>
@@ -27,14 +27,14 @@ export default function Home() {
             rel="noreferrer"
           >
             <p className="text-xl font-semibold leading-7 text-p2blue-500 mt-6">
-              React App Example
+              Next.js App Example
             </p>
           </a>
         </div>
       </div>
       <div className="py-12">
         <div className="mx-auto max-w-3xl px-6 lg:px-8 text-center">
-          {/* <Auth /> */}
+          <User />
         </div>
       </div>
       <div className="py-24 sm:py-32">
