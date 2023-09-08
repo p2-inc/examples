@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { keycloak, authState } = useKeycloak();
+
 function login() {
   keycloak.login();
 }

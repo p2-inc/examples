@@ -20,11 +20,13 @@
 </template>
 
 <script lang="ts" setup>
-const services = useServices();
+import { useAuth } from "~/stores/auth";
 const buttonClasses =
   "rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600";
+const services = useServices();
 
-const user = await services.$auth.getUser();
+const authStore = useAuth();
+const user = authStore.user;
 
 const signIn = () => services.$auth.signInRedirect();
 const signOut = () => services.$auth.logout();

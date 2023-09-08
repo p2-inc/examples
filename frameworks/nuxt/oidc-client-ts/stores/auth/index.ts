@@ -26,6 +26,7 @@ export const useAuth = defineStore("auth", () => {
     tenantId,
     setUpUserCredentials,
     clearUserSession,
+    user: authUser,
   };
 });
 
