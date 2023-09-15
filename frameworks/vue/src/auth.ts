@@ -5,7 +5,7 @@ export const kc = {
   applicationUrl: 'http://localhost:3000',
   realm: 'shared-deployment-001',
   clientId: 'reg-example-1',
-  clientSecret: 'CLIENT_ID'
+  clientSecret: 'CLIENT_SECRET'
 }
 
 const Auth = new UserManager({
