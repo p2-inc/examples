@@ -19,7 +19,7 @@
           />
         </a>
         <a
-          href="https://github.com/p2-inc/examples/tree/main/frameworks/reactjs"
+          href="https://github.com/p2-inc/examples/tree/main/frameworks/nuxt/oidc-client-ts"
           target="_blank"
           rel="noreferrer"
         >
