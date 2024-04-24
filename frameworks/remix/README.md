@@ -18,7 +18,7 @@ You can start editing the page by modifying `app/routes/_index.tsx`. The page au
 
 # Phase Two React Example
 
-All Auth related items are in [auth.server.ts]("./app/services/auth.server.ts"). This example leverages [remix-auth](https://github.com/sergiodxa/remix-auth) and [remix-keycloak](https://github.com/marsmars0x01/remix-keycloak) to provide hook and HOC support.
+All Auth related items are in [auth.server.ts](./app/services/auth.server.ts). This example leverages [remix-auth](https://github.com/sergiodxa/remix-auth) and [remix-keycloak](https://github.com/marsmars0x01/remix-keycloak) to provide hook and HOC support.
 
 ## Available Scripts
 
