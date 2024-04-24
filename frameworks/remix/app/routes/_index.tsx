@@ -36,7 +36,7 @@ export default function Index() {
             rel="noreferrer"
           >
             <p className="text-xl font-semibold leading-7 text-p2blue-500 mt-6">
-              Next.js App Example
+              Remix App Example
             </p>
           </a>
         </div>
