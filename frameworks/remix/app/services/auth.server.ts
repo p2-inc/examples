@@ -13,9 +13,7 @@ const keycloakStrategy = new KeycloakStrategy(
     clientSecret: "CLIENT_SECRET",
     callbackURL: "http://localhost:3000/auth/keycloak/callback",
   },
-  async ({ profile }) => {
-    return profile
-  }
+  async ({ profile }) => profile
 );
 
 authenticator.use(keycloakStrategy);
