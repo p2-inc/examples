@@ -16,7 +16,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/routes/_index.tsx`. The page auto-updates as you edit the file.
 
-# Phase Two React Example
+# Phase Two Remix Example
 
 All Auth related items are in [auth.server.ts](./app/services/auth.server.ts). This example leverages [remix-auth](https://github.com/sergiodxa/remix-auth) and [remix-keycloak](https://github.com/marsmars0x01/remix-keycloak) to provide hook and HOC support.
 
