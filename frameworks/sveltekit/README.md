@@ -2,7 +2,9 @@
 
 ## Getting Started
 
-First, run the development server:
+First, create a `AUTH_SECRET` in the
+
+Then, run the development server:
 
 ```bash
 npm run dev

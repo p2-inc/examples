@@ -4,7 +4,11 @@ import Keycloak from "@auth/sveltekit/providers/keycloak";
 //   AUTH_KEYCLOAK_ID,
 //   AUTH_KEYCLOAK_ISSUER,
 //   AUTH_KEYCLOAK_SECRET,
+//   AUTH_SECRET
 // } from "$env/static/private";
+
+const authjsSecret =
+  "f18d48ce9bea32e44b5591b2c89185729d4559435f77ca76872a83a0850563a4"; // Use Environment Variables AUTH_SECRET in prod
 
 const realm = "shared-deployment-001";
 
@@ -16,5 +20,6 @@ const kcConfig = {
 
 export const { handle, signIn, signOut } = SvelteKitAuth({
   trustHost: true,
+  secret: authjsSecret,
   providers: [Keycloak(kcConfig)],
 });
