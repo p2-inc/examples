@@ -9,14 +9,12 @@ import Keycloak from "@auth/sveltekit/providers/keycloak";
 const realm = "shared-deployment-001";
 
 const kcConfig = {
-      issuer: `https://usw2.auth.ac/auth/realms/${realm}`,
-      clientId: "reg-example-1",
-      clientSecret: "CLIENT_SECRET", // Paste "Client secret" here. Use Environment variables in prod
-}
+  issuer: `https://usw2.auth.ac/auth/realms/${realm}`, // Use Environment Variables AUTH_KEYCLOAK_ISSUER in prod
+  clientId: "reg-example-1", // Use Environment Variables AUTH_KEYCLOAK_ID in prod
+  clientSecret: "CLIENT_SECRET", // Paste "Client secret" here. Use Environment Variables AUTH_KEYCLOAK_ISSUER in prod
+};
 
 export const { handle, signIn, signOut } = SvelteKitAuth({
   trustHost: true,
-  providers: [
-    Keycloak(kcConfig),
-  ],
+  providers: [Keycloak(kcConfig)],
 });

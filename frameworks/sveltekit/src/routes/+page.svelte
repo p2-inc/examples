@@ -39,8 +39,8 @@
     <div class="mx-auto max-w-3xl px-6 lg:px-8 text-center">
       <User
         data={{
-          status: Boolean(data?.session),
           user: data?.session?.user,
+          status: Boolean(data?.session),
         }}
       />
     </div>
