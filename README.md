@@ -10,3 +10,4 @@ This is a repo for code examples showing how to integrate Keycloak with various 
 - [Vue](./frameworks/vue/)
 - [Django](./frameworks/django/)
 - [Remix](./frameworks/remix/)
+- [SpringBoot](./frameworks/spring-boot-keycloak/)

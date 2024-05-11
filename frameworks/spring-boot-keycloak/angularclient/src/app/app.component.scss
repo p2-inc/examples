@@ -1,0 +1,10 @@
+.flex-container {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.flex-item-container {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
