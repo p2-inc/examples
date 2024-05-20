@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: spring-boot-keycloak
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8888/auth/realms/demo-realm
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+logging:
+  level:
+    org.springframework.security: TRACE
+server:
+  port: '8080'

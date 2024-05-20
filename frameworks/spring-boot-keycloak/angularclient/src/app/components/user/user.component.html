@@ -1,0 +1,16 @@
+<div *ngIf="isLoggedIn">
+  <!-- Content for logged-in users -->
+  <div class="mb-2 text-p2blue-700 text-2xl">Authenticated</div>
+  <div class="mb-6 text-p2blue-700 text-md">
+    <div *ngIf="userInfo">
+      <p><span class="font-bold">Username</span>: {{ userInfo.username }}</p>
+      <p><span class="font-bold">Email</span>: {{ userInfo.email }}</p>
+      <p><span class="font-bold">Roles</span>: {{ userInfo.roles }}</p>
+    </div>
+  </div>
+  <Button [class]="buttonClasses" (click)="signOut()">Sign Out</Button>
+</div>
+<div *ngIf="!isLoggedIn">
+  <div class="mb-6 text-p2blue-700 text-2xl">Not authenticated.</div>
+  <Button [class]="buttonClasses" (click)="signIn()">Sign In</Button>
+</div>
