@@ -1,11 +1,10 @@
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.4.
 
-his project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.4.
+# NodeJS
 
-# NodeJS 
+This project runs using Node.js version v16 or newer.
 
-This project runs using Node.js version v12.22.9.
-
-# npm package manager 
+# npm package manager
 
 This project is build using npm package manager version 8.5.1
 

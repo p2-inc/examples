@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {AuthGuard} from "./commons/auth.guard";
-import {MainpageComponent} from "./components/mainpage/mainpage.component";
+import { AuthGuard } from './commons/auth.guard';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   {
     path: '',
-    canActivate: [AuthGuard],
-    component: MainpageComponent
-  }
+    // canActivate: [AuthGuard], // Full route protection
+    component: HomeComponent,
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
