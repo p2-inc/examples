@@ -23,14 +23,14 @@ import { UserComponent } from './components/user/user.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    OAuthModule.forRoot(),
+    OAuthModule.forRoot()
   ],
   providers: [
     {
       provide: APP_INITIALIZER,
       useFactory: applicationInitializerFactory,
       deps: [OAuthService],
-      multi: true,
+      multi: true
     },
     { provide: LOCAL_STORAGE_TOKEN, useFactory: localStorageFactory },
     { provide: OAuthStorage, useFactory: localStorageFactory },
