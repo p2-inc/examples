@@ -3,8 +3,11 @@
 import { useSession } from "next-auth/react";
 import { LoginButton, LogoutButton } from "./buttons.components";
 
+import { Token } from "./token.component";
+
 export const User = () => {
   const { data: session, status } = useSession();
+  console.log("🚀 ~ User ~ session:", session);
   let content;
 
   if (status === "loading") {
@@ -33,6 +36,7 @@ export const User = () => {
           <div>{session.user?.name}</div>
         </div>
         <LogoutButton />
+        <Token />
       </div>
     );
   }
