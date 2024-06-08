@@ -1,0 +1,39 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - add-token-info
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18" # Specify the version of Node.js you need
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./frameworks/nextjs
+
+      - name: Build project
+        run: npm run build
+        working-directory: ./frameworks/nextjs
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_DEPLOYMENT_TOKEN }} # You need to add this secret to your GitHub repository
+        run: vercel --prod -t $VERCEL_TOKEN -n phasetwo-nextjs-example
+        working-directory: ./frameworks/nextjs
