@@ -1,18 +1,19 @@
 import { User } from "@/components/user.component";
+import { Icon } from "@iconify/react";
 
 export default async function Home() {
   return (
     <div className="page-bg min-h-screen">
       <picture>
-        <source media="(max-width: 767px)" srcSet="/home-bg-mobile.jpg" />
-        <source media="(min-width: 768px)" srcSet="/home-bg.jpg" />
+        <source media="(max-width: 767px)" srcSet="/home-bg-mobile.webp" />
+        <source media="(min-width: 768px)" srcSet="/home-bg.webp" />
         <img
           className="page-home"
-          src="/img/home-bg-mobile.jpg"
+          src="/img/home-bg-mobile.webp"
           alt="Gradient Background"
         />
       </picture>
-      <div className="px-6 py-24 sm:py-32 lg:px-8">
+      <div className="px-6 pt-24 pb-8 sm:py-8 lg:pt-24 lg:pb-8 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <a href="https://phasetwo.io" target="_blank" rel="noreferrer">
             <img
@@ -28,11 +29,12 @@ export default async function Home() {
           >
             <p className="text-xl font-semibold leading-7 text-p2blue-500 mt-6">
               Next.js App Example
+              <Icon icon="line-md:external-link-rounded" className="ml-1" />
             </p>
           </a>
         </div>
       </div>
-      <div className="py-12">
+      <div className="py-8">
         <div className="mx-auto max-w-3xl px-6 lg:px-8 text-center">
           <User />
         </div>
@@ -47,6 +49,7 @@ export default async function Home() {
             >
               <div className="p-8 sm:p-10 bg-purple-500/10 text-center text-xl font-semibold text-slate-600/80">
                 Docs
+                <Icon icon="line-md:external-link-rounded" className="ml-1" />
               </div>
             </a>
             <a
@@ -56,11 +59,13 @@ export default async function Home() {
             >
               <div className="p-8 sm:p-10 bg-purple-500/10 text-center text-xl font-semibold text-slate-600/80">
                 Github
+                <Icon icon="bi:github" className="ml-1" />
               </div>
             </a>
             <a href="https://phasetwo.io/blog" target="_blank" rel="noreferrer">
               <div className="p-8 sm:p-10 bg-purple-500/10 text-center text-xl font-semibold text-slate-600/80">
                 Blog
+                <Icon icon="line-md:external-link-rounded" className="ml-1" />
               </div>
             </a>
             <a
@@ -70,6 +75,11 @@ export default async function Home() {
             >
               <div className="p-8 sm:p-10 bg-purple-500/10 text-center text-xl font-semibold text-slate-600/80">
                 Contact
+                <Icon
+                  icon="ic:outline-email"
+                  className="ml-1"
+                  style={{ width: "1.1em", height: "1.1em" }}
+                />
               </div>
             </a>
           </div>
