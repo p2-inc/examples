@@ -25,3 +25,7 @@
     object-position: bottom;
   }
 }
+
+.iconify {
+  display: inline-block;
+}

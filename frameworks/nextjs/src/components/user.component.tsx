@@ -7,7 +7,6 @@ import { Token } from "./token.component";
 
 export const User = () => {
   const { data: session, status } = useSession();
-  console.log("🚀 ~ User ~ session:", session);
   let content;
 
   if (status === "loading") {
