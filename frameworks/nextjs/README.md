@@ -1,5 +1,7 @@
 # Phase Two Next.js Example
 
+[View Deployed Example](https://phasetwo-nextjs-example.vercel.app/)
+
 ## Getting Started
 
 First, run the development server:
@@ -18,7 +20,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-# Phase Two React Example
+# Phase Two Next.js Example
 
 All Auth related items are in [Auth.tsx]("./src/Auth.tsx"). This example leverages [react-oidc-context](https://github.com/authts/react-oidc-context/tree/f175dcba6ab09871b027d6a2f2224a17712b67c5) (which uses [oidc-client-ts](https://github.com/authts/oidc-client-ts)) to provide hook and HOC support.
 
