@@ -1,9 +1,5 @@
 name: Deploy to Vercel
 
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  VERCEL_TOKEN: ${{ secrets.VERCEL_DEPLOYMENT_TOKEN }}
 on:
   push:
     branches:
@@ -20,6 +16,10 @@ jobs:
   deploy-preview:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_DEPLOYMENT_TOKEN }}
 
     steps:
       - name: Checkout code
@@ -56,6 +56,10 @@ jobs:
   deploy-prod:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_DEPLOYMENT_TOKEN }}
 
     steps:
       - name: Checkout code
