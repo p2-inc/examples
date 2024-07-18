@@ -4,12 +4,17 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "frameworks/nextjs/**"
   pull_request:
     branches:
-      - add-token-info
+      - main
+    paths:
+      - "frameworks/nextjs/**"
 
 jobs:
-  deploy:
+  deploy-preview:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
 
     steps:
@@ -19,7 +24,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18" # Specify the version of Node.js you need
+          node-version: "20"
 
       - name: Install dependencies
         run: npm install
@@ -34,6 +39,36 @@ jobs:
 
       - name: Deploy to Vercel
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_DEPLOYMENT_TOKEN }} # You need to add this secret to your GitHub repository
+          VERCEL_TOKEN: ${{ secrets.VERCEL_DEPLOYMENT_TOKEN }}
+        run: vercel -t $VERCEL_TOKEN -n phasetwo-nextjs-example
+        working-directory: ./frameworks/nextjs
+
+  deploy-prod:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./frameworks/nextjs
+
+      - name: Build project
+        run: npm run build
+        working-directory: ./frameworks/nextjs
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_DEPLOYMENT_TOKEN }}
         run: vercel --prod -t $VERCEL_TOKEN -n phasetwo-nextjs-example
         working-directory: ./frameworks/nextjs

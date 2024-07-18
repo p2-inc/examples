@@ -2,6 +2,9 @@ import { useSession } from "next-auth/react";
 import jwt from "jsonwebtoken";
 import { ExtendedSession } from "@/app/api/auth/[...nextauth]/route";
 
+const TextAreaClasses =
+  "block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-purple-200/50";
+
 export const Token = () => {
   const { data: session, status } = useSession();
   const extendedSession = session as ExtendedSession | null;
@@ -16,7 +19,7 @@ export const Token = () => {
         <div className="mt-2">
           <label
             htmlFor="accessToken"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-sm font-semibold leading-6 text-gray-900"
           >
             Access Token
           </label>
@@ -25,7 +28,7 @@ export const Token = () => {
             rows={6}
             name="accessToken"
             id="accessToken"
-            className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            className={TextAreaClasses}
             defaultValue={JSON.stringify(
               jwt.decode(extendedSession?.accessToken ?? "", { complete: true })
                 ?.payload,
@@ -37,7 +40,7 @@ export const Token = () => {
         <div className="mt-2">
           <label
             htmlFor="idToken"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-sm font-semibold leading-6 text-gray-900"
           >
             Id Token
           </label>
@@ -46,7 +49,7 @@ export const Token = () => {
             rows={6}
             name="idToken"
             id="idToken"
-            className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            className={TextAreaClasses}
           >
             {JSON.stringify(
               //@ts-ignore
@@ -60,7 +63,7 @@ export const Token = () => {
         <div className="mt-2">
           <label
             htmlFor="refreshToken"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-sm font-semibold leading-6 text-gray-900"
           >
             Refresh Token
           </label>
@@ -69,7 +72,7 @@ export const Token = () => {
             rows={6}
             name="refreshToken"
             id="refreshToken"
-            className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            className={TextAreaClasses}
           >
             {JSON.stringify(
               //@ts-ignore
