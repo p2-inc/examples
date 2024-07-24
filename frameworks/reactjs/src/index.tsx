@@ -4,14 +4,16 @@ import "./index.css";
 import App from "./App";
 import { AuthProvider } from "react-oidc-context";
 
-const authServerUrl = "https://euc1.auth.ac/auth/";
-const realm = "shared-deployment-001";
-const client = "reg-example-1";
+// CHANGE authServerUrl to your Auth Server URL
+const authServerUrl = "https://app.phasetwo.io/auth/";
+const realm = "p2examples";
+const client = "reactjs-example";
 
 const oidcConfig = {
   authority: `${authServerUrl}realms/${realm}`,
   client_id: client,
-  redirect_uri: "http://localhost:3000/authenticated",
+  // CHANGE redirect_uri to your app url
+  redirect_uri: "https://phasetwo-react-example.vercel.app/",
   onSigninCallback: (args: any) =>
     window.history.replaceState({}, document.title, window.location.pathname),
 };
