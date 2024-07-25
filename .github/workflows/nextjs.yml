@@ -1,4 +1,4 @@
-name: Deploy Next.js Example to Vercel
+name: Deploy Next.js Example
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
