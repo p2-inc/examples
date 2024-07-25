@@ -2,14 +2,18 @@ import { User } from "~/components/user";
 import { useLoaderData } from "@remix-run/react";
 import { authenticator } from "~/services/auth.server";
 import { LoaderFunctionArgs, json } from "@remix-run/node";
+import { Icon } from "@iconify/react";
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  console.log("🚀 ~ loader ~ request:", authenticator);
+
   const user = await authenticator.isAuthenticated(request);
   return json(user);
 }
 
 export default function Index() {
   const authenticatedUser = useLoaderData<typeof loader>();
+  console.log("🚀 ~ Index ~ authenticatedUser:", authenticatedUser);
   return (
     <div className="page-bg min-h-screen">
       <picture>
@@ -21,12 +25,12 @@ export default function Index() {
           alt="Gradient Background"
         />
       </picture>
-      <div className="px-6 py-24 sm:py-32 lg:px-8">
+      <div className="px-6 pt-24 pb-8 sm:py-8 lg:pt-24 lg:pb-8 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <a href="https://phasetwo.io" target="_blank" rel="noreferrer">
             <img
               src="/logo_phase_slash.svg"
-              className="w-full max-w-xl mx-auto"
+              className="w-full max-w-xl mx-auto max-h-28"
               alt="Phase Two"
             />
           </a>
@@ -35,18 +39,16 @@ export default function Index() {
             target="_blank"
             rel="noreferrer"
           >
-            <p className="text-xl font-semibold leading-7 text-p2blue-500 mt-6">
-              Remix App Example
+            <p className="text-5xl font-semibold leading-7 text-p2blue-500 mt-6 flex items-center w-full justify-center">
+              <Icon icon="simple-icons:remix" className="mr-2" />
+              <Icon icon="bi:github" />
             </p>
           </a>
         </div>
       </div>
       <div className="py-12">
         <div className="mx-auto max-w-3xl px-6 lg:px-8 text-center">
-          <User
-            status={Boolean(authenticatedUser)}
-            user={authenticatedUser?.__json}
-          />
+          <User status={Boolean(authenticatedUser)} user={authenticatedUser} />
         </div>
       </div>
       <div className="py-24 sm:py-32">

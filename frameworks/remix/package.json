@@ -22,6 +22,7 @@
     "remix-keycloak": "^2.0.4"
   },
   "devDependencies": {
+    "@iconify/react": "^5.0.1",
     "@remix-run/dev": "^2.9.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
