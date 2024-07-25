@@ -5,15 +5,12 @@ import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { Icon } from "@iconify/react";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  console.log("🚀 ~ loader ~ request:", authenticator);
-
   const user = await authenticator.isAuthenticated(request);
   return json(user);
 }
 
 export default function Index() {
   const authenticatedUser = useLoaderData<typeof loader>();
-  console.log("🚀 ~ Index ~ authenticatedUser:", authenticatedUser);
   return (
     <div className="page-bg min-h-screen">
       <picture>
