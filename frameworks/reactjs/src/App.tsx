@@ -6,7 +6,7 @@ import { FooterLinks } from "./components/footer-links.components";
 
 function App() {
   return (
-    <div className="page-bg">
+    <div className="page-bg min-h-screen">
       <picture>
         <source media="(max-width: 767px)" srcSet="/home-bg-mobile.jpg" />
         <source media="(min-width: 768px)" srcSet="/home-bg.jpg" />
