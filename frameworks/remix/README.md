@@ -1,5 +1,7 @@
 # Phase Two Remix Example
 
+[View Deployed Sample](https://phasetwo-remix-example.vercel.app/)
+
 ## Getting Started
 
 First, run the development server:
