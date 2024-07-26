@@ -15,13 +15,19 @@
       </div>
       <button :class="buttonClasses" @click="logout()">Sign out</button>
     </div>
-    <!-- Error -->
+
+    <TokenComponent v-if="user" :user="user" />
   </div>
 </template>
 
 <script>
+import TokenComponent from './Token.vue'
+
 export default {
   name: 'UserComponent',
+  components: {
+    TokenComponent
+  },
   data() {
     return {
       user: null,
@@ -33,6 +39,7 @@ export default {
   },
   async created() {
     const user = await this.$auth.getUser()
+    console.log('🚀 ~ created ~ user:', user)
     if (user) {
       this.user = user
     }
