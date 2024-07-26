@@ -4,7 +4,7 @@
 
 Configure Keycloak in [keycloak.client.ts](./plugins/keycloak.client.ts)
 
-Client side only authentication.
+Client side only authentication using keycloak-js
 
 ## Setup, Run, Build
 

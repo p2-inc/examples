@@ -1,4 +1,3 @@
-import { keycloakConfig } from "./keycloak-config";
 import { User, UserManager, WebStorageStateStore } from "oidc-client-ts";
 
 export default class AuthService {
