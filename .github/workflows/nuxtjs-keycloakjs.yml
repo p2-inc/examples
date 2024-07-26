@@ -1,0 +1,89 @@
+name: Deploy Vue Example
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_NUXTJS_KEYCLOAKJS_PROJECT_ID }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_DEPLOYMENT_TOKEN }}
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "frameworks/vue/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "frameworks/vue/**"
+
+jobs:
+  deploy-preview:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./frameworks/vue
+
+      - name: Build project
+        run: npm run build
+        working-directory: ./frameworks/vue
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+        working-directory: ./frameworks/vue
+
+      - name: Build Project Artifacts
+        run: vercel build --token=$VERCEL_TOKEN
+        working-directory: ./frameworks/vue
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --token=$VERCEL_TOKEN
+        working-directory: ./frameworks/vue
+
+  deploy-prod:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./frameworks/vue
+
+      - name: Build project
+        run: npm run build
+        working-directory: ./frameworks/vue
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+        working-directory: ./frameworks/vue
+
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=$VERCEL_TOKEN
+        working-directory: ./frameworks/vue
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+        working-directory: ./frameworks/vue

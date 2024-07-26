@@ -9,4 +9,9 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  app: {
+    head: {
+      title: "Phase Two Nuxt.js Keycloak Example",
+    },
+  },
 });

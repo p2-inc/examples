@@ -10,4 +10,9 @@ export default defineNuxtConfig({
     },
   },
   modules: ["@pinia/nuxt"],
+  app: {
+    head: {
+      title: "Phase Two Nuxt.js Keycloak Example",
+    },
+  },
 });

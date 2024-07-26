@@ -16,6 +16,8 @@
     "tailwindcss": "^3.3.3"
   },
   "dependencies": {
-    "keycloak-js": "^22.0.1"
+    "iconify-icon": "^2.1.0",
+    "jwt-decode": "^4.0.0",
+    "keycloak-js": "^25.0.2"
   }
 }

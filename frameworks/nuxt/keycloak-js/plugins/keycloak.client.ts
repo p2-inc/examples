@@ -2,9 +2,9 @@ import Keycloak, { KeycloakConfig } from "keycloak-js";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const initOptions: KeycloakConfig = {
-    url: "https://euc1.auth.ac/auth/",
-    realm: "shared-deployment-001",
-    clientId: "reg-example-1",
+    url: "https://app.phasetwo.io/auth/",
+    realm: "p2examples",
+    clientId: "nuxt-example",
   };
 
   const keycloak = new Keycloak(initOptions);
