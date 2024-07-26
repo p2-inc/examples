@@ -14,11 +14,11 @@ export default function Index() {
   return (
     <div className="page-bg min-h-screen">
       <picture>
-        <source media="(max-width: 767px)" srcSet="/home-bg-mobile.jpg" />
-        <source media="(min-width: 768px)" srcSet="/home-bg.jpg" />
+        <source media="(max-width: 767px)" srcSet="/home-bg-mobile.webp" />
+        <source media="(min-width: 768px)" srcSet="/home-bg.webp" />
         <img
           className="page-home"
-          src="/img/home-bg-mobile.jpg"
+          src="/img/home-bg-mobile.webp"
           alt="Gradient Background"
         />
       </picture>
