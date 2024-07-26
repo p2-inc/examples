@@ -23,7 +23,7 @@
             class="text-4xl font-semibold leading-7 text-p2blue-500 mt-6 flex items-center w-full justify-center"
           >
             <iconify-icon icon="logos:vue" class="w-9 mr-2"></iconify-icon>
-            <iconify-icon icon="bi:github" class="w-9"></iconify-icon>
+            <iconify-icon icon="bi:github" class="w-9"></iconify-icon> (keycloak-js)
           </p>
         </a>
       </div>
