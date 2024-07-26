@@ -1,7 +1,6 @@
 export const keycloakConfig = {
-  authorityUrl: "https://euc1.auth.ac",
-  applicationUrl: "http://localhost:3000",
-  realm: "shared-deployment-001",
-  clientId: "reg-example-1",
-  clientSecret: "CLIENT_SECRET",
+  authorityUrl: process.env.KEYCLOAK_ISSUER,
+  realm: process.env.KEYCLOAK_REALM,
+  clientId: process.env.KEYCLOAK_CLIENT_ID,
+  clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,
 };

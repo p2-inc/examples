@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: "Phase Two Nuxt.js Keycloak Example",
+      title: "Phase Two Nuxt.js Keycloak Example (keycloak-js)",
     },
   },
 });

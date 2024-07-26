@@ -19,7 +19,7 @@
           />
         </a>
         <a
-          href="https://github.com/p2-inc/examples/tree/main/frameworks/vue"
+          href="https://github.com/p2-inc/examples/tree/main/frameworks/nuxt/keycloak-js"
           target="_blank"
           rel="noreferrer"
         >
@@ -29,6 +29,7 @@
             <iconify-icon icon="logos:nuxt-icon" class="mr-2"></iconify-icon>
             <iconify-icon icon="bi:github" class="w-9"></iconify-icon>
           </p>
+          [keycloak-js]
         </a>
       </div>
     </div>

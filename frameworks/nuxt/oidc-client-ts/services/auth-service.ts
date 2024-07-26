@@ -1,19 +1,25 @@
-import { User, UserManager, WebStorageStateStore } from "oidc-client-ts";
 import { keycloakConfig } from "./keycloak-config";
+import { User, UserManager, WebStorageStateStore } from "oidc-client-ts";
 
 export default class AuthService {
   private userManager!: UserManager;
+  private keycloakConfig: any;
 
   constructor() {
+    const rtConfig = useRuntimeConfig();
+
+    this.keycloakConfig = {
+      ...rtConfig.public,
+    };
     this.initializedOidc();
   }
 
   private initializedOidc() {
     try {
+      const { realm, keycloakIssuer, clientId } = this.keycloakConfig;
       const settings = {
-        authority: `${keycloakConfig.authorityUrl}/auth/realms/${keycloakConfig.realm}`,
-        client_id: keycloakConfig.clientId,
-        client_secret: keycloakConfig.clientSecret,
+        authority: `${keycloakIssuer}/auth/realms/${realm}`,
+        client_id: clientId,
         redirect_uri: `${window.location.origin}/auth`,
         silent_redirect_uri: `${window.location.origin}/silent-refresh`,
         post_logout_redirect_uri: `${window.location.origin}`,
