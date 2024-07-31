@@ -24,4 +24,9 @@ export default defineNuxtConfig({
       clientId: process.env.KEYCLOAK_CLIENT_ID,
     },
   },
+  nitro: {
+    output: {
+      dir: "dist",
+    },
+  },
 });
