@@ -34,10 +34,6 @@ jobs:
         run: npm install
         working-directory: ./frameworks/reactjs
 
-      - name: Build project
-        run: npm run build
-        working-directory: ./frameworks/reactjs
-
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
 
@@ -68,10 +64,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./frameworks/reactjs
-
-      - name: Build project
-        run: npm run build
         working-directory: ./frameworks/reactjs
 
       - name: Install Vercel CLI
