@@ -14,4 +14,7 @@ export default defineNuxtConfig({
       title: "Phase Two Nuxt.js Keycloak Example (keycloak-js)",
     },
   },
+  nitro: {
+    preset: "vercel",
+  },
 });
