@@ -7,6 +7,10 @@
   export let data: LayoutServerData;
 </script>
 
+<svelte:head>
+  <title>SvelteKit + Phase Two Example</title>
+</svelte:head>
+
 <div class="page-bg min-h-screen">
   <picture>
     <source media="(max-width: 767px)" srcSet="/home-bg-mobile.webp" />

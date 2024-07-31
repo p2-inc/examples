@@ -24,7 +24,7 @@
 		"vite": "^5.0.11"
 	},
 	"dependencies": {
-		"@auth/sveltekit": "^1.0.1",
+		"@auth/sveltekit": "^1.4.2",
 		"jwt-decode": "^4.0.0"
 	}
 }

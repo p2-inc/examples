@@ -14,18 +14,6 @@
   import { jwtDecode } from "jwt-decode";
   import { onMount } from "svelte";
 
-  // Function to find keys by partial match
-  function findKeysByPartialMatch(part: string): string[] {
-    const keys = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key && key.includes(part)) {
-        keys.push(key);
-      }
-    }
-    return keys;
-  }
-
   function stringifyToken(token: string) {
     return JSON.stringify(jwtDecode(token), null, 2);
   }
@@ -35,22 +23,10 @@
   let refreshToken = "";
 
   onMount(() => {
-    let token;
-    const tokenKeys = findKeysByPartialMatch("oidc.user:");
-    if (tokenKeys.length > 0) {
-      token = localStorage.getItem(tokenKeys[0]);
-    }
-
-    if (token) {
-      try {
-        const data = JSON.parse(token);
-        console.log("🚀 ~ onMount ~ data:", data);
-        accessToken = stringifyToken(data.access_token);
-        idToken = stringifyToken(data.id_token);
-        refreshToken = stringifyToken(data.refresh_token);
-      } catch (error) {
-        console.error("Error parsing token", error);
-      }
+    if (data && data.user) {
+      idToken = stringifyToken(data.user.idToken);
+      accessToken = stringifyToken(data.user.accessToken);
+      refreshToken = stringifyToken(data.user.refreshToken);
     }
   });
 </script>
