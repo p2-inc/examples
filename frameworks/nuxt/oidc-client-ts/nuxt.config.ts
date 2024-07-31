@@ -25,8 +25,6 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
-    output: {
-      serverDir: "dist",
-    },
+    preset: "vercel",
   },
 });
