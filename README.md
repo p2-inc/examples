@@ -13,6 +13,7 @@ This is a repo for code examples showing how to integrate Keycloak with various 
 | Nuxt (keycloak-js)    |   [🧑‍💻📁](./frameworks/nuxt/keycloak-js/)   | [👩‍💻🚀](https://phasetwo-nuxt-keycloakjs-example.vercel.app/) |   [👩‍🏫] (https://phasetwo.io/blog/instant-user-managemenet-and-sso-for-nuxt/)   |
 | Nuxt (oidc-client-ts) | [🧑‍💻📁](./frameworks/nuxt/oidc-client-ts/)  |    [👩‍💻🚀](https://phasetwo-nuxt-oidc-example.vercel.app/)    |   [👩‍🏫] (https://phasetwo.io/blog/instant-user-managemenet-and-sso-for-nuxt/)   |
 | Sveltekit             |      [🧑‍💻📁](./frameworks/sveltekit/)       |    [👩‍💻🚀](https://phasetwo-sveltekit-example.vercel.app)     | [👩‍🏫] (https://phasetwo.io/blog/instant-user-management-and-sso-for-sveltekit/) |
+| Angular               |       [🧑‍💻📁](./frameworks/angular/)        |     [👩‍💻🚀](https://phasetwo-angular-example.vercel.app)      |                                       👩‍🏫                                       |
 | Django                |        [🧑‍💻📁](./frameworks/django/)        |                             👩‍💻⚒️                             |                 [👩‍🏫](https://phasetwo.io/blog/secure-django/)                  |
 | SpringBoot + Angular  | [🧑‍💻📁](./frameworks/spring-boot-keycloak/) |                             👩‍💻⚒️                             |               [👩‍🏫] https://phasetwo.io/blog/secure-spring-boot/                |
 
