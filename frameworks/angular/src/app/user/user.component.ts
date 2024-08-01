@@ -13,9 +13,6 @@ import { filter } from 'rxjs/operators';
   styleUrl: './user.component.css',
 })
 export class UserComponent {
-  isLoggedIn: boolean = false;
-  userInfo: any;
-
   buttonClasses =
     'rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600';
 
@@ -35,7 +32,7 @@ export class UserComponent {
   }
 
   signOut() {
-    this.oauthService.logOut();
+    return this.oauthService.logOut();
   }
 
   private decodeAndStringifyToken(token: any) {
