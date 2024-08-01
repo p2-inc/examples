@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
+    "iconify-icon": "^2.1.0",
+    "jwt-decode": "^4.0.0",
     "oidc-client-ts": "^2.2.5",
     "pinia": "^2.1.6"
   },

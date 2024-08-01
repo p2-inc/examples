@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useKeycloak } from "../composables/keycloak-c";
+import TokenComponent from "./Token.vue";
+
 const { keycloak, authState } = useKeycloak();
 
 function login() {
@@ -33,6 +36,7 @@ function logout() {
       >
         Log out
       </button>
+      <TokenComponent :user="keycloak" />
     </div>
     <div>
       <div v-if="authState === 'error'" class="mb-6 text-p2blue-700 text-2xl">

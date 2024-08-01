@@ -28,10 +28,6 @@ export class AuthService {
   getUserInfo(): any {
     const decodedToken = this.getDecodedAccessToken();
     if (decodedToken) {
-      console.log(
-        '🚀 ~ AuthService ~ getUserInfo ~ decodedToken:',
-        decodedToken
-      );
       return {
         username: decodedToken.preferred_username,
         email: decodedToken.email,

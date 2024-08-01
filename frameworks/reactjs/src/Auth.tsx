@@ -1,4 +1,5 @@
 import { useAuth } from "react-oidc-context";
+import { Token } from "./components/token.component";
 
 const Auth = () => {
   const auth = useAuth();
@@ -58,6 +59,7 @@ const Auth = () => {
         >
           Log out
         </button>
+        <Token />
       </div>
     );
   }

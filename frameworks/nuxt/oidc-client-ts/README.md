@@ -1,63 +1,20 @@
-# Nuxt 3 Minimal Starter
+# Phase Two Keycloak Nuxt Example
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+[🚀 See Deployed Example](https://phasetwo-nuxt-oidc-example.vercel.app/)
 
-## Setup
+Configure Keycloak in [auth-service.ts](./services/auth-service.ts)
+
+Copy the `.env.example` to `.env` and add in your variables.
+
+Authentication using oidc-client-ts
+
+## Setup, Run, Build
 
 Make sure to install the dependencies:
 
 ```bash
 # npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
 npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
 ```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

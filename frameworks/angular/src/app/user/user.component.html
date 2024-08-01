@@ -1,0 +1,67 @@
+<div *ngIf="idToken">
+  <!-- Content for logged-in users -->
+  <div class="mb-2 text-p2blue-700 text-2xl">Authenticated</div>
+  <div class="mb-6 text-p2blue-700 text-md">
+    <div>
+      <p><span class="font-bold">Username</span>: {{ userName }}</p>
+      <p><span class="font-bold">Email</span>: {{ email }}</p>
+    </div>
+    <div>
+      <div class="mt-4 text-left">
+        <div class="mt-2">
+          <label
+            for="accessToken"
+            class="block text-sm font-semibold leading-6 text-gray-900"
+          >
+            Access Token
+          </label>
+
+          <textarea
+            rows="6"
+            name="accessToken"
+            id="accessToken"
+            class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-purple-200/50"
+            value="{{ accessToken }}"
+          ></textarea>
+        </div>
+        <div class="mt-2">
+          <label
+            for="idToken"
+            class="block text-sm font-semibold leading-6 text-gray-900"
+          >
+            Id Token
+          </label>
+
+          <textarea
+            rows="6"
+            name="idToken"
+            id="idToken"
+            class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-purple-200/50"
+            value="{{ idToken }}"
+          ></textarea>
+        </div>
+        <div class="mt-2">
+          <label
+            for="refreshToken"
+            class="block text-sm font-semibold leading-6 text-gray-900"
+          >
+            Refresh Token
+          </label>
+
+          <textarea
+            rows="6"
+            name="refreshToken"
+            id="refreshToken"
+            class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-purple-200/50"
+            value="{{ refreshToken }}"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <Button [class]="buttonClasses" (click)="signOut()">Sign Out</Button>
+</div>
+<div *ngIf="!idToken">
+  <div class="mb-6 text-p2blue-700 text-2xl">Not authenticated.</div>
+  <Button [class]="buttonClasses" (click)="signIn()">Sign In</Button>
+</div>
