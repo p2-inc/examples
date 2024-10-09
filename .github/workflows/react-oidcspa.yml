@@ -1,19 +1,20 @@
-name: Deploy Nuxt oidc-client-ts Example
+name: Deploy React OIDC Spa Example
+
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_NUXT_OIDC_PROJECT_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_REACT_PROJECT_ID }}
   VERCEL_TOKEN: ${{ secrets.VERCEL_DEPLOYMENT_TOKEN }}
 on:
   push:
     branches:
       - main
     paths:
-      - "frameworks/nuxt/oidc-client-ts/**"
+      - "frameworks/reactjs/oidc-spa/**"
   pull_request:
     branches:
       - main
     paths:
-      - "frameworks/nuxt/oidc-client-ts/**"
+      - "frameworks/reactjs/oidc-spa/**"
 
 jobs:
   deploy-preview:
@@ -31,22 +32,22 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./frameworks/nuxt/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-client-ts
 
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
 
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
-        working-directory: ./frameworks/nuxt/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-client-ts
 
       - name: Build Project Artifacts
         run: vercel build --token=$VERCEL_TOKEN
-        working-directory: ./frameworks/nuxt/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-client-ts
 
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --token=$VERCEL_TOKEN
-        working-directory: ./frameworks/nuxt/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-client-ts
 
   deploy-prod:
     if: github.event_name == 'push' && github.repository == 'p2-inc/examples'
@@ -63,19 +64,19 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./frameworks/nuxt/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-client-ts
 
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
 
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=$VERCEL_TOKEN
-        working-directory: ./frameworks/nuxt/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-client-ts
 
       - name: Build Project Artifacts
         run: vercel build --prod --token=$VERCEL_TOKEN
-        working-directory: ./frameworks/nuxt/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-client-ts
 
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
-        working-directory: ./frameworks/nuxt/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-client-ts
