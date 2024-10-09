@@ -1,4 +1,4 @@
-name: Deploy React Example
+name: Deploy React OIDC Spa Example
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
