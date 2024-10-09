@@ -18,7 +18,7 @@ on:
 
 jobs:
   deploy-preview:
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' && github.repository == 'p2-inc/examples'
     runs-on: ubuntu-latest
 
     steps:
@@ -50,7 +50,7 @@ jobs:
         working-directory: ./frameworks/angular
 
   deploy-prod:
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && github.repository == 'p2-inc/examples'
     runs-on: ubuntu-latest
 
     steps:
