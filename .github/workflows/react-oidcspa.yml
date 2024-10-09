@@ -32,22 +32,22 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./frameworks/reactjs/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-spa
 
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
 
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
-        working-directory: ./frameworks/reactjs/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-spa
 
       - name: Build Project Artifacts
         run: vercel build --token=$VERCEL_TOKEN
-        working-directory: ./frameworks/reactjs/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-spa
 
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --token=$VERCEL_TOKEN
-        working-directory: ./frameworks/reactjs/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-spa
 
   deploy-prod:
     if: github.event_name == 'push' && github.repository == 'p2-inc/examples'
@@ -64,19 +64,19 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./frameworks/reactjs/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-spa
 
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
 
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=$VERCEL_TOKEN
-        working-directory: ./frameworks/reactjs/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-spa
 
       - name: Build Project Artifacts
         run: vercel build --prod --token=$VERCEL_TOKEN
-        working-directory: ./frameworks/reactjs/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-spa
 
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
-        working-directory: ./frameworks/reactjs/oidc-client-ts
+        working-directory: ./frameworks/reactjs/oidc-spa
