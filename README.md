@@ -20,7 +20,7 @@ This is a repo for code examples showing how to integrate Keycloak with various 
 
 ## Multi-tenant
 
-Demo App to be used as a starting point for a multi-tenant setup. Uses `nx` to manage the apps.
+[Demo Apps](./multitenant/README.md) to be used as a starting point for a multi-tenant setup. Uses `nx` to manage the apps and `oidc-spa`.
 
 ## Github Actions
 
