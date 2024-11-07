@@ -18,6 +18,10 @@ This is a repo for code examples showing how to integrate Keycloak with various 
 | Django                 |        [🧑‍💻📁](./frameworks/django/)         |                             👩‍💻⚒️                             |                 [👩‍🏫](https://phasetwo.io/blog/secure-django/)                 |
 | SpringBoot + Angular   | [🧑‍💻📁](./frameworks/spring-boot-keycloak/)  |                             👩‍💻⚒️                             |              [👩‍🏫](https://phasetwo.io/blog/secure-spring-boot/)               |
 
+## Multi-tenant
+
+Demo App to be used as a starting point for a multi-tenant setup. Uses `nx` to manage the apps.
+
 ## Github Actions
 
 This repo contains actions that deploy all frameworks. Feel free to use, disable, or remove as desired.
