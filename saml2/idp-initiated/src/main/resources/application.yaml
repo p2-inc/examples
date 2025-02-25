@@ -1,0 +1,17 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: idp-initiated
+  security:
+    saml2:
+      relyingparty:
+        registration:
+          okta-app:
+            entity-id: "{baseUrl}/saml2/metadata"
+            acs.location: "{baseUrl}/login/saml2/sso"
+            signing.credentials:
+              - private-key-location: classpath:credentials/private.key # you need replace this with private key from keycloak saml client in order to validate signature
+                certificate-location: classpath:credentials/cert.crt # you need replace this with cert from keycloak saml client in order to validate signature
+            idp-entity-id: http://localhost:8080/realms/test-realm
+            assertingparty.metadata-uri: http://localhost:8080/realms/test-realm/protocol/saml/descriptor
