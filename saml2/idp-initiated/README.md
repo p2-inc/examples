@@ -11,5 +11,5 @@ This project was generated with [Spring Initializr](https://start.spring.io/). C
 3. Import realm in file: `/keycloak/test-realm-export.json`\
    You will need to change the ```singleSignOnServiceUrl``` with the one found in the metadata from OKTA application created at step 1
 4. Import saml-client: `/keycloak/saml-client.json`
-5. Run project using: `mvn:bootRun`
+5. Run project using: `./gradlew bootRun`
 6. Start authentication from OKTA application page
