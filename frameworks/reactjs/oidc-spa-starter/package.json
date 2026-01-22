@@ -4,16 +4,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.38",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
+    "@types/node": "^16.18.126",
+    "@types/react": "^18.3.27",
+    "@types/react-dom": "^18.3.7",
     "jwt-decode": "^4.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
@@ -43,10 +43,10 @@
     ]
   },
   "devDependencies": {
-    "@iconify/react": "^5.0.1",
-    "@types/jsonwebtoken": "^9.0.6",
-    "prettier": "^3.0.0",
+    "@iconify/react": "^5.2.1",
+    "@types/jsonwebtoken": "^9.0.10",
+    "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.3.0",
-    "tailwindcss": "^3.3.2"
+    "tailwindcss": "^3.4.19"
   }
 }
