@@ -2,10 +2,14 @@
   "name": "@multitenant/source",
   "version": "0.0.0",
   "license": "MIT",
+  "private": true,
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "generate-phasetwo-orgs-api": "openapi-generator-cli generate -i https://raw.githubusercontent.com/p2-inc/phasetwo-docs/refs/heads/master/openapi.yaml -g typescript-fetch -o libs/phasetwo-orgs-api/src/lib --skip-validate-spec"
   },
-  "private": true,
   "dependencies": {
     "@iconify/react": "^5.2.1",
     "oidc-spa": "^5.7.0",
