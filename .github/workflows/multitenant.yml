@@ -1,0 +1,27 @@
+name: Multitenant (Nx)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "multitenant/**"
+      - ".github/workflows/multitenant.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "multitenant/**"
+      - ".github/workflows/multitenant.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  ci:
+    uses: ./.github/workflows/_node-ci.yml
+    with:
+      working-directory: multitenant
