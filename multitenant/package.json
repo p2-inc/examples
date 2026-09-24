@@ -12,10 +12,10 @@
     "generate:orgs-api": "openapi-generator-cli generate --generator-key orgs-api"
   },
   "dependencies": {
-    "@iconify/react": "^5.2.1",
-    "oidc-spa": "^5.7.0",
+    "oidc-spa": "^10.2.15",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
