@@ -1,74 +1,79 @@
-import { jwtDecode } from "jwt-decode";
-import { useOidc } from "../index";
+import { decodeJwt } from "oidc-spa/decode-jwt";
+import { useEffect, useState } from "react";
+import { getOidc, useOidc } from "../oidc.ts";
 
-const TextAreaClasses =
-  "block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-purple-200/50";
+const textareaClasses =
+  "block w-full rounded-md bg-purple-200/50 px-2 py-1.5 font-mono text-xs text-gray-900 ring-1 ring-gray-300 ring-inset";
 
-function stringifyToken(token: any) {
-  return JSON.stringify(jwtDecode(token), null, 2);
+function decode(token: string | undefined) {
+  if (!token) {
+    return "";
+  }
+  try {
+    return JSON.stringify(decodeJwt(token), null, 2);
+  } catch {
+    return token;
+  }
 }
 
-export const Token = () => {
-  const { isUserLoggedIn, oidcTokens } = useOidc();
+export function Token() {
+  const { decodedIdToken } = useOidc({ assert: "user logged in" });
+  const [accessToken, setAccessToken] = useState<string>();
 
-  if (!isUserLoggedIn) {
-    return null;
-  }
+  useEffect(() => {
+    let active = true;
+    let unsubscribe = () => {};
 
-  if (isUserLoggedIn) {
-    return (
-      <div className="mt-4 text-left">
-        <div className="mt-2">
-          <label
-            htmlFor="accessToken"
-            className="block text-sm font-semibold leading-6 text-gray-900"
-          >
-            Access Token
-          </label>
+    void getOidc({ assert: "user logged in" }).then(async (oidc) => {
+      const token = await oidc.getAccessToken();
+      if (!active) {
+        return;
+      }
+      setAccessToken(token);
+      unsubscribe =
+        oidc.subscribeToAccessTokenRotation(
+          setAccessToken,
+        ).unsubscribeFromAccessTokenRotation;
+    });
 
-          <textarea
-            rows={6}
-            name="accessToken"
-            id="accessToken"
-            className={TextAreaClasses}
-            defaultValue={stringifyToken(oidcTokens.accessToken)}
-          ></textarea>
-        </div>
-        <div className="mt-2">
-          <label
-            htmlFor="idToken"
-            className="block text-sm font-semibold leading-6 text-gray-900"
-          >
-            Id Token
-          </label>
+    return () => {
+      active = false;
+      unsubscribe();
+    };
+  }, []);
 
-          <textarea
-            rows={6}
-            name="idToken"
-            id="idToken"
-            className={TextAreaClasses}
-            defaultValue={stringifyToken(oidcTokens.idToken)}
-          ></textarea>
-        </div>
-        <div className="mt-2">
-          <label
-            htmlFor="refreshToken"
-            className="block text-sm font-semibold leading-6 text-gray-900"
-          >
-            Refresh Token
-          </label>
-
-          <textarea
-            rows={6}
-            name="refreshToken"
-            id="refreshToken"
-            className={TextAreaClasses}
-            defaultValue={stringifyToken(oidcTokens.refreshToken)}
-          ></textarea>
-        </div>
+  return (
+    <div className="mt-8 space-y-4 text-left">
+      <div>
+        <label
+          htmlFor="access-token"
+          className="mb-1 block text-sm font-semibold text-gray-900"
+        >
+          Access token (decoded)
+        </label>
+        <textarea
+          id="access-token"
+          rows={12}
+          readOnly
+          className={textareaClasses}
+          value={decode(accessToken)}
+        />
       </div>
-    );
-  }
-
-  return null;
-};
+      <div>
+        <label
+          htmlFor="id-token"
+          className="mb-1 block text-sm font-semibold text-gray-900"
+        >
+          ID token (decoded)
+        </label>
+        <textarea
+          id="id-token"
+          rows={12}
+          readOnly
+          className={textareaClasses}
+          value={JSON.stringify(decodedIdToken, null, 2)}
+        />
+      </div>
+    </div>
+  );
+}
