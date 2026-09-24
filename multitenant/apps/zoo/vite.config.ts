@@ -16,10 +16,6 @@ export default defineConfig({
     host: 'localhost',
   },
   plugins: [react(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
-  // Uncomment this if you are using workers.
-  // worker: {
-  //  plugins: [ nxViteTsPaths() ],
-  // },
   build: {
     outDir: '../../dist/apps/zoo',
     emptyOutDir: true,
@@ -27,5 +23,13 @@ export default defineConfig({
     commonjsOptions: {
       transformMixedEsModules: true,
     },
+  },
+  test: {
+    name: 'zoo',
+    watch: false,
+    globals: true,
+    environment: 'jsdom',
+    include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    reporters: ['default'],
   },
 });
