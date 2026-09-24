@@ -1,19 +1,31 @@
-# Phase Two React Example
+# Phase Two React example: react-oidc-context + oidc-client-ts
 
-[🚀 View Deployed Sample](https://phasetwo-react-example.vercel.app/)
+[🚀 View the deployed example](https://phasetwo-react-example.vercel.app/)
 
-All Auth related items are in [Auth.tsx]("./src/Auth.tsx"). This example leverages [react-oidc-context](https://github.com/authts/react-oidc-context/tree/f175dcba6ab09871b027d6a2f2224a17712b67c5) (which uses [oidc-client-ts](https://github.com/authts/oidc-client-ts)) to provide hook and HOC support.
+A React single-page app that logs users in with Keycloak using the authorization code flow with PKCE, through [react-oidc-context](https://github.com/authts/react-oidc-context) and [oidc-client-ts](https://github.com/authts/oidc-client-ts). It is built with [Vite](https://vite.dev) and [Tailwind CSS](https://tailwindcss.com).
 
-## Available Scripts
+- [src/main.tsx](./src/main.tsx) configures the `AuthProvider` from environment variables.
+- [src/Auth.tsx](./src/Auth.tsx) shows the login state and the Log in / Log out buttons.
+- [src/components/token.component.tsx](./src/components/token.component.tsx) decodes the access and ID tokens.
 
-In the project directory, you can run:
+Tokens are kept in session storage and refreshed before they expire. Logging out also ends the Keycloak session.
 
-`npm start`
+## Configuration
 
-Runs the app in the development mode.
+| Variable               | Description                           | Default (`.env`)                                 |
+| ---------------------- | ------------------------------------- | ------------------------------------------------ |
+| `VITE_OIDC_ISSUER_URI` | URL of your Keycloak realm            | `https://app.phasetwo.io/auth/realms/p2examples` |
+| `VITE_OIDC_CLIENT_ID`  | Client ID of a public Keycloak client | `reactjs-example`                                |
 
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+`.env` points at the hosted Phase Two demo realm. To use the [local Keycloak](../../../keycloak/README.md) instead, run `cp .env.local.sample .env.local`.
 
-The page will reload if you make edits.
+For your own realm, create an OpenID Connect client with client authentication off, the standard flow enabled, `http://localhost:3000/*` as valid redirect URI, and `+` as web origin and as valid post logout redirect URI.
 
-You will also see any lint errors in the console.
+## Run it
+
+```sh
+pnpm install
+pnpm dev
+```
+
+Then open <http://localhost:3000>. `pnpm build` creates a production build in `dist/`. `pnpm typecheck`, `pnpm lint` and `pnpm format` are also available.
