@@ -1,0 +1,71 @@
+{
+  "realm": "demo-realm",
+  "displayName": "Spring Boot example (local)",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "roles": {
+    "realm": [
+      {
+        "name": "user",
+        "description": "Can call GET /api/test/user on the Spring Boot API"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "demo-spa",
+      "name": "Spring Boot example: Angular client",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "implicitFlowEnabled": false,
+      "rootUrl": "http://localhost:4200",
+      "baseUrl": "/",
+      "redirectUris": ["http://localhost:4200/*"],
+      "webOrigins": ["+"],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "+"
+      }
+    }
+  ],
+  "users": [
+    {
+      "username": "test",
+      "email": "test@example.com",
+      "firstName": "Test",
+      "lastName": "User",
+      "enabled": true,
+      "emailVerified": true,
+      "realmRoles": ["default-roles-demo-realm", "user"],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "test",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "username": "noaccess",
+      "email": "noaccess@example.com",
+      "firstName": "No",
+      "lastName": "Access",
+      "enabled": true,
+      "emailVerified": true,
+      "realmRoles": ["default-roles-demo-realm"],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "noaccess",
+          "temporary": false
+        }
+      ]
+    }
+  ]
+}

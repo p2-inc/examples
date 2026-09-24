@@ -1,21 +1,21 @@
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.4.
+# Angular client
 
-# NodeJS
+The Angular single-page app of the [Spring Boot example](../README.md). It logs users in with Keycloak using the authorization code flow with PKCE, through [angular-oauth2-oidc](https://github.com/manfredsteyer/angular-oauth2-oidc), and calls the Spring Boot API with the access token.
 
-This project runs using Node.js version v16 or newer.
+- [`src/environments/environment.ts`](./src/environments/environment.ts): Keycloak issuer, client ID and API URL.
+- [`src/app/app.config.ts`](./src/app/app.config.ts): configures angular-oauth2-oidc, sends the access token only to the API, and finishes the login when Keycloak redirects back.
+- [`src/app/auth/auth.guard.ts`](./src/app/auth/auth.guard.ts): `authGuard` starts the login before opening a route that needs it (`/protected`).
+- [`src/app/home/`](./src/app/home): login status, the Log in / Log out buttons, the API calls and the decoded tokens.
 
-# npm package manager
+Tokens are kept in session storage and refreshed before they expire. Logging out also ends the Keycloak session.
 
-This project is build using npm package manager version 8.5.1
+## Run it
 
-## Install dependencies
+Start Keycloak and the API first, as described in the [example's README](../README.md). Then:
 
-Run `npm install` to add all dependencies
+```sh
+pnpm install
+pnpm start
+```
 
-## Development server
-
-Run `npm run ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Build
-
-Run `npm run ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Open <http://localhost:4200>. `pnpm build`, `pnpm test`, `pnpm lint`, `pnpm typecheck` and `pnpm format` are also available.

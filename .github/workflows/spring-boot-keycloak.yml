@@ -1,0 +1,32 @@
+name: Spring Boot + Angular (Keycloak)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "frameworks/spring-boot-keycloak/**"
+      - ".github/workflows/spring-boot-keycloak.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "frameworks/spring-boot-keycloak/**"
+      - ".github/workflows/spring-boot-keycloak.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  api:
+    uses: ./.github/workflows/_gradle-ci.yml
+    with:
+      working-directory: frameworks/spring-boot-keycloak
+
+  angularclient:
+    uses: ./.github/workflows/_node-ci.yml
+    with:
+      working-directory: frameworks/spring-boot-keycloak/angularclient

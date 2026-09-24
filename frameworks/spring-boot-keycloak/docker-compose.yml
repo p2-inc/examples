@@ -1,14 +1,27 @@
-version: '3.8'
+name: p2-examples-spring-boot-keycloak
 
 services:
   keycloak:
-    image: quay.io/keycloak/keycloak:24.0.3
-    entrypoint: ["/opt/keycloak/bin/kc.sh", "start-dev"]
+    image: quay.io/phasetwo/phasetwo-keycloak:26.6
+    command: ["start-dev", "--import-realm"]
     environment:
-      - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=admin
-      - KC_HTTP_RELATIVE_PATH=/auth/
-      - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=*:8787,server=y,suspend=n -Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_HTTP_RELATIVE_PATH: /auth
+      KC_HEALTH_ENABLED: "true"
     ports:
       - "8888:8080"
-    restart: always
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import:ro
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "bash",
+          "-c",
+          "exec 3<>/dev/tcp/127.0.0.1/9000 && printf 'GET /auth/health/ready HTTP/1.0\\r\\nHost: localhost\\r\\n\\r\\n' >&3 && grep -q UP <&3",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 60
+      start_period: 20s
