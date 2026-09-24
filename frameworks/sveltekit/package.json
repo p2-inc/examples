@@ -1,30 +1,44 @@
 {
+	"name": "phasetwo-sveltekit-example",
+	"private": true,
+	"version": "0.0.0",
 	"type": "module",
-	"name": "phase_two_keycloak_sveltekit_example",
+	"packageManager": "pnpm@10.34.5",
+	"engines": {
+		"node": "24.x"
+	},
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build && svelte-kit sync",
+		"build": "vite build",
 		"preview": "vite preview",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
-	},
-	"devDependencies": {
-		"@iconify/svelte": "^4.0.2",
-		"@sveltejs/adapter-auto": "^3.0.0",
-		"@sveltejs/kit": "^2.0.0",
-		"@sveltejs/vite-plugin-svelte": "^3.0.0",
-		"autoprefixer": "^10.4.19",
-		"postcss": "^8.4.38",
-		"publint": "^0.1.9",
-		"svelte": "^4.2.7",
-		"svelte-check": "^3.6.0",
-		"tailwindcss": "^3.4.3",
-		"tslib": "^2.4.1",
-		"typescript": "^5.0.0",
-		"vite": "^5.0.11"
+		"prepare": "svelte-kit sync || echo ''",
+		"typecheck": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"lint": "eslint .",
+		"format": "prettier --write ."
 	},
 	"dependencies": {
-		"@auth/sveltekit": "^1.4.2",
-		"jwt-decode": "^4.0.0"
+		"@auth/core": "0.41.3",
+		"@auth/sveltekit": "^1.11.3"
+	},
+	"devDependencies": {
+		"@eslint/js": "^10.0.1",
+		"@sveltejs/adapter-vercel": "^6.3.4",
+		"@sveltejs/kit": "^2.70.3",
+		"@sveltejs/vite-plugin-svelte": "^7.3.1",
+		"@tailwindcss/vite": "^4.3.3",
+		"@types/node": "^24.13.6",
+		"eslint": "^10.11.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-svelte": "^3.23.0",
+		"globals": "^17.12.0",
+		"prettier": "^3.9.9",
+		"prettier-plugin-svelte": "^4.1.1",
+		"prettier-plugin-tailwindcss": "^0.8.1",
+		"svelte": "^5.57.1",
+		"svelte-check": "^4.7.6",
+		"tailwindcss": "^4.3.3",
+		"typescript": "~6.0.3",
+		"typescript-eslint": "^8.70.1",
+		"vite": "^8.3.1"
 	}
 }

@@ -1,47 +1,33 @@
-# Phase Two SvelteKit Example
+# Phase Two SvelteKit example: Auth.js
 
-[🚀 See Deployed Example](https://phasetwo-sveltekit-example.vercel.app)
+[🚀 View the deployed example](https://phasetwo-sveltekit-example.vercel.app/)
 
-## Getting Started
+A SvelteKit app (Svelte 5) that logs users in with Keycloak through [Auth.js](https://authjs.dev/reference/sveltekit) (`@auth/sveltekit`) and its Keycloak provider. The login runs on the server: tokens stay in an encrypted, HTTP-only session cookie and the browser only sees decoded claims. It is styled with [Tailwind CSS](https://tailwindcss.com) and deploys to Vercel.
 
-Run the development server:
+- [src/auth.ts](./src/auth.ts) configures Auth.js: the Keycloak provider, refreshing the access token before it expires, the session content, and ending the Keycloak session on logout.
+- [src/hooks.server.ts](./src/hooks.server.ts) adds Auth.js to every request, and [src/routes/+layout.server.ts](./src/routes/+layout.server.ts) loads the session.
+- [src/routes/signin](./src/routes/signin/+page.server.ts) and [src/routes/signout](./src/routes/signout/+page.server.ts) are the form actions behind the Log in / Log out buttons in [src/lib/components/UserStatus.svelte](./src/lib/components/UserStatus.svelte).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
+## Configuration
+
+Copy [.env.example](./.env.example) to `.env`. It points at the [local Keycloak](../../keycloak/README.md). Auth.js reads these variables at runtime.
+
+| Variable               | Description                                                         | Local value                                    |
+| ---------------------- | ------------------------------------------------------------------- | ---------------------------------------------- |
+| `AUTH_SECRET`          | Random secret that encrypts the session (`openssl rand -base64 32`) | —                                              |
+| `AUTH_KEYCLOAK_ID`     | Client ID of a confidential Keycloak client                         | `sveltekit`                                    |
+| `AUTH_KEYCLOAK_SECRET` | Secret of that client                                               | `sveltekit-local-dev-secret`                   |
+| `AUTH_KEYCLOAK_ISSUER` | URL of your Keycloak realm                                          | `http://localhost:8080/auth/realms/p2examples` |
+
+`.env` is ignored by git; never commit secrets.
+
+For your own realm, create an OpenID Connect client with client authentication on, the standard flow enabled, `http://localhost:3000/*` as valid redirect URI, and `+` as web origin and as valid post logout redirect URI.
+
+## Run it
+
+```sh
+pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `src/routes/+page.svelte`. The page auto-updates as you edit the file.
-
-# Phase Two SvelteKit Example
-
-Auth related items are in [auth.ts](./src/auth.ts), [signin](./src/routes/signin/+page.server.ts) and [signout](./src/routes/signout/+page.server.ts) files. This example leverages [@auth/sveltekit](https://github.com/nextauthjs/next-auth) to provide hook and HOC support.
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm run dev`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-## In Production
-
-To use the application in production, make sure to use the environment variables in [auth.ts](./src/auth.ts) file. Apart from the Keycloak variables, you need to set a `AUTH_SECRET` environment variable required by the library being used for the authentication.
-
-Here's how you can generate the `AUTH_SECRET` correctly:
-
-```bash
-npx auth secret
-```
-
-and use the `AUTH_SECRET` variable in output to be set as the environment variable.
+Then open <http://localhost:3000>. `pnpm build` creates a production build for Vercel. `pnpm typecheck`, `pnpm lint` and `pnpm format` are also available.
