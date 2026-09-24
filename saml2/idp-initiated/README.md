@@ -47,7 +47,7 @@ Without Okta, the flow starts at Keycloak's `/protocol/saml/clients/okta-client`
 - [application.yaml](./src/main/resources/application.yaml) defines the relying party registration `keycloak`: the SP's entity ID, ACS and single logout URLs, its signing key pair, and the URL of Keycloak's IdP metadata, which Spring reads at startup to learn Keycloak's endpoints and signing certificate. `{baseUrl}` is replaced with the URL the request came in on.
 - [SecurityConfiguration.java](./src/main/java/com/saml2/idp_initiated/SecurityConfiguration.java) requires a login for every page. `saml2Login` processes SAML responses posted to `/login/saml2/sso` (the registration is found from the response's issuer, so the ACS URL needs no registration ID) and sends users who aren't logged in to Keycloak. `saml2Logout` handles single logout, and `saml2Metadata` publishes the SP metadata, which Spring Boot's default configuration doesn't.
 - [RootController.java](./src/main/java/com/saml2/idp_initiated/controllers/RootController.java) and [index.html](./src/main/resources/templates/index.html) show the logged-in user and the decoded assertion: the NameID, the session index and every attribute. They read it through Spring Security 7's `Saml2AssertionAuthentication` and `Saml2ResponseAssertionAccessor`, which replace the deprecated `Saml2AuthenticatedPrincipal`.
-- [keycloak/test-realm.json](./keycloak/test-realm.json) is the `test-realm` realm: the SAML client, a test user and a disabled placeholder for the Okta identity provider.
+- [keycloak/test-realm-export.json](./keycloak/test-realm-export.json) is the `test-realm` realm: the SAML client, a test user and a disabled placeholder for the Okta identity provider. Keep the `-export` suffix: Keycloak's import reads a file named `<name>-realm.json` as the realm `<name>`, so `test-realm.json` would fail to import.
 - [scripts/generate-sp-credentials.sh](./scripts/generate-sp-credentials.sh) creates the SP's signing key pair.
 
 ## Prerequisites
@@ -69,7 +69,7 @@ docker compose up -d --wait
 ```
 
 1. `generate-sp-credentials.sh` writes a 2048-bit RSA key and a self-signed certificate, valid for 10 years, to `credentials/private.key` and `credentials/cert.crt`. The `credentials` folder is ignored by git. Running the script again keeps an existing pair; delete the folder to create a new one.
-2. `docker compose up -d --wait` starts a Phase Two Keycloak on port 8080 and imports [keycloak/test-realm.json](./keycloak/test-realm.json): the realm `test-realm`, the SAML client for this SP and the user `test` / `test`. The admin console is at <http://localhost:8080/admin>, with `admin` / `admin`.
+2. `docker compose up -d --wait` starts a Phase Two Keycloak on port 8080 and imports [keycloak/test-realm-export.json](./keycloak/test-realm-export.json): the realm `test-realm`, the SAML client for this SP and the user `test` / `test`. The admin console is at <http://localhost:8080/admin>, with `admin` / `admin`.
 3. `./gradlew bootRun` starts the SP on <http://localhost:8081>. Start Keycloak first: the SP downloads Keycloak's IdP metadata at startup and doesn't start without it. It doesn't start without the key pair either, and then fails with `Private key location 'URL [file:credentials/private.key]' does not exist`.
 
 Opening <http://localhost:8081> starts an SP-initiated login: the SP sends you to Keycloak, and after you log in as `test` / `test`, back to the SP.
@@ -114,7 +114,7 @@ The realm has a SAML identity provider `okta-broker` with placeholder values (`y
 
 ## Using your own Keycloak
 
-To use another Keycloak, for example a [Phase Two](https://phasetwo.io) deployment, either import [keycloak/test-realm.json](./keycloak/test-realm.json) as a new realm, or create the client in an existing realm:
+To use another Keycloak, for example a [Phase Two](https://phasetwo.io) deployment, either import [keycloak/test-realm-export.json](./keycloak/test-realm-export.json) as a new realm, or create the client in an existing realm:
 
 1. Point `assertingparty.metadata-uri` in [application.yaml](./src/main/resources/application.yaml) at your realm's IdP metadata: `https://<your-keycloak>/realms/<your-realm>/protocol/saml/descriptor`, with `/auth` before `/realms` on Keycloaks that use it, such as Phase Two's.
 2. Start the SP, then import its metadata in Keycloak: Clients > Import client, with the file downloaded from <http://localhost:8081/saml2/metadata>. This sets the client ID, the ACS and single logout URLs, and the SP's certificate.
