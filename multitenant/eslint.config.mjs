@@ -1,14 +1,15 @@
-const nx = require('@nx/eslint-plugin');
+import nx from '@nx/eslint-plugin';
 
-module.exports = [
+export default [
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
   {
     ignores: [
       '**/dist',
+      '**/out-tsc',
       '**/vite.config.*.timestamp*',
-      '**/vitest.config.*.timestamp*',
+      'libs/phasetwo-orgs-api/src/lib',
     ],
   },
   {
@@ -18,7 +19,7 @@ module.exports = [
         'error',
         {
           enforceBuildableLibDependency: true,
-          allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?js$'],
+          allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$'],
           depConstraints: [
             {
               sourceTag: '*',
@@ -28,10 +29,5 @@ module.exports = [
         },
       ],
     },
-  },
-  {
-    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-    // Override or add rules here
-    rules: {},
   },
 ];
