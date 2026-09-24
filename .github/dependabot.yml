@@ -8,7 +8,113 @@ updates:
       github-actions:
         patterns: ["*"]
 
+  - package-ecosystem: npm
+    directories:
+      - /frameworks/reactjs/oidc-client-ts
+      - /frameworks/reactjs/oidc-spa
+      - /frameworks/reactjs/oidc-spa-starter
+      - /frameworks/vue
+      - /frameworks/nuxt/keycloak-js
+      - /frameworks/nuxt/oidc-client-ts
+      - /frameworks/sveltekit
+      - /frameworks/angular
+      - /frameworks/spring-boot-keycloak/angularclient
+      - /tools/e2e-smoke
+    schedule:
+      interval: monthly
+    cooldown:
+      default-days: 7
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+    ignore:
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
+      - dependency-name: "@types/node"
+        update-types: [version-update:semver-major]
+
+  - package-ecosystem: npm
+    directory: /frameworks/nextjs
+    schedule:
+      interval: monthly
+    cooldown:
+      default-days: 7
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+    ignore:
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
+      - dependency-name: "@types/node"
+        update-types: [version-update:semver-major]
+      - dependency-name: eslint
+        update-types: [version-update:semver-major]
+
+  - package-ecosystem: npm
+    directory: /frameworks/remix
+    schedule:
+      interval: monthly
+    cooldown:
+      default-days: 7
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+    ignore:
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
+      - dependency-name: "@types/node"
+        update-types: [version-update:semver-major]
+      - dependency-name: react-router
+        update-types: [version-update:semver-major]
+      - dependency-name: "@react-router/*"
+        update-types: [version-update:semver-major]
+
+  - package-ecosystem: npm
+    directory: /multitenant
+    schedule:
+      interval: monthly
+    cooldown:
+      default-days: 7
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+    ignore:
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
+      - dependency-name: "@types/node"
+        update-types: [version-update:semver-major]
+      - dependency-name: eslint
+        update-types: [version-update:semver-major]
+      - dependency-name: "@eslint/js"
+        update-types: [version-update:semver-major]
+      - dependency-name: vitest
+        update-types: [version-update:semver-major]
+
+  - package-ecosystem: pip
+    directory: /frameworks/django
+    schedule:
+      interval: monthly
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+    ignore:
+      - dependency-name: django
+        update-types: [version-update:semver-major]
+
+  - package-ecosystem: gradle
+    directories:
+      - /frameworks/spring-boot-keycloak
+      - /saml2/idp-initiated
+    schedule:
+      interval: monthly
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+
   - package-ecosystem: docker-compose
-    directory: /keycloak
+    directories:
+      - /keycloak
+      - /frameworks/spring-boot-keycloak
+      - /saml2/idp-initiated
     schedule:
       interval: monthly
