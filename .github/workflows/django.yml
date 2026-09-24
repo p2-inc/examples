@@ -1,0 +1,46 @@
+name: Django (mozilla-django-oidc)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "frameworks/django/**"
+      - ".github/workflows/django.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "frameworks/django/**"
+      - ".github/workflows/django.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  ci:
+    name: Check and test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: frameworks/django
+    env:
+      DJANGO_SECRET_KEY: ci-only-insecure-secret-key
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version-file: frameworks/django/.python-version
+          cache: pip
+          cache-dependency-path: frameworks/django/requirements.txt
+
+      - run: pip install -r requirements.txt
+      - run: python manage.py check
+      - run: python manage.py makemigrations --check --dry-run
+      - run: python manage.py collectstatic --noinput
+      - run: python manage.py test
