@@ -74,17 +74,21 @@ docker compose up -d --wait
 
 Opening <http://localhost:8081> starts an SP-initiated login: the SP sends you to Keycloak, and after you log in as `test` / `test`, back to the SP.
 
-Use `localhost` rather than `127.0.0.1`. The SP checks the response's `Destination` and `Audience` against URLs built from the host the request came in on, and Keycloak has `localhost` URLs.
+Use `localhost` rather than `127.0.0.1`. The SP builds its entity ID and URLs from the host the request came in on, so on `127.0.0.1` it introduces itself as `http://127.0.0.1:8081/saml2/metadata`, which isn't a client in the realm, and Keycloak answers "Invalid Request".
 
 ## Quick test without Okta
 
 1. Open Keycloak's IdP-initiated SSO URL for the client: <http://localhost:8080/realms/test-realm/protocol/saml/clients/okta-client>.
 2. Log in as `test` / `test`.
-3. Keycloak posts a signed SAML response to <http://localhost:8081/login/saml2/sso>, and the SP shows "Authenticated", the NameID `test` and the attributes Keycloak sent: `email`, `firstName` and `lastName` from the client's mappers, and `Role` from Keycloak's default `role_list` client scope.
+3. Keycloak posts a signed SAML response to <http://localhost:8081/login/saml2/sso>, and the SP shows "Authenticated", the NameID `test` and the attributes from the client's mappers: `email`, `firstName` and `lastName`. Keycloak's default `role_list` client scope also sends a `Role` attribute for users who have roles, such as users created in the admin console. The imported `test` user has none.
 
 "Log out" logs you out of both: the SP ends its session and sends a signed `LogoutRequest` to Keycloak, Keycloak ends its session and posts a `LogoutResponse` back to `/logout/saml2/slo`, and the SP shows Spring Security's default login page with "You have been signed out". Its `keycloak` link starts an SP-initiated login.
 
-If a login fails, the SP redirects to the same page with the reason, for example an invalid signature or a mismatched `Destination`.
+If a login fails, the SP sends you to the same page with only "Invalid credentials". The reason, for example `invalid_signature` or `invalid_destination`, is logged at trace level:
+
+```sh
+./gradlew bootRun --args='--logging.level.org.springframework.security.saml2=TRACE'
+```
 
 ## Full flow with Okta
 
@@ -117,7 +121,7 @@ The realm has a SAML identity provider `okta-broker` with placeholder values (`y
 To use another Keycloak, for example a [Phase Two](https://phasetwo.io) deployment, either import [keycloak/test-realm-export.json](./keycloak/test-realm-export.json) as a new realm, or create the client in an existing realm:
 
 1. Point `assertingparty.metadata-uri` in [application.yaml](./src/main/resources/application.yaml) at your realm's IdP metadata: `https://<your-keycloak>/realms/<your-realm>/protocol/saml/descriptor`, with `/auth` before `/realms` on Keycloaks that use it, such as Phase Two's.
-2. Start the SP, then import its metadata in Keycloak: Clients > Import client, with the file downloaded from <http://localhost:8081/saml2/metadata>. This sets the client ID, the ACS and single logout URLs, and the SP's certificate.
+2. Start the SP, then import its metadata in Keycloak: Clients > Import client, with the file downloaded from <http://localhost:8081/saml2/metadata>. This sets the client ID, the ACS and single logout URLs, and the SP's certificate, and turns "Client signature required" on, so Keycloak checks the SP's signatures.
 3. On the client, set "IDP-Initiated SSO URL name" to `okta-client` and check that "Sign documents" is on. Add `email`, `firstName` and `lastName` user property mappers if you want those attributes.
 
 The IdP-initiated SSO URL is then `https://<your-keycloak>/realms/<your-realm>/protocol/saml/clients/okta-client`.
@@ -138,10 +142,11 @@ The [GitHub workflow](../../.github/workflows/saml2-idp-initiated.yml) runs `./g
 docker compose down
 ```
 
-Keycloak keeps nothing: the next `docker compose up` imports the realm again.
+Keycloak keeps nothing: the next `docker compose up` imports the realm again, with new signing keys. Restart the SP after that, since it reads Keycloak's certificate only at startup; until then, logins fail with `invalid_signature`.
 
 ## Security notes
 
 - Earlier versions of this example committed an SP private key (`src/main/resources/credentials/private.key`) and a Keycloak client private key (in `keycloak/saml-client.json`). They remain in the git history, so they are public: never trust or reuse them.
 - `admin` / `admin` and `test` / `test` exist only in the local container.
 - The Okta identity provider validates Okta's signatures. Don't turn "Validate signatures" off: Keycloak would then accept any response posted to its broker endpoint.
+- Spring Security accepts a response with an `InResponseTo` only in the browser session that sent the request, but it accepts an unsolicited, IdP-initiated response in any session and doesn't remember the responses it has already accepted. A captured response therefore logs in again until it expires: with Keycloak's defaults, about a minute after it is issued, plus the five minutes of clock skew Spring allows. Keep the client's "Assertion Lifespan" short in Keycloak and use HTTPS outside your machine.
