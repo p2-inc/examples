@@ -1,0 +1,63 @@
+name: _vercel-deploy
+
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        type: string
+        required: true
+    secrets:
+      VERCEL_ORG_ID:
+        required: false
+      VERCEL_PROJECT_ID:
+        required: false
+      VERCEL_TOKEN:
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy to Vercel
+    if: >-
+      github.repository == 'p2-inc/examples' &&
+      github.actor != 'dependabot[bot]' &&
+      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      DEPLOY_TARGET: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') && 'production' || 'preview' }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: ${{ inputs.working-directory }}/package.json
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: ${{ inputs.working-directory }}/.nvmrc
+          cache: pnpm
+          cache-dependency-path: ${{ inputs.working-directory }}/pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: npm install --global vercel@59
+
+      - name: Pull Vercel project settings
+        run: vercel pull --yes --environment="$DEPLOY_TARGET" --token="$VERCEL_TOKEN"
+
+      - name: Build
+        run: vercel build ${{ env.DEPLOY_TARGET == 'production' && '--prod' || '' }} --token="$VERCEL_TOKEN"
+
+      - name: Deploy
+        run: |
+          url=$(vercel deploy --prebuilt ${{ env.DEPLOY_TARGET == 'production' && '--prod' || '' }} --token="$VERCEL_TOKEN")
+          echo "Deployed to Vercel ($DEPLOY_TARGET): $url" >> "$GITHUB_STEP_SUMMARY"
