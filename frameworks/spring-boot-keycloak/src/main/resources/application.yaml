@@ -5,10 +5,9 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8888/auth/realms/demo-realm
-          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
-logging:
-  level:
-    org.springframework.security: TRACE
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8888/auth/realms/demo-realm}
 server:
-  port: '8080'
+  port: 8080
+app:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:4200}

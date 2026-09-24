@@ -1,0 +1,97 @@
+<div class="pb-8 text-xl italic">Your current status is:</div>
+@if (auth.authenticated()) {
+  <div class="mb-2 text-2xl text-p2blue-700">Authenticated</div>
+  <div class="mb-6 text-p2blue-700">
+    <div>{{ auth.idTokenClaims()?.name }}</div>
+    <div>{{ auth.idTokenClaims()?.email }}</div>
+  </div>
+  <button
+    type="button"
+    class="cursor-pointer rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+    (click)="auth.logout()"
+  >
+    Log out
+  </button>
+} @else {
+  <div class="mb-6 text-2xl text-p2blue-700">Not authenticated.</div>
+  @if (!auth.keycloakReachable()) {
+    <p class="mb-6 text-sm text-red-700">
+      Keycloak is not reachable at {{ issuer }}. Start it with
+      <code>docker compose up -d --wait</code>.
+    </p>
+  }
+  <button
+    type="button"
+    class="cursor-pointer rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+    (click)="auth.login()"
+  >
+    Log in
+  </button>
+}
+
+<section class="mt-12">
+  <h2 class="text-xl font-semibold text-p2blue-700">Spring Boot API</h2>
+  <div class="mt-4 flex flex-wrap justify-center gap-3">
+    <button
+      type="button"
+      class="cursor-pointer rounded-md bg-white px-2.5 py-1.5 font-mono text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
+      (click)="call('/api/test/anonymous')"
+    >
+      Call /api/test/anonymous
+    </button>
+    <button
+      type="button"
+      class="cursor-pointer rounded-md bg-white px-2.5 py-1.5 font-mono text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
+      (click)="call('/api/test/user')"
+    >
+      Call /api/test/user
+    </button>
+  </div>
+  @if (response(); as response) {
+    <div class="mt-4 text-left">
+      <label for="api-response" class="mb-1 block text-sm font-semibold text-gray-900">
+        Response from GET {{ response.path }}
+      </label>
+      <textarea
+        id="api-response"
+        rows="6"
+        readonly
+        class="block w-full rounded-md bg-purple-200/50 px-2 py-1.5 font-mono text-xs text-gray-900 ring-1 ring-gray-300 ring-inset"
+        [value]="response.text"
+      ></textarea>
+    </div>
+  }
+  <p class="mt-4 text-sm text-p2blue-700">
+    <a routerLink="/protected" class="font-semibold underline">Open the protected page</a>, a route
+    guarded by <code>authGuard</code>.
+  </p>
+</section>
+
+@if (auth.authenticated()) {
+  <div class="mt-12 space-y-4 text-left">
+    <div>
+      <label for="access-token" class="mb-1 block text-sm font-semibold text-gray-900">
+        Access token (decoded)
+      </label>
+      <textarea
+        id="access-token"
+        rows="12"
+        readonly
+        class="block w-full rounded-md bg-purple-200/50 px-2 py-1.5 font-mono text-xs text-gray-900 ring-1 ring-gray-300 ring-inset"
+        [value]="auth.accessTokenClaims() | json"
+      ></textarea>
+    </div>
+    <div>
+      <label for="id-token" class="mb-1 block text-sm font-semibold text-gray-900">
+        ID token (decoded)
+      </label>
+      <textarea
+        id="id-token"
+        rows="12"
+        readonly
+        class="block w-full rounded-md bg-purple-200/50 px-2 py-1.5 font-mono text-xs text-gray-900 ring-1 ring-gray-300 ring-inset"
+        [value]="auth.idTokenClaims() | json"
+      ></textarea>
+    </div>
+  </div>
+}
