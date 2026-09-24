@@ -13,12 +13,44 @@
  */
 
 import { mapValues } from '../runtime';
+import type { OrganizationRoleRepresentation } from './OrganizationRoleRepresentation';
+import {
+    OrganizationRoleRepresentationFromJSON,
+    OrganizationRoleRepresentationFromJSONTyped,
+    OrganizationRoleRepresentationToJSON,
+    OrganizationRoleRepresentationToJSONTyped,
+} from './OrganizationRoleRepresentation';
+
 /**
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface UserWithOrgsBriefRepresentation
  */
-export interface OrganizationRepresentation {
+export interface UserWithOrgsBriefRepresentation {
+    /**
+     * 
+     */
+    createdTimestamp?: number;
+    /**
+     * 
+     */
+    email?: string;
+    /**
+     * 
+     */
+    emailVerified?: boolean;
+    /**
+     * 
+     */
+    enabled?: boolean;
+    /**
+     * 
+     */
+    firstName?: string;
+    /**
+     * 
+     */
+    groups?: Array<string>;
     /**
      * 
      */
@@ -26,74 +58,68 @@ export interface OrganizationRepresentation {
     /**
      * 
      */
-    name?: string;
+    lastName?: string;
     /**
      * 
      */
-    displayName?: string;
+    username?: string;
     /**
      * 
      */
-    url?: string;
-    /**
-     * 
-     */
-    realm?: string;
-    /**
-     * 
-     */
-    domains?: Array<string>;
-    /**
-     * 
-     */
-    attributes?: { [key: string]: Array<string>; };
+    organizations?: { [key: string]: Array<OrganizationRoleRepresentation>; };
 }
 
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * Check if a given object implements the UserWithOrgsBriefRepresentation interface.
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export function instanceOfUserWithOrgsBriefRepresentation(value: object): value is UserWithOrgsBriefRepresentation {
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function UserWithOrgsBriefRepresentationFromJSON(json: any): UserWithOrgsBriefRepresentation {
+    return UserWithOrgsBriefRepresentationFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function UserWithOrgsBriefRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): UserWithOrgsBriefRepresentation {
     if (json == null) {
         return json;
     }
     return {
         
+        'createdTimestamp': json['createdTimestamp'] == null ? undefined : json['createdTimestamp'],
+        'email': json['email'] == null ? undefined : json['email'],
+        'emailVerified': json['emailVerified'] == null ? undefined : json['emailVerified'],
+        'enabled': json['enabled'] == null ? undefined : json['enabled'],
+        'firstName': json['firstName'] == null ? undefined : json['firstName'],
+        'groups': json['groups'] == null ? undefined : json['groups'],
         'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'lastName': json['lastName'] == null ? undefined : json['lastName'],
+        'username': json['username'] == null ? undefined : json['username'],
+        'organizations': json['organizations'] == null ? undefined : json['organizations'],
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function UserWithOrgsBriefRepresentationToJSON(json: any): UserWithOrgsBriefRepresentation {
+    return UserWithOrgsBriefRepresentationToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function UserWithOrgsBriefRepresentationToJSONTyped(value?: UserWithOrgsBriefRepresentation | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
+        'createdTimestamp': value['createdTimestamp'],
+        'email': value['email'],
+        'emailVerified': value['emailVerified'],
+        'enabled': value['enabled'],
+        'firstName': value['firstName'],
+        'groups': value['groups'],
         'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
+        'lastName': value['lastName'],
+        'username': value['username'],
+        'organizations': value['organizations'],
     };
 }
 

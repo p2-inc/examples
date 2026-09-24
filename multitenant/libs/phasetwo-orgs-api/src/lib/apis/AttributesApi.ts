@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Phase Two Admin REST API
- * This is a REST API reference for the Phase Two Keycloak custom resources. These are extensions to the standard [Keycloak Admin REST API](https://www.keycloak.org/docs-api/17.0/rest-api/index.html).  ### Base URI format Paths specified in the documentation are relative to the the base URI. - Format: `https://<host>:<port>/auth/realms` - Example: `https://app.phasetwo.io/auth/realms`  ### Authentication Authentication is achieved by using the `Authentication: Bearer <token>` header in all requests. This is either the access token received from a normal authentication, or by a request directly to the OpenID Connect token endpoint.  It is recommended that you use a Keycloak Admin Client, such as [this one for Javascript](https://github.com/keycloak/keycloak-nodejs-admin-client), as they take care of authentication, getting an access token, and refreshing it when it expires.  #### Client credentials grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=client_credentials&client_id=admin-cli&client_secret=fd649804-3a74-4d69-acaa-8f065c6b7da1 ```  #### Password grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=password&username=uname@foo.com&password=pwd123AZY&client_id=admin-cli ```  ### SDKs Modern API libraries are available for several common languages. These are available as open source at the links below, or you can choose to generate your own using our [OpenAPI spec file](https://raw.githubusercontent.com/p2-inc/phasetwo-docs/master/openapi.yaml).  | Language | Library | | --- | --- | | Java (and other JVM langs) | https://github.com/p2-inc/phasetwo-java | | JavaScript/TypeScript | https://github.com/p2-inc/phasetwo-js | | Python | https://github.com/p2-inc/phasetwo-python | 
+ * This is a REST API reference for the Phase Two Keycloak custom resources. These are extensions to the standard [Keycloak Admin REST API](https://www.keycloak.org/docs-api/latest/rest-api/index.html).  ### Base URI format Paths specified in the documentation are relative to the the base URI. - Format: `https://<host>:<port>/auth/realms` - Example: `https://app.phasetwo.io/auth/realms`  ### Authentication Authentication is achieved by using the `Authentication: Bearer <token>` header in all requests. This is either the access token received from a normal authentication, or by a request directly to the OpenID Connect token endpoint.  It is recommended that you use a Keycloak Admin Client, such as [this one for Javascript](https://github.com/keycloak/keycloak/tree/main/js/libs/keycloak-admin-client), as they take care of authentication, getting an access token, and refreshing it when it expires.  #### Client credentials grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=client_credentials&client_id=admin-cli&client_secret=fd649804-3a74-4d69-acaa-8f065c6b7da1 ```  #### Password grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=password&username=uname@foo.com&password=pwd123AZY&client_id=admin-cli ```  ### SDKs Modern API libraries are available for several common languages. These are available as open source at the links below, or you can choose to generate your own using our [OpenAPI spec file](https://raw.githubusercontent.com/p2-inc/phasetwo-docs/main/openapi.yaml).  | Language | Library | | --- | --- | | Java (and other JVM langs) | https://github.com/p2-inc/phasetwo-java | | JavaScript/TypeScript | https://github.com/p2-inc/phasetwo-js | | Python | https://github.com/p2-inc/phasetwo-python | 
  *
  * The version of the OpenAPI document: v1
  * 
@@ -12,38 +12,65 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  RealmAttributeRepresentation,
-} from '../models/index';
 import {
+    type RealmAttributeRepresentation,
     RealmAttributeRepresentationFromJSON,
     RealmAttributeRepresentationToJSON,
-} from '../models/index';
+} from '../models/RealmAttributeRepresentation';
 
 export interface CreateRealmAttributeRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * 
+     */
     realmAttributeRepresentation: RealmAttributeRepresentation;
 }
 
 export interface DeleteRealmAttributeRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * attribute key
+     */
     attributeKey: string;
 }
 
 export interface GetRealmAttributeByKeyRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * attribute key
+     */
     attributeKey: string;
 }
 
 export interface GetRealmAttributesRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
 }
 
 export interface UpdateRealmAttributeByKeyRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * attribute key
+     */
     attributeKey: string;
+    /**
+     * 
+     */
     realmAttributeRepresentation: RealmAttributeRepresentation;
 }
 
@@ -53,9 +80,9 @@ export interface UpdateRealmAttributeByKeyRequest {
 export class AttributesApi extends runtime.BaseAPI {
 
     /**
-     * Create a new realm attribute
+     * Creates request options for createRealmAttribute without sending the request
      */
-    async createRealmAttributeRaw(requestParameters: CreateRealmAttributeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async createRealmAttributeRequestOpts(requestParameters: CreateRealmAttributeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -84,13 +111,25 @@ export class AttributesApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/attributes`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))),
+
+        let urlPath = `/{realm}/attributes`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+
+        return {
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: RealmAttributeRepresentationToJSON(requestParameters['realmAttributeRepresentation']),
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new realm attribute
+     */
+    async createRealmAttributeRaw(requestParameters: CreateRealmAttributeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.createRealmAttributeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -103,9 +142,9 @@ export class AttributesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the realm attribute
+     * Creates request options for deleteRealmAttribute without sending the request
      */
-    async deleteRealmAttributeRaw(requestParameters: DeleteRealmAttributeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteRealmAttributeRequestOpts(requestParameters: DeleteRealmAttributeRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -132,12 +171,25 @@ export class AttributesApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/attributes/{attributeKey}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"attributeKey"}}`, encodeURIComponent(String(requestParameters['attributeKey']))),
+
+        let urlPath = `/{realm}/attributes/{attributeKey}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{attributeKey}', encodeURIComponent(String(requestParameters['attributeKey'])));
+
+        return {
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the realm attribute
+     */
+    async deleteRealmAttributeRaw(requestParameters: DeleteRealmAttributeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteRealmAttributeRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -150,9 +202,9 @@ export class AttributesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get realm attribute by key
+     * Creates request options for getRealmAttributeByKey without sending the request
      */
-    async getRealmAttributeByKeyRaw(requestParameters: GetRealmAttributeByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RealmAttributeRepresentation>> {
+    async getRealmAttributeByKeyRequestOpts(requestParameters: GetRealmAttributeByKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -179,12 +231,25 @@ export class AttributesApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/attributes/{attributeKey}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"attributeKey"}}`, encodeURIComponent(String(requestParameters['attributeKey']))),
+
+        let urlPath = `/{realm}/attributes/{attributeKey}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{attributeKey}', encodeURIComponent(String(requestParameters['attributeKey'])));
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get realm attribute by key
+     */
+    async getRealmAttributeByKeyRaw(requestParameters: GetRealmAttributeByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RealmAttributeRepresentation>> {
+        const requestOptions = await this.getRealmAttributeByKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => RealmAttributeRepresentationFromJSON(jsonValue));
     }
@@ -198,10 +263,9 @@ export class AttributesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a list of attributes for this realm
-     * Get realm attributes
+     * Creates request options for getRealmAttributes without sending the request
      */
-    async getRealmAttributesRaw(requestParameters: GetRealmAttributesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<{ [key: string]: RealmAttributeRepresentation; }>>> {
+    async getRealmAttributesRequestOpts(requestParameters: GetRealmAttributesRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -221,12 +285,25 @@ export class AttributesApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/attributes`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))),
+
+        let urlPath = `/{realm}/attributes`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a list of attributes for this realm
+     * Get realm attributes
+     */
+    async getRealmAttributesRaw(requestParameters: GetRealmAttributesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<{ [key: string]: RealmAttributeRepresentation; }>>> {
+        const requestOptions = await this.getRealmAttributesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse<any>(response);
     }
@@ -241,9 +318,9 @@ export class AttributesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update realm attribute by key
+     * Creates request options for updateRealmAttributeByKey without sending the request
      */
-    async updateRealmAttributeByKeyRaw(requestParameters: UpdateRealmAttributeByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async updateRealmAttributeByKeyRequestOpts(requestParameters: UpdateRealmAttributeByKeyRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -279,13 +356,26 @@ export class AttributesApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/attributes/{attributeKey}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"attributeKey"}}`, encodeURIComponent(String(requestParameters['attributeKey']))),
+
+        let urlPath = `/{realm}/attributes/{attributeKey}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{attributeKey}', encodeURIComponent(String(requestParameters['attributeKey'])));
+
+        return {
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: RealmAttributeRepresentationToJSON(requestParameters['realmAttributeRepresentation']),
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update realm attribute by key
+     */
+    async updateRealmAttributeByKeyRaw(requestParameters: UpdateRealmAttributeByKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateRealmAttributeByKeyRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

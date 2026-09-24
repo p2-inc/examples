@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Phase Two Admin REST API
- * This is a REST API reference for the Phase Two Keycloak custom resources. These are extensions to the standard [Keycloak Admin REST API](https://www.keycloak.org/docs-api/17.0/rest-api/index.html).  ### Base URI format Paths specified in the documentation are relative to the the base URI. - Format: `https://<host>:<port>/auth/realms` - Example: `https://app.phasetwo.io/auth/realms`  ### Authentication Authentication is achieved by using the `Authentication: Bearer <token>` header in all requests. This is either the access token received from a normal authentication, or by a request directly to the OpenID Connect token endpoint.  It is recommended that you use a Keycloak Admin Client, such as [this one for Javascript](https://github.com/keycloak/keycloak-nodejs-admin-client), as they take care of authentication, getting an access token, and refreshing it when it expires.  #### Client credentials grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=client_credentials&client_id=admin-cli&client_secret=fd649804-3a74-4d69-acaa-8f065c6b7da1 ```  #### Password grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=password&username=uname@foo.com&password=pwd123AZY&client_id=admin-cli ```  ### SDKs Modern API libraries are available for several common languages. These are available as open source at the links below, or you can choose to generate your own using our [OpenAPI spec file](https://raw.githubusercontent.com/p2-inc/phasetwo-docs/master/openapi.yaml).  | Language | Library | | --- | --- | | Java (and other JVM langs) | https://github.com/p2-inc/phasetwo-java | | JavaScript/TypeScript | https://github.com/p2-inc/phasetwo-js | | Python | https://github.com/p2-inc/phasetwo-python | 
+ * This is a REST API reference for the Phase Two Keycloak custom resources. These are extensions to the standard [Keycloak Admin REST API](https://www.keycloak.org/docs-api/latest/rest-api/index.html).  ### Base URI format Paths specified in the documentation are relative to the the base URI. - Format: `https://<host>:<port>/auth/realms` - Example: `https://app.phasetwo.io/auth/realms`  ### Authentication Authentication is achieved by using the `Authentication: Bearer <token>` header in all requests. This is either the access token received from a normal authentication, or by a request directly to the OpenID Connect token endpoint.  It is recommended that you use a Keycloak Admin Client, such as [this one for Javascript](https://github.com/keycloak/keycloak/tree/main/js/libs/keycloak-admin-client), as they take care of authentication, getting an access token, and refreshing it when it expires.  #### Client credentials grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=client_credentials&client_id=admin-cli&client_secret=fd649804-3a74-4d69-acaa-8f065c6b7da1 ```  #### Password grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=password&username=uname@foo.com&password=pwd123AZY&client_id=admin-cli ```  ### SDKs Modern API libraries are available for several common languages. These are available as open source at the links below, or you can choose to generate your own using our [OpenAPI spec file](https://raw.githubusercontent.com/p2-inc/phasetwo-docs/main/openapi.yaml).  | Language | Library | | --- | --- | | Java (and other JVM langs) | https://github.com/p2-inc/phasetwo-java | | JavaScript/TypeScript | https://github.com/p2-inc/phasetwo-js | | Python | https://github.com/p2-inc/phasetwo-python | 
  *
  * The version of the OpenAPI document: v1
  * 
@@ -12,30 +12,20 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  OrganizationDomainRepresentation,
-} from '../models/index';
-import {
-    OrganizationDomainRepresentationFromJSON,
-    OrganizationDomainRepresentationToJSON,
-} from '../models/index';
-
-export interface GetOrganizationDomainRequest {
-    realm: string;
-    orgId: string;
-    domainName: string;
-}
-
-export interface GetOrganizationDomainsRequest {
-    realm: string;
-    orgId: string;
-}
 
 export interface VerifyDomainRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
+    /**
+     * domain name
+     */
     domainName: string;
 }
 
@@ -45,113 +35,9 @@ export interface VerifyDomainRequest {
 export class OrganizationDomainsApi extends runtime.BaseAPI {
 
     /**
-     * Get details for a domain owned by an organization
+     * Creates request options for verifyDomain without sending the request
      */
-    async getOrganizationDomainRaw(requestParameters: GetOrganizationDomainRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganizationDomainRepresentation>> {
-        if (requestParameters['realm'] == null) {
-            throw new runtime.RequiredError(
-                'realm',
-                'Required parameter "realm" was null or undefined when calling getOrganizationDomain().'
-            );
-        }
-
-        if (requestParameters['orgId'] == null) {
-            throw new runtime.RequiredError(
-                'orgId',
-                'Required parameter "orgId" was null or undefined when calling getOrganizationDomain().'
-            );
-        }
-
-        if (requestParameters['domainName'] == null) {
-            throw new runtime.RequiredError(
-                'domainName',
-                'Required parameter "domainName" was null or undefined when calling getOrganizationDomain().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("access_token", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/domains/{domainName}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"domainName"}}`, encodeURIComponent(String(requestParameters['domainName']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => OrganizationDomainRepresentationFromJSON(jsonValue));
-    }
-
-    /**
-     * Get details for a domain owned by an organization
-     */
-    async getOrganizationDomain(requestParameters: GetOrganizationDomainRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganizationDomainRepresentation> {
-        const response = await this.getOrganizationDomainRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get details for all domains owned by an organization
-     */
-    async getOrganizationDomainsRaw(requestParameters: GetOrganizationDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OrganizationDomainRepresentation>>> {
-        if (requestParameters['realm'] == null) {
-            throw new runtime.RequiredError(
-                'realm',
-                'Required parameter "realm" was null or undefined when calling getOrganizationDomains().'
-            );
-        }
-
-        if (requestParameters['orgId'] == null) {
-            throw new runtime.RequiredError(
-                'orgId',
-                'Required parameter "orgId" was null or undefined when calling getOrganizationDomains().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("access_token", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/domains`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OrganizationDomainRepresentationFromJSON));
-    }
-
-    /**
-     * Get details for all domains owned by an organization
-     */
-    async getOrganizationDomains(requestParameters: GetOrganizationDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OrganizationDomainRepresentation>> {
-        const response = await this.getOrganizationDomainsRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Initiate a verification check for the domain name owned by this organization
-     * Start domain verification
-     */
-    async verifyDomainRaw(requestParameters: VerifyDomainRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async verifyDomainRequestOpts(requestParameters: VerifyDomainRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -185,12 +71,27 @@ export class OrganizationDomainsApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/domains/{domainName}/verify`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"domainName"}}`, encodeURIComponent(String(requestParameters['domainName']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/domains/{domainName}/verify`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{domainName}', encodeURIComponent(String(requestParameters['domainName'])));
+
+        return {
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Initiate a verification check for the domain name owned by this organization
+     * Start domain verification
+     */
+    async verifyDomainRaw(requestParameters: VerifyDomainRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.verifyDomainRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

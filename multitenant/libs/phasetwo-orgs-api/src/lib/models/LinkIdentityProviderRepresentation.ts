@@ -16,84 +16,60 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface LinkIdentityProviderRepresentation
  */
-export interface OrganizationRepresentation {
+export interface LinkIdentityProviderRepresentation {
     /**
      * 
      */
-    id?: string;
+    alias?: string;
     /**
      * 
      */
-    name?: string;
+    postBrokerFlow?: string;
     /**
      * 
      */
-    displayName?: string;
-    /**
-     * 
-     */
-    url?: string;
-    /**
-     * 
-     */
-    realm?: string;
-    /**
-     * 
-     */
-    domains?: Array<string>;
-    /**
-     * 
-     */
-    attributes?: { [key: string]: Array<string>; };
+    syncMode?: string;
 }
 
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * Check if a given object implements the LinkIdentityProviderRepresentation interface.
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export function instanceOfLinkIdentityProviderRepresentation(value: object): value is LinkIdentityProviderRepresentation {
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function LinkIdentityProviderRepresentationFromJSON(json: any): LinkIdentityProviderRepresentation {
+    return LinkIdentityProviderRepresentationFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function LinkIdentityProviderRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): LinkIdentityProviderRepresentation {
     if (json == null) {
         return json;
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'alias': json['alias'] == null ? undefined : json['alias'],
+        'postBrokerFlow': json['post_broker_flow'] == null ? undefined : json['post_broker_flow'],
+        'syncMode': json['sync_mode'] == null ? undefined : json['sync_mode'],
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function LinkIdentityProviderRepresentationToJSON(json: any): LinkIdentityProviderRepresentation {
+    return LinkIdentityProviderRepresentationToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function LinkIdentityProviderRepresentationToJSONTyped(value?: LinkIdentityProviderRepresentation | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
+        'alias': value['alias'],
+        'post_broker_flow': value['postBrokerFlow'],
+        'sync_mode': value['syncMode'],
     };
 }
 

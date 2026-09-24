@@ -13,12 +13,34 @@
  */
 
 import { mapValues } from '../runtime';
+import type { OrganizationRoleRepresentation } from './OrganizationRoleRepresentation';
+import {
+    OrganizationRoleRepresentationFromJSON,
+    OrganizationRoleRepresentationFromJSONTyped,
+    OrganizationRoleRepresentationToJSON,
+    OrganizationRoleRepresentationToJSONTyped,
+} from './OrganizationRoleRepresentation';
+import type { IdentityProviderRepresentation } from './IdentityProviderRepresentation';
+import {
+    IdentityProviderRepresentationFromJSON,
+    IdentityProviderRepresentationFromJSONTyped,
+    IdentityProviderRepresentationToJSON,
+    IdentityProviderRepresentationToJSONTyped,
+} from './IdentityProviderRepresentation';
+import type { OrganizationExportRepresentationAllOfMembers } from './OrganizationExportRepresentationAllOfMembers';
+import {
+    OrganizationExportRepresentationAllOfMembersFromJSON,
+    OrganizationExportRepresentationAllOfMembersFromJSONTyped,
+    OrganizationExportRepresentationAllOfMembersToJSON,
+    OrganizationExportRepresentationAllOfMembersToJSONTyped,
+} from './OrganizationExportRepresentationAllOfMembers';
+
 /**
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface OrganizationExportRepresentation
  */
-export interface OrganizationRepresentation {
+export interface OrganizationExportRepresentation {
     /**
      * 
      */
@@ -47,20 +69,32 @@ export interface OrganizationRepresentation {
      * 
      */
     attributes?: { [key: string]: Array<string>; };
+    /**
+     * 
+     */
+    roles?: Array<OrganizationRoleRepresentation>;
+    /**
+     * 
+     */
+    identityProviders?: Array<IdentityProviderRepresentation>;
+    /**
+     * 
+     */
+    members?: Array<OrganizationExportRepresentationAllOfMembers>;
 }
 
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * Check if a given object implements the OrganizationExportRepresentation interface.
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export function instanceOfOrganizationExportRepresentation(value: object): value is OrganizationExportRepresentation {
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function OrganizationExportRepresentationFromJSON(json: any): OrganizationExportRepresentation {
+    return OrganizationExportRepresentationFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function OrganizationExportRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationExportRepresentation {
     if (json == null) {
         return json;
     }
@@ -73,14 +107,17 @@ export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscrim
         'realm': json['realm'] == null ? undefined : json['realm'],
         'domains': json['domains'] == null ? undefined : json['domains'],
         'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'roles': json['roles'] == null ? undefined : ((json['roles'] as Array<any>).map(OrganizationRoleRepresentationFromJSON)),
+        'identityProviders': json['identityProviders'] == null ? undefined : ((json['identityProviders'] as Array<any>).map(IdentityProviderRepresentationFromJSON)),
+        'members': json['members'] == null ? undefined : ((json['members'] as Array<any>).map(OrganizationExportRepresentationAllOfMembersFromJSON)),
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function OrganizationExportRepresentationToJSON(json: any): OrganizationExportRepresentation {
+    return OrganizationExportRepresentationToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function OrganizationExportRepresentationToJSONTyped(value?: OrganizationExportRepresentation | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -94,6 +131,9 @@ export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepres
         'realm': value['realm'],
         'domains': value['domains'],
         'attributes': value['attributes'],
+        'roles': value['roles'] == null ? undefined : ((value['roles'] as Array<any>).map(OrganizationRoleRepresentationToJSON)),
+        'identityProviders': value['identityProviders'] == null ? undefined : ((value['identityProviders'] as Array<any>).map(IdentityProviderRepresentationToJSON)),
+        'members': value['members'] == null ? undefined : ((value['members'] as Array<any>).map(OrganizationExportRepresentationAllOfMembersToJSON)),
     };
 }
 

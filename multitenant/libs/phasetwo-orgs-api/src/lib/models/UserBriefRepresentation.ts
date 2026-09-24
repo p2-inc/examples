@@ -16,9 +16,33 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface UserBriefRepresentation
  */
-export interface OrganizationRepresentation {
+export interface UserBriefRepresentation {
+    /**
+     * 
+     */
+    createdTimestamp?: number;
+    /**
+     * 
+     */
+    email?: string;
+    /**
+     * 
+     */
+    emailVerified?: boolean;
+    /**
+     * 
+     */
+    enabled?: boolean;
+    /**
+     * 
+     */
+    firstName?: string;
+    /**
+     * 
+     */
+    groups?: Array<string>;
     /**
      * 
      */
@@ -26,74 +50,62 @@ export interface OrganizationRepresentation {
     /**
      * 
      */
-    name?: string;
+    lastName?: string;
     /**
      * 
      */
-    displayName?: string;
-    /**
-     * 
-     */
-    url?: string;
-    /**
-     * 
-     */
-    realm?: string;
-    /**
-     * 
-     */
-    domains?: Array<string>;
-    /**
-     * 
-     */
-    attributes?: { [key: string]: Array<string>; };
+    username?: string;
 }
 
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * Check if a given object implements the UserBriefRepresentation interface.
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export function instanceOfUserBriefRepresentation(value: object): value is UserBriefRepresentation {
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function UserBriefRepresentationFromJSON(json: any): UserBriefRepresentation {
+    return UserBriefRepresentationFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function UserBriefRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): UserBriefRepresentation {
     if (json == null) {
         return json;
     }
     return {
         
+        'createdTimestamp': json['createdTimestamp'] == null ? undefined : json['createdTimestamp'],
+        'email': json['email'] == null ? undefined : json['email'],
+        'emailVerified': json['emailVerified'] == null ? undefined : json['emailVerified'],
+        'enabled': json['enabled'] == null ? undefined : json['enabled'],
+        'firstName': json['firstName'] == null ? undefined : json['firstName'],
+        'groups': json['groups'] == null ? undefined : json['groups'],
         'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'lastName': json['lastName'] == null ? undefined : json['lastName'],
+        'username': json['username'] == null ? undefined : json['username'],
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function UserBriefRepresentationToJSON(json: any): UserBriefRepresentation {
+    return UserBriefRepresentationToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function UserBriefRepresentationToJSONTyped(value?: UserBriefRepresentation | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
+        'createdTimestamp': value['createdTimestamp'],
+        'email': value['email'],
+        'emailVerified': value['emailVerified'],
+        'enabled': value['enabled'],
+        'firstName': value['firstName'],
+        'groups': value['groups'],
         'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
+        'lastName': value['lastName'],
+        'username': value['username'],
     };
 }
 

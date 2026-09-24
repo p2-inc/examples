@@ -16,84 +16,60 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface BulkResponseItem
  */
-export interface OrganizationRepresentation {
+export interface BulkResponseItem {
     /**
      * 
      */
-    id?: string;
+    status?: number;
     /**
      * 
      */
-    name?: string;
+    error?: string;
     /**
      * 
      */
-    displayName?: string;
-    /**
-     * 
-     */
-    url?: string;
-    /**
-     * 
-     */
-    realm?: string;
-    /**
-     * 
-     */
-    domains?: Array<string>;
-    /**
-     * 
-     */
-    attributes?: { [key: string]: Array<string>; };
+    item?: object;
 }
 
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * Check if a given object implements the BulkResponseItem interface.
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export function instanceOfBulkResponseItem(value: object): value is BulkResponseItem {
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function BulkResponseItemFromJSON(json: any): BulkResponseItem {
+    return BulkResponseItemFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function BulkResponseItemFromJSONTyped(json: any, ignoreDiscriminator: boolean): BulkResponseItem {
     if (json == null) {
         return json;
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'status': json['status'] == null ? undefined : json['status'],
+        'error': json['error'] == null ? undefined : json['error'],
+        'item': json['item'] == null ? undefined : json['item'],
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function BulkResponseItemToJSON(json: any): BulkResponseItem {
+    return BulkResponseItemToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function BulkResponseItemToJSONTyped(value?: BulkResponseItem | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
+        'status': value['status'],
+        'error': value['error'],
+        'item': value['item'],
     };
 }
 

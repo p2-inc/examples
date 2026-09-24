@@ -16,71 +16,42 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface SwitchOrganizationRepresentation
  */
-export interface OrganizationRepresentation {
+export interface SwitchOrganizationRepresentation {
     /**
-     * 
+     * The ID of the organization to switch to
      */
-    id?: string;
-    /**
-     * 
-     */
-    name?: string;
-    /**
-     * 
-     */
-    displayName?: string;
-    /**
-     * 
-     */
-    url?: string;
-    /**
-     * 
-     */
-    realm?: string;
-    /**
-     * 
-     */
-    domains?: Array<string>;
-    /**
-     * 
-     */
-    attributes?: { [key: string]: Array<string>; };
+    id: string;
 }
 
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * Check if a given object implements the SwitchOrganizationRepresentation interface.
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export function instanceOfSwitchOrganizationRepresentation(value: object): value is SwitchOrganizationRepresentation {
+    if (!('id' in value) || value['id'] === undefined) return false;
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function SwitchOrganizationRepresentationFromJSON(json: any): SwitchOrganizationRepresentation {
+    return SwitchOrganizationRepresentationFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function SwitchOrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): SwitchOrganizationRepresentation {
     if (json == null) {
         return json;
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'id': json['id'],
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function SwitchOrganizationRepresentationToJSON(json: any): SwitchOrganizationRepresentation {
+    return SwitchOrganizationRepresentationToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function SwitchOrganizationRepresentationToJSONTyped(value?: SwitchOrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -88,12 +59,6 @@ export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepres
     return {
         
         'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
     };
 }
 

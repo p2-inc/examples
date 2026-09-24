@@ -9,7 +9,7 @@
     "node": "24.x"
   },
   "scripts": {
-    "generate-phasetwo-orgs-api": "openapi-generator-cli generate -i https://raw.githubusercontent.com/p2-inc/phasetwo-docs/refs/heads/master/openapi.yaml -g typescript-fetch -o libs/phasetwo-orgs-api/src/lib --skip-validate-spec"
+    "generate:orgs-api": "openapi-generator-cli generate --generator-key orgs-api"
   },
   "dependencies": {
     "@iconify/react": "^5.2.1",
@@ -27,7 +27,7 @@
     "@nx/vitest": "23.2.1",
     "@nx/web": "23.2.1",
     "@nx/workspace": "23.2.1",
-    "@openapitools/openapi-generator-cli": "^2.28.0",
+    "@openapitools/openapi-generator-cli": "^2.41.0",
     "@tailwindcss/vite": "^4.3.3",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/react": "^16.3.3",

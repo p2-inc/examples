@@ -14,86 +14,79 @@
 
 import { mapValues } from '../runtime';
 /**
+ * HTTP Basic auth. The password is hashed with Argon2id before
+ * storage.
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface ExternalBasicScimAuth
  */
-export interface OrganizationRepresentation {
+export interface ExternalBasicScimAuth {
     /**
      * 
      */
-    id?: string;
+    type: ExternalBasicScimAuthTypeEnum;
     /**
+     * Username for HTTP Basic auth. Stored in cleartext.
+     */
+    username?: string;
+    /**
+     * Password for HTTP Basic auth. Cleartext on submit; hashed at
+     * rest. Omit on update to keep the existing password.
      * 
      */
-    name?: string;
-    /**
-     * 
-     */
-    displayName?: string;
-    /**
-     * 
-     */
-    url?: string;
-    /**
-     * 
-     */
-    realm?: string;
-    /**
-     * 
-     */
-    domains?: Array<string>;
-    /**
-     * 
-     */
-    attributes?: { [key: string]: Array<string>; };
+    password?: string;
 }
 
+
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * @export
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export const ExternalBasicScimAuthTypeEnum = {
+    ExternalBasic: 'EXTERNAL_BASIC',
+} as const;
+export type ExternalBasicScimAuthTypeEnum = typeof ExternalBasicScimAuthTypeEnum[keyof typeof ExternalBasicScimAuthTypeEnum];
+
+
+/**
+ * Check if a given object implements the ExternalBasicScimAuth interface.
+ */
+export function instanceOfExternalBasicScimAuth(value: object): value is ExternalBasicScimAuth {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'EXTERNAL_BASIC') return false;
+    
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function ExternalBasicScimAuthFromJSON(json: any): ExternalBasicScimAuth {
+    return ExternalBasicScimAuthFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function ExternalBasicScimAuthFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExternalBasicScimAuth {
     if (json == null) {
         return json;
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'type': json['type'],
+        'username': json['username'] == null ? undefined : json['username'],
+        'password': json['password'] == null ? undefined : json['password'],
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function ExternalBasicScimAuthToJSON(json: any): ExternalBasicScimAuth {
+    return ExternalBasicScimAuthToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function ExternalBasicScimAuthToJSONTyped(value?: ExternalBasicScimAuth | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
+        'type': value['type'],
+        'username': value['username'],
+        'password': value['password'],
     };
 }
 

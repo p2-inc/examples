@@ -14,86 +14,85 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Validates an inbound JWT issued by an external IdP. The token's
+ * issuer and audience must match the configured values, and the
+ * signature is verified against keys fetched from the configured
+ * JWKS URI.
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface ExternalJwtScimAuth
  */
-export interface OrganizationRepresentation {
+export interface ExternalJwtScimAuth {
     /**
      * 
      */
-    id?: string;
+    type: ExternalJwtScimAuthTypeEnum;
     /**
-     * 
+     * Expected `iss` claim. Must exactly match the upstream IdP's issuer URL.
      */
-    name?: string;
+    issuer?: string;
     /**
-     * 
+     * Expected `aud` claim.
      */
-    displayName?: string;
+    audience?: string;
     /**
-     * 
+     * URL the server fetches to validate the JWT signature.
      */
-    url?: string;
-    /**
-     * 
-     */
-    realm?: string;
-    /**
-     * 
-     */
-    domains?: Array<string>;
-    /**
-     * 
-     */
-    attributes?: { [key: string]: Array<string>; };
+    jwksUri?: string;
 }
 
+
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * @export
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export const ExternalJwtScimAuthTypeEnum = {
+    ExternalJwt: 'EXTERNAL_JWT',
+} as const;
+export type ExternalJwtScimAuthTypeEnum = typeof ExternalJwtScimAuthTypeEnum[keyof typeof ExternalJwtScimAuthTypeEnum];
+
+
+/**
+ * Check if a given object implements the ExternalJwtScimAuth interface.
+ */
+export function instanceOfExternalJwtScimAuth(value: object): value is ExternalJwtScimAuth {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'EXTERNAL_JWT') return false;
+    
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function ExternalJwtScimAuthFromJSON(json: any): ExternalJwtScimAuth {
+    return ExternalJwtScimAuthFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function ExternalJwtScimAuthFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExternalJwtScimAuth {
     if (json == null) {
         return json;
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'type': json['type'],
+        'issuer': json['issuer'] == null ? undefined : json['issuer'],
+        'audience': json['audience'] == null ? undefined : json['audience'],
+        'jwksUri': json['jwks_uri'] == null ? undefined : json['jwks_uri'],
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function ExternalJwtScimAuthToJSON(json: any): ExternalJwtScimAuth {
+    return ExternalJwtScimAuthToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function ExternalJwtScimAuthToJSONTyped(value?: ExternalJwtScimAuth | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
+        'type': value['type'],
+        'issuer': value['issuer'],
+        'audience': value['audience'],
+        'jwks_uri': value['jwksUri'],
     };
 }
 

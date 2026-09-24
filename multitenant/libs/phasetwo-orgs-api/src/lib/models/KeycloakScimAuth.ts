@@ -14,86 +14,66 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Authenticates inbound SCIM calls with a Keycloak-issued access
+ * token (Bearer). The caller must hold the realm-management roles
+ * required to manage members of the organization.
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface KeycloakScimAuth
  */
-export interface OrganizationRepresentation {
+export interface KeycloakScimAuth {
     /**
      * 
      */
-    id?: string;
-    /**
-     * 
-     */
-    name?: string;
-    /**
-     * 
-     */
-    displayName?: string;
-    /**
-     * 
-     */
-    url?: string;
-    /**
-     * 
-     */
-    realm?: string;
-    /**
-     * 
-     */
-    domains?: Array<string>;
-    /**
-     * 
-     */
-    attributes?: { [key: string]: Array<string>; };
+    type: KeycloakScimAuthTypeEnum;
 }
 
+
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * @export
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export const KeycloakScimAuthTypeEnum = {
+    Keycloak: 'KEYCLOAK',
+} as const;
+export type KeycloakScimAuthTypeEnum = typeof KeycloakScimAuthTypeEnum[keyof typeof KeycloakScimAuthTypeEnum];
+
+
+/**
+ * Check if a given object implements the KeycloakScimAuth interface.
+ */
+export function instanceOfKeycloakScimAuth(value: object): value is KeycloakScimAuth {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'KEYCLOAK') return false;
+    
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function KeycloakScimAuthFromJSON(json: any): KeycloakScimAuth {
+    return KeycloakScimAuthFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function KeycloakScimAuthFromJSONTyped(json: any, ignoreDiscriminator: boolean): KeycloakScimAuth {
     if (json == null) {
         return json;
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'type': json['type'],
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function KeycloakScimAuthToJSON(json: any): KeycloakScimAuth {
+    return KeycloakScimAuthToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function KeycloakScimAuthToJSONTyped(value?: KeycloakScimAuth | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
+        'type': value['type'],
     };
 }
 
