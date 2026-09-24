@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   displayName: 'phasetwo-orgs-api',
   preset: '../../jest.preset.js',
   testEnvironment: 'node',

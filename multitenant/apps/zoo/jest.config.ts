@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   displayName: 'zoo',
   preset: '../../jest.preset.js',
   transform: {
