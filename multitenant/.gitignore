@@ -42,3 +42,8 @@ Thumbs.db
 .nx/workspace-data
 
 vite.config.*.timestamp*
+.claude/worktrees
+.claude/settings.local.json
+.nx/polygraph
+.nx/self-healing
+.nx/migrate-runs

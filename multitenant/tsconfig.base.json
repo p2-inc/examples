@@ -18,7 +18,12 @@
       "@multitenant/api-manager": ["libs/api-manager/src/index.ts"],
       "@multitenant/phasetwo-orgs-api": ["libs/phasetwo-orgs-api/src/index.ts"],
       "@multitenant/ui-shared": ["libs/ui-shared/src/index.ts"]
-    }
+    },
+    "strict": false,
+    "noUncheckedSideEffectImports": false,
+    "types": ["*"],
+    "esModuleInterop": false,
+    "ignoreDeprecations": "6.0"
   },
   "exclude": ["node_modules", "tmp"]
 }
