@@ -9,7 +9,6 @@
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/.eslintrc.json",
       "!{projectRoot}/eslint.config.js",
-      "!{projectRoot}/jest.config.[jt]s",
       "!{projectRoot}/src/test-setup.[jt]s",
       "!{projectRoot}/test-setup.[jt]s"
     ],
@@ -33,12 +32,6 @@
       }
     },
     {
-      "plugin": "@nx/jest/plugin",
-      "options": {
-        "targetName": "test"
-      }
-    },
-    {
       "plugin": "@nx/vitest",
       "options": {
         "testTargetName": "test"
@@ -51,7 +44,8 @@
         "babel": true,
         "style": "css",
         "linter": "eslint",
-        "bundler": "vite"
+        "bundler": "vite",
+        "unitTestRunner": "vitest"
       },
       "component": {
         "style": "css"

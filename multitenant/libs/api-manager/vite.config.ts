@@ -1,17 +1,15 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
-import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/libs/ui-shared',
-  plugins: [react(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
+  cacheDir: '../../node_modules/.vite/libs/api-manager',
+  plugins: [nxViteTsPaths()],
   test: {
-    name: 'ui-shared',
+    name: 'api-manager',
     watch: false,
     globals: true,
-    environment: 'jsdom',
+    environment: 'node',
     include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     reporters: ['default'],
   },
