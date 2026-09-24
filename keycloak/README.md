@@ -41,7 +41,7 @@ Every client allows its local redirect URIs, `+` as web origin (CORS for the red
 
 Confidential clients use the secret `<client-id>-local-dev-secret` (for example `nextjs-local-dev-secret`). **These secrets, and the demo passwords, exist only for this local container.** Never reuse them anywhere else.
 
-The Spring Boot and SAML examples keep their own Keycloak setup (`frameworks/spring-boot-keycloak/docker-compose.yml` on port 8888, `saml2/idp-initiated`), because their tutorials use different realms.
+The Spring Boot and SAML examples keep their own Keycloak setup, because their tutorials use different realms. [`frameworks/spring-boot-keycloak/docker-compose.yml`](../frameworks/spring-boot-keycloak/docker-compose.yml) runs on port 8888, next to this one. [`saml2/idp-initiated/docker-compose.yml`](../saml2/idp-initiated/docker-compose.yml) runs on port 8080 without the `/auth` path, like the SAML tutorial, so stop this Keycloak before you start that one.
 
 ## Organizations (for `/multitenant`)
 
