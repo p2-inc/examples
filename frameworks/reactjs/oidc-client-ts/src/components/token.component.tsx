@@ -1,75 +1,52 @@
-// import jwt from "jsonwebtoken";
-import { useAuth } from "react-oidc-context";
 import { jwtDecode } from "jwt-decode";
+import { useAuth } from "react-oidc-context";
 
-const TextAreaClasses =
-  "block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-purple-200/50";
+const textareaClasses =
+  "block w-full rounded-md bg-purple-200/50 px-2 py-1.5 font-mono text-xs text-gray-900 ring-1 ring-gray-300 ring-inset";
 
-function stringifyToken(token: any) {
-  return JSON.stringify(jwtDecode(token), null, 2);
+function decode(token: string | undefined) {
+  return token ? JSON.stringify(jwtDecode(token), null, 2) : "";
 }
 
-export const Token = () => {
-  const auth = useAuth();
+export function Token() {
+  const { user } = useAuth();
 
-  if (auth.isLoading || auth.error || !auth.isAuthenticated) {
+  if (!user) {
     return null;
   }
 
-  if (auth.isAuthenticated) {
-    return (
-      <div className="mt-4 text-left">
-        <div className="mt-2">
-          <label
-            htmlFor="accessToken"
-            className="block text-sm font-semibold leading-6 text-gray-900"
-          >
-            Access Token
-          </label>
-
-          <textarea
-            rows={6}
-            name="accessToken"
-            id="accessToken"
-            className={TextAreaClasses}
-            defaultValue={stringifyToken(auth?.user?.access_token)}
-          ></textarea>
-        </div>
-        <div className="mt-2">
-          <label
-            htmlFor="idToken"
-            className="block text-sm font-semibold leading-6 text-gray-900"
-          >
-            Id Token
-          </label>
-
-          <textarea
-            rows={6}
-            name="idToken"
-            id="idToken"
-            className={TextAreaClasses}
-            defaultValue={stringifyToken(auth?.user?.id_token)}
-          ></textarea>
-        </div>
-        <div className="mt-2">
-          <label
-            htmlFor="refreshToken"
-            className="block text-sm font-semibold leading-6 text-gray-900"
-          >
-            Refresh Token
-          </label>
-
-          <textarea
-            rows={6}
-            name="refreshToken"
-            id="refreshToken"
-            className={TextAreaClasses}
-            defaultValue={stringifyToken(auth?.user?.refresh_token)}
-          ></textarea>
-        </div>
+  return (
+    <div className="mt-8 space-y-4 text-left">
+      <div>
+        <label
+          htmlFor="access-token"
+          className="mb-1 block text-sm font-semibold text-gray-900"
+        >
+          Access token (decoded)
+        </label>
+        <textarea
+          id="access-token"
+          rows={12}
+          readOnly
+          className={textareaClasses}
+          value={decode(user.access_token)}
+        />
       </div>
-    );
-  }
-
-  return null;
-};
+      <div>
+        <label
+          htmlFor="id-token"
+          className="mb-1 block text-sm font-semibold text-gray-900"
+        >
+          ID token (decoded)
+        </label>
+        <textarea
+          id="id-token"
+          rows={12}
+          readOnly
+          className={textareaClasses}
+          value={decode(user.id_token)}
+        />
+      </div>
+    </div>
+  );
+}
