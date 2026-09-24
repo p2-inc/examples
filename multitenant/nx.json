@@ -6,11 +6,7 @@
     "production": [
       "default",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-      "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/.eslintrc.json",
-      "!{projectRoot}/eslint.config.js",
-      "!{projectRoot}/src/test-setup.[jt]s",
-      "!{projectRoot}/test-setup.[jt]s"
+      "!{projectRoot}/eslint.config.mjs"
     ],
     "sharedGlobals": []
   },
@@ -41,7 +37,6 @@
   "generators": {
     "@nx/react": {
       "application": {
-        "babel": true,
         "style": "css",
         "linter": "eslint",
         "bundler": "vite",
@@ -55,13 +50,6 @@
         "linter": "eslint",
         "unitTestRunner": "vitest"
       }
-    }
-  },
-  "targetDefaults": {
-    "@nx/js:tsc": {
-      "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
     }
   }
 }
