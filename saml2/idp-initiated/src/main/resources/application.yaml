@@ -15,7 +15,7 @@ spring:
               url: "{baseUrl}/logout/saml2/slo"
             signing:
               credentials:
-                - private-key-location: classpath:credentials/private.key
-                  certificate-location: classpath:credentials/cert.crt
+                - private-key-location: file:credentials/private.key
+                  certificate-location: file:credentials/cert.crt
             assertingparty:
               metadata-uri: http://localhost:8080/realms/test-realm/protocol/saml/descriptor
