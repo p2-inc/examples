@@ -1,29 +1,32 @@
-# Angular + Phase Two Example
+# Phase Two Angular example: angular-oauth2-oidc
 
-[🚀 See Deployed Example](https://phasetwo-angular-example.vercel.app)
+[🚀 View the deployed example](https://phasetwo-angular-example.vercel.app/)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.3.
+An Angular 22 app (standalone components, signals, no zone.js) that logs users in with Keycloak using the authorization code flow with PKCE, through [angular-oauth2-oidc](https://github.com/manfredsteyer/angular-oauth2-oidc). It is styled with [Tailwind CSS](https://tailwindcss.com).
 
-## Development server
+- [src/app/auth/auth.config.ts](./src/app/auth/auth.config.ts) holds the OpenID Connect settings, read from the environment files.
+- [src/app/app.config.ts](./src/app/app.config.ts) registers angular-oauth2-oidc and completes the login before the app renders (`provideAppInitializer`).
+- [src/app/auth/auth.service.ts](./src/app/auth/auth.service.ts) exposes the login state and the decoded tokens as signals, and the `login` / `logout` actions.
+- [src/app/user-status](./src/app/user-status) shows the login state, the Log in / Log out buttons and the decoded tokens.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Tokens are kept in session storage and refreshed before they expire. Logging out also ends the Keycloak session.
 
-## Code scaffolding
+## Configuration
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+| File                                                                                         | Used by                                  | Keycloak                                                                                      |
+| -------------------------------------------------------------------------------------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------- |
+| [src/environments/environment.ts](./src/environments/environment.ts)                         | production builds (`pnpm build`, Vercel) | the hosted Phase Two demo realm `https://app.phasetwo.io/auth/realms/p2examples`              |
+| [src/environments/environment.development.ts](./src/environments/environment.development.ts) | `pnpm start`                             | the [local Keycloak](../../keycloak/README.md) `http://localhost:8080/auth/realms/p2examples` |
 
-## Build
+Both use the public client `angular`. For your own realm, create an OpenID Connect client with client authentication off, the standard flow enabled, `http://localhost:4200/*` as valid redirect URI, and `+` as web origin and as valid post logout redirect URI, then change the environment files.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Run it
 
-## Running unit tests
+Start the [local Keycloak](../../keycloak/README.md) first, then:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```sh
+pnpm install
+pnpm start
+```
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Open <http://localhost:4200> and log in as `demo` / `demo`. `pnpm build` creates a production build in `dist/angular/browser`. `pnpm test`, `pnpm lint` and `pnpm format` are also available.

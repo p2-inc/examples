@@ -1,4 +1,3 @@
-# Editor configuration, see https://editorconfig.org
 root = true
 
 [*]
@@ -10,6 +9,7 @@ trim_trailing_whitespace = true
 
 [*.ts]
 quote_type = single
+ij_typescript_use_double_quotes = false
 
 [*.md]
 max_line_length = off

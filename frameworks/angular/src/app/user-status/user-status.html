@@ -1,0 +1,42 @@
+<div class="pb-8 text-xl italic">Your current status is:</div>
+@if (auth.isAuthenticated()) {
+  <div class="mb-2 text-2xl text-p2blue-700">Authenticated</div>
+  <div class="mb-6 text-p2blue-700">
+    <div>{{ auth.idTokenClaims()?.['name'] }}</div>
+    <div>{{ auth.idTokenClaims()?.['email'] }}</div>
+  </div>
+  <button type="button" [class]="buttonClasses" (click)="auth.logout()">Log out</button>
+  <div class="mt-8 space-y-4 text-left">
+    <div>
+      <label for="access-token" class="mb-1 block text-sm font-semibold text-gray-900">
+        Access token (decoded)
+      </label>
+      <textarea
+        id="access-token"
+        rows="12"
+        readonly
+        [class]="textareaClasses"
+        [value]="accessTokenJson()"
+      ></textarea>
+    </div>
+    <div>
+      <label for="id-token" class="mb-1 block text-sm font-semibold text-gray-900">
+        ID token (decoded)
+      </label>
+      <textarea
+        id="id-token"
+        rows="12"
+        readonly
+        [class]="textareaClasses"
+        [value]="idTokenJson()"
+      ></textarea>
+    </div>
+  </div>
+} @else if (auth.error()) {
+  <div class="mb-2 text-2xl text-p2blue-700">Authentication error.</div>
+  <div class="mb-6">{{ auth.error() }}</div>
+  <button type="button" [class]="buttonClasses" (click)="auth.login()">Log in</button>
+} @else {
+  <div class="mb-6 text-2xl text-p2blue-700">Not authenticated.</div>
+  <button type="button" [class]="buttonClasses" (click)="auth.login()">Log in</button>
+}
