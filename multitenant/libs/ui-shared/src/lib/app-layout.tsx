@@ -1,63 +1,59 @@
-import { Icon } from '@iconify/react';
-import { FooterLinks } from './footer-links';
-
+import type { ReactNode } from 'react';
 import homeBgMobile from '../assets/home-bg-mobile.webp';
 import homeBg from '../assets/home-bg.webp';
-import Logo from '../assets/logo_phase_slash.svg';
+import logo from '../assets/logo_phase_slash.svg';
+import { FooterLinks } from './footer-links';
+import { GithubIcon, ReactIcon } from './icons';
+
+const exampleUrl = 'https://github.com/p2-inc/examples/tree/main/multitenant';
 
 export function AppLayout({
-  Auth,
   appName,
-  appTenant,
+  children,
 }: {
-  Auth: React.ComponentType;
   appName: string;
-  appTenant: string;
+  children: ReactNode;
 }) {
   return (
-    <div className="bg-top bg-no-repeat bg-cover min-h-screen">
+    <div className="page-bg min-h-screen">
       <picture>
         <source media="(max-width: 767px)" srcSet={homeBgMobile} />
         <source media="(min-width: 768px)" srcSet={homeBg} />
-        <img
-          className="page-home absolute left-0 top-0 w-screen h-screen -z-10 md:left-1/2 md:transform md:-translate-x-1/2"
-          src={homeBgMobile}
-          alt="Gradient Background"
-        />
+        <img className="page-home" src={homeBgMobile} alt="" />
       </picture>
-      <div className="px-6 pt-24 pb-8 sm:py-8 lg:pt-24 lg:pb-8 lg:px-8">
+      <header className="px-6 pt-24 pb-8 sm:py-8 lg:px-8 lg:pt-24 lg:pb-8">
         <div className="mx-auto max-w-2xl text-center">
           <a href="https://phasetwo.io" target="_blank" rel="noreferrer">
             <img
-              src={Logo}
-              className="w-full max-w-xl mx-auto max-h-28"
+              src={logo}
+              className="mx-auto max-h-28 w-full max-w-xl"
               alt="Phase Two"
             />
           </a>
           <a
-            href="https://github.com/p2-inc/examples/tree/main/frameworks/reactjs"
+            href={exampleUrl}
             target="_blank"
             rel="noreferrer"
+            aria-label="Source code on GitHub"
+            className="mt-6 flex items-center justify-center gap-2 text-5xl text-p2blue-500"
           >
-            <p className="text-5xl font-semibold leading-7 text-p2blue-500 mt-6 flex items-center w-full justify-center">
-              <Icon icon="simple-icons:react" className="mr-2" />
-              <Icon icon="bi:github" />
-            </p>
+            <ReactIcon />
+            <GithubIcon />
           </a>
-          <div className="flex justify-center gap-5 mt-5">
-            <div className="text-2xl">Application: {appName}</div>
-            <div className="text-2xl">Tenant: {appTenant}</div>
-          </div>
+          <h1 className="mt-4 text-3xl font-semibold text-p2blue-700">
+            {appName}
+          </h1>
+          <p className="mt-1 text-lg text-p2blue-700">
+            Multitenant · React · oidc-spa
+          </p>
         </div>
-      </div>
-      <div className="py-8">
-        <div className="mx-auto max-w-3xl px-6 lg:px-8 text-center">
-          <Auth />
+      </header>
+      <main className="py-8">
+        <div className="mx-auto max-w-3xl px-6 text-center lg:px-8">
+          {children}
         </div>
-      </div>
+      </main>
       <FooterLinks />
     </div>
   );
 }
-
-export default AppLayout;
