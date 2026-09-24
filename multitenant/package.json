@@ -9,6 +9,15 @@
     "node": "24.x"
   },
   "scripts": {
+    "dev": "nx run-many -t dev",
+    "dev:zoo": "nx dev zoo",
+    "dev:aquarium": "nx dev aquarium",
+    "build": "nx run-many -t build",
+    "preview": "nx run-many -t preview",
+    "typecheck": "nx run-many -t typecheck",
+    "lint": "nx run-many -t lint",
+    "test": "nx run-many -t test",
+    "format": "prettier --write .",
     "generate:orgs-api": "openapi-generator-cli generate --generator-key orgs-api"
   },
   "dependencies": {
