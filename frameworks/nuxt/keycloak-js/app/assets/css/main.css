@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --color-p2blue-100: #f9fcfe;
+  --color-p2blue-200: #edf5fb;
+  --color-p2blue-500: #5b9fdd;
+  --color-p2blue-700: #1570c2;
+  --color-p2blue-900: #3c474e;
+  --color-p2gray-800: #1c1d1e;
+  --color-p2gray-900: #252627;
+  --color-p2grad-100: #739fe5;
+  --color-p2grad-200: #295398;
+  --color-p2dark-900: #111111;
+  --color-p2dark-1000: #000000;
+  --drop-shadow-btn-dark: 0px 1px 8px rgba(11, 25, 35, 0.4);
+  --drop-shadow-btn-light: 0px 1px 8px rgba(11, 25, 35, 0.1);
+}
+
+@layer components {
+  .page-bg {
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+  }
+
+  .page-home {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  @media (min-width: 768px) {
+    .page-home {
+      left: 50%;
+      transform: translateX(-50%);
+      object-fit: cover;
+      object-position: bottom;
+    }
+  }
+}
