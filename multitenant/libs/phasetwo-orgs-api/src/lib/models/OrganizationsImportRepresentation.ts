@@ -13,87 +13,78 @@
  */
 
 import { mapValues } from '../runtime';
+import type { OrganizationExportRepresentation } from './OrganizationExportRepresentation';
+import {
+    OrganizationExportRepresentationFromJSON,
+    OrganizationExportRepresentationFromJSONTyped,
+    OrganizationExportRepresentationToJSON,
+    OrganizationExportRepresentationToJSONTyped,
+} from './OrganizationExportRepresentation';
+import type { OrganizationsConfigRepresentation } from './OrganizationsConfigRepresentation';
+import {
+    OrganizationsConfigRepresentationFromJSON,
+    OrganizationsConfigRepresentationFromJSONTyped,
+    OrganizationsConfigRepresentationToJSON,
+    OrganizationsConfigRepresentationToJSONTyped,
+} from './OrganizationsConfigRepresentation';
+
 /**
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface OrganizationsImportRepresentation
  */
-export interface OrganizationRepresentation {
+export interface OrganizationsImportRepresentation {
+    /**
+     * Import format version
+     */
+    version?: string;
     /**
      * 
      */
-    id?: string;
+    organizations?: Array<OrganizationExportRepresentation>;
     /**
      * 
      */
-    name?: string;
-    /**
-     * 
-     */
-    displayName?: string;
-    /**
-     * 
-     */
-    url?: string;
-    /**
-     * 
-     */
-    realm?: string;
-    /**
-     * 
-     */
-    domains?: Array<string>;
-    /**
-     * 
-     */
-    attributes?: { [key: string]: Array<string>; };
+    config?: OrganizationsConfigRepresentation;
 }
 
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * Check if a given object implements the OrganizationsImportRepresentation interface.
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export function instanceOfOrganizationsImportRepresentation(value: object): value is OrganizationsImportRepresentation {
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function OrganizationsImportRepresentationFromJSON(json: any): OrganizationsImportRepresentation {
+    return OrganizationsImportRepresentationFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function OrganizationsImportRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationsImportRepresentation {
     if (json == null) {
         return json;
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'version': json['version'] == null ? undefined : json['version'],
+        'organizations': json['organizations'] == null ? undefined : ((json['organizations'] as Array<any>).map(OrganizationExportRepresentationFromJSON)),
+        'config': json['config'] == null ? undefined : OrganizationsConfigRepresentationFromJSON(json['config']),
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function OrganizationsImportRepresentationToJSON(json: any): OrganizationsImportRepresentation {
+    return OrganizationsImportRepresentationToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function OrganizationsImportRepresentationToJSONTyped(value?: OrganizationsImportRepresentation | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
+        'version': value['version'],
+        'organizations': value['organizations'] == null ? undefined : ((value['organizations'] as Array<any>).map(OrganizationExportRepresentationToJSON)),
+        'config': OrganizationsConfigRepresentationToJSON(value['config']),
     };
 }
 

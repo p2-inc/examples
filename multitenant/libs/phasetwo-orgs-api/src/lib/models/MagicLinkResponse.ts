@@ -16,84 +16,60 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface MagicLinkResponse
  */
-export interface OrganizationRepresentation {
+export interface MagicLinkResponse {
     /**
      * 
      */
-    id?: string;
+    userId?: string;
     /**
      * 
      */
-    name?: string;
+    link?: string;
     /**
      * 
      */
-    displayName?: string;
-    /**
-     * 
-     */
-    url?: string;
-    /**
-     * 
-     */
-    realm?: string;
-    /**
-     * 
-     */
-    domains?: Array<string>;
-    /**
-     * 
-     */
-    attributes?: { [key: string]: Array<string>; };
+    sent?: boolean;
 }
 
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * Check if a given object implements the MagicLinkResponse interface.
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export function instanceOfMagicLinkResponse(value: object): value is MagicLinkResponse {
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function MagicLinkResponseFromJSON(json: any): MagicLinkResponse {
+    return MagicLinkResponseFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function MagicLinkResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): MagicLinkResponse {
     if (json == null) {
         return json;
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'userId': json['user_id'] == null ? undefined : json['user_id'],
+        'link': json['link'] == null ? undefined : json['link'],
+        'sent': json['sent'] == null ? undefined : json['sent'],
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function MagicLinkResponseToJSON(json: any): MagicLinkResponse {
+    return MagicLinkResponseToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function MagicLinkResponseToJSONTyped(value?: MagicLinkResponse | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
+        'user_id': value['userId'],
+        'link': value['link'],
+        'sent': value['sent'],
     };
 }
 

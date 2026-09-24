@@ -14,86 +14,98 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * A freshly issued OIDC token set, reflecting the user's new active organization. The `refresh_token` is only present when the client is configured to use refresh tokens, and `id_token` only for OIDC requests.
  * @export
- * @interface OrganizationRepresentation
+ * @interface AccessTokenResponse
  */
-export interface OrganizationRepresentation {
+export interface AccessTokenResponse {
     /**
      * 
      */
-    id?: string;
+    accessToken?: string;
     /**
      * 
      */
-    name?: string;
+    expiresIn?: number;
     /**
      * 
      */
-    displayName?: string;
+    refreshExpiresIn?: number;
     /**
      * 
      */
-    url?: string;
+    refreshToken?: string;
     /**
      * 
      */
-    realm?: string;
+    tokenType?: string;
     /**
      * 
      */
-    domains?: Array<string>;
+    idToken?: string;
     /**
      * 
      */
-    attributes?: { [key: string]: Array<string>; };
+    notBeforePolicy?: number;
+    /**
+     * 
+     */
+    sessionState?: string;
+    /**
+     * 
+     */
+    scope?: string;
 }
 
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * Check if a given object implements the AccessTokenResponse interface.
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export function instanceOfAccessTokenResponse(value: object): value is AccessTokenResponse {
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function AccessTokenResponseFromJSON(json: any): AccessTokenResponse {
+    return AccessTokenResponseFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function AccessTokenResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccessTokenResponse {
     if (json == null) {
         return json;
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'accessToken': json['access_token'] == null ? undefined : json['access_token'],
+        'expiresIn': json['expires_in'] == null ? undefined : json['expires_in'],
+        'refreshExpiresIn': json['refresh_expires_in'] == null ? undefined : json['refresh_expires_in'],
+        'refreshToken': json['refresh_token'] == null ? undefined : json['refresh_token'],
+        'tokenType': json['token_type'] == null ? undefined : json['token_type'],
+        'idToken': json['id_token'] == null ? undefined : json['id_token'],
+        'notBeforePolicy': json['not-before-policy'] == null ? undefined : json['not-before-policy'],
+        'sessionState': json['session_state'] == null ? undefined : json['session_state'],
+        'scope': json['scope'] == null ? undefined : json['scope'],
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function AccessTokenResponseToJSON(json: any): AccessTokenResponse {
+    return AccessTokenResponseToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function AccessTokenResponseToJSONTyped(value?: AccessTokenResponse | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
+        'access_token': value['accessToken'],
+        'expires_in': value['expiresIn'],
+        'refresh_expires_in': value['refreshExpiresIn'],
+        'refresh_token': value['refreshToken'],
+        'token_type': value['tokenType'],
+        'id_token': value['idToken'],
+        'not-before-policy': value['notBeforePolicy'],
+        'session_state': value['sessionState'],
+        'scope': value['scope'],
     };
 }
 

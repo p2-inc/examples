@@ -2,6 +2,25 @@
   "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
   "spaces": 2,
   "generator-cli": {
-    "version": "7.9.0"
+    "version": "7.25.0",
+    "generators": {
+      "orgs-api": {
+        "generatorName": "typescript-fetch",
+        "inputSpec": "https://raw.githubusercontent.com/p2-inc/phasetwo-docs/refs/heads/main/openapi.yaml",
+        "output": "libs/phasetwo-orgs-api/src/lib",
+        "globalProperty": {
+          "apiDocs": false,
+          "modelDocs": false,
+          "skipFormModel": false
+        },
+        "openapiNormalizer": {
+          "KEEP_ONLY_FIRST_TAG_IN_OPERATION": true
+        },
+        "inlineSchemaNameMappings": {
+          "importOrganizations_request": "ImportOrganizationsForm",
+          "createPortalLink_request": "CreatePortalLinkForm"
+        }
+      }
+    }
   }
 }

@@ -16,84 +16,60 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface OrganizationExportRepresentationAllOfMembers
  */
-export interface OrganizationRepresentation {
+export interface OrganizationExportRepresentationAllOfMembers {
     /**
      * 
      */
-    id?: string;
+    userId?: string;
     /**
      * 
      */
-    name?: string;
+    email?: string;
     /**
      * 
      */
-    displayName?: string;
-    /**
-     * 
-     */
-    url?: string;
-    /**
-     * 
-     */
-    realm?: string;
-    /**
-     * 
-     */
-    domains?: Array<string>;
-    /**
-     * 
-     */
-    attributes?: { [key: string]: Array<string>; };
+    roles?: Array<string>;
 }
 
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * Check if a given object implements the OrganizationExportRepresentationAllOfMembers interface.
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export function instanceOfOrganizationExportRepresentationAllOfMembers(value: object): value is OrganizationExportRepresentationAllOfMembers {
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function OrganizationExportRepresentationAllOfMembersFromJSON(json: any): OrganizationExportRepresentationAllOfMembers {
+    return OrganizationExportRepresentationAllOfMembersFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function OrganizationExportRepresentationAllOfMembersFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationExportRepresentationAllOfMembers {
     if (json == null) {
         return json;
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'userId': json['userId'] == null ? undefined : json['userId'],
+        'email': json['email'] == null ? undefined : json['email'],
+        'roles': json['roles'] == null ? undefined : json['roles'],
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function OrganizationExportRepresentationAllOfMembersToJSON(json: any): OrganizationExportRepresentationAllOfMembers {
+    return OrganizationExportRepresentationAllOfMembersToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function OrganizationExportRepresentationAllOfMembersToJSONTyped(value?: OrganizationExportRepresentationAllOfMembers | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
+        'userId': value['userId'],
+        'email': value['email'],
+        'roles': value['roles'],
     };
 }
 

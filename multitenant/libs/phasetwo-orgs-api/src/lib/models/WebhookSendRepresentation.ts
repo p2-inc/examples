@@ -13,12 +13,20 @@
  */
 
 import { mapValues } from '../runtime';
+import type { WebhookRepresentation } from './WebhookRepresentation';
+import {
+    WebhookRepresentationFromJSON,
+    WebhookRepresentationFromJSONTyped,
+    WebhookRepresentationToJSON,
+    WebhookRepresentationToJSONTyped,
+} from './WebhookRepresentation';
+
 /**
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface WebhookSendRepresentation
  */
-export interface OrganizationRepresentation {
+export interface WebhookSendRepresentation {
     /**
      * 
      */
@@ -26,61 +34,81 @@ export interface OrganizationRepresentation {
     /**
      * 
      */
-    name?: string;
+    type?: string;
     /**
      * 
      */
-    displayName?: string;
+    status?: number;
     /**
      * 
      */
-    url?: string;
+    statusMessage?: string;
     /**
      * 
      */
-    realm?: string;
+    retried?: number;
     /**
      * 
      */
-    domains?: Array<string>;
+    sentAt?: string;
     /**
      * 
      */
-    attributes?: { [key: string]: Array<string>; };
+    eventId?: string;
+    /**
+     * 
+     */
+    keycloakEventType?: string;
+    /**
+     * 
+     */
+    keycloakEventId?: string;
+    /**
+     * 
+     */
+    webhook?: WebhookRepresentation;
+    /**
+     * 
+     */
+    payload?: string;
 }
 
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * Check if a given object implements the WebhookSendRepresentation interface.
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export function instanceOfWebhookSendRepresentation(value: object): value is WebhookSendRepresentation {
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function WebhookSendRepresentationFromJSON(json: any): WebhookSendRepresentation {
+    return WebhookSendRepresentationFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function WebhookSendRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookSendRepresentation {
     if (json == null) {
         return json;
     }
     return {
         
         'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'type': json['type'] == null ? undefined : json['type'],
+        'status': json['status'] == null ? undefined : json['status'],
+        'statusMessage': json['status_message'] == null ? undefined : json['status_message'],
+        'retried': json['retried'] == null ? undefined : json['retried'],
+        'sentAt': json['sent_at'] == null ? undefined : json['sent_at'],
+        'eventId': json['event_id'] == null ? undefined : json['event_id'],
+        'keycloakEventType': json['keycloak_event_type'] == null ? undefined : json['keycloak_event_type'],
+        'keycloakEventId': json['keycloak_event_id'] == null ? undefined : json['keycloak_event_id'],
+        'webhook': json['webhook'] == null ? undefined : WebhookRepresentationFromJSON(json['webhook']),
+        'payload': json['payload'] == null ? undefined : json['payload'],
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function WebhookSendRepresentationToJSON(json: any): WebhookSendRepresentation {
+    return WebhookSendRepresentationToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function WebhookSendRepresentationToJSONTyped(value?: WebhookSendRepresentation | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -88,12 +116,16 @@ export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepres
     return {
         
         'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
+        'type': value['type'],
+        'status': value['status'],
+        'status_message': value['statusMessage'],
+        'retried': value['retried'],
+        'sent_at': value['sentAt'],
+        'event_id': value['eventId'],
+        'keycloak_event_type': value['keycloakEventType'],
+        'keycloak_event_id': value['keycloakEventId'],
+        'webhook': WebhookRepresentationToJSON(value['webhook']),
+        'payload': value['payload'],
     };
 }
 

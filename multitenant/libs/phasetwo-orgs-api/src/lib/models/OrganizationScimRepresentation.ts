@@ -13,87 +13,89 @@
  */
 
 import { mapValues } from '../runtime';
+import type { OrganizationScimAuth } from './OrganizationScimAuth';
+import {
+    OrganizationScimAuthFromJSON,
+    OrganizationScimAuthFromJSONTyped,
+    OrganizationScimAuthToJSON,
+    OrganizationScimAuthToJSONTyped,
+} from './OrganizationScimAuth';
+
 /**
+ * Per-organization SCIM 2.0 service-provider configuration. One of these
+ * backs the SCIM endpoint at
+ * `{authServerUrl}/realms/{realm}/scim/v2/organizations/{orgId}/`.
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface OrganizationScimRepresentation
  */
-export interface OrganizationRepresentation {
+export interface OrganizationScimRepresentation {
+    /**
+     * Whether the organization's SCIM endpoint accepts inbound traffic.
+     * Turn this off to pause provisioning without losing the
+     * configuration.
+     * 
+     */
+    enabled?: boolean;
+    /**
+     * When true, the provisioned user's `username` mirrors their
+     * `email`, and subsequent SCIM update operations do not change
+     * the username.
+     * 
+     */
+    emailAsUsername?: boolean;
+    /**
+     * When true, provisioned users are federated with the
+     * organization's configured identity provider so they can sign in
+     * via the org's SSO immediately after provisioning.
+     * 
+     */
+    linkIdp?: boolean;
     /**
      * 
      */
-    id?: string;
-    /**
-     * 
-     */
-    name?: string;
-    /**
-     * 
-     */
-    displayName?: string;
-    /**
-     * 
-     */
-    url?: string;
-    /**
-     * 
-     */
-    realm?: string;
-    /**
-     * 
-     */
-    domains?: Array<string>;
-    /**
-     * 
-     */
-    attributes?: { [key: string]: Array<string>; };
+    auth?: OrganizationScimAuth;
 }
 
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * Check if a given object implements the OrganizationScimRepresentation interface.
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export function instanceOfOrganizationScimRepresentation(value: object): value is OrganizationScimRepresentation {
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function OrganizationScimRepresentationFromJSON(json: any): OrganizationScimRepresentation {
+    return OrganizationScimRepresentationFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function OrganizationScimRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationScimRepresentation {
     if (json == null) {
         return json;
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'enabled': json['enabled'] == null ? undefined : json['enabled'],
+        'emailAsUsername': json['email_as_username'] == null ? undefined : json['email_as_username'],
+        'linkIdp': json['link_idp'] == null ? undefined : json['link_idp'],
+        'auth': json['auth'] == null ? undefined : OrganizationScimAuthFromJSON(json['auth']),
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function OrganizationScimRepresentationToJSON(json: any): OrganizationScimRepresentation {
+    return OrganizationScimRepresentationToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function OrganizationScimRepresentationToJSONTyped(value?: OrganizationScimRepresentation | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
+        'enabled': value['enabled'],
+        'email_as_username': value['emailAsUsername'],
+        'link_idp': value['linkIdp'],
+        'auth': OrganizationScimAuthToJSON(value['auth']),
     };
 }
 

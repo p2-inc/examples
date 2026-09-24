@@ -16,84 +16,54 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface CredentialRepresentation
  */
-export interface OrganizationRepresentation {
+export interface CredentialRepresentation {
     /**
      * 
      */
-    id?: string;
+    type?: string;
     /**
      * 
      */
-    name?: string;
-    /**
-     * 
-     */
-    displayName?: string;
-    /**
-     * 
-     */
-    url?: string;
-    /**
-     * 
-     */
-    realm?: string;
-    /**
-     * 
-     */
-    domains?: Array<string>;
-    /**
-     * 
-     */
-    attributes?: { [key: string]: Array<string>; };
+    value?: string;
 }
 
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * Check if a given object implements the CredentialRepresentation interface.
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export function instanceOfCredentialRepresentation(value: object): value is CredentialRepresentation {
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function CredentialRepresentationFromJSON(json: any): CredentialRepresentation {
+    return CredentialRepresentationFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function CredentialRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): CredentialRepresentation {
     if (json == null) {
         return json;
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'type': json['type'] == null ? undefined : json['type'],
+        'value': json['value'] == null ? undefined : json['value'],
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function CredentialRepresentationToJSON(json: any): CredentialRepresentation {
+    return CredentialRepresentationToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function CredentialRepresentationToJSONTyped(value?: CredentialRepresentation | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
+        'type': value['type'],
+        'value': value['value'],
     };
 }
 

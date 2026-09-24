@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Phase Two Admin REST API
- * This is a REST API reference for the Phase Two Keycloak custom resources. These are extensions to the standard [Keycloak Admin REST API](https://www.keycloak.org/docs-api/17.0/rest-api/index.html).  ### Base URI format Paths specified in the documentation are relative to the the base URI. - Format: `https://<host>:<port>/auth/realms` - Example: `https://app.phasetwo.io/auth/realms`  ### Authentication Authentication is achieved by using the `Authentication: Bearer <token>` header in all requests. This is either the access token received from a normal authentication, or by a request directly to the OpenID Connect token endpoint.  It is recommended that you use a Keycloak Admin Client, such as [this one for Javascript](https://github.com/keycloak/keycloak-nodejs-admin-client), as they take care of authentication, getting an access token, and refreshing it when it expires.  #### Client credentials grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=client_credentials&client_id=admin-cli&client_secret=fd649804-3a74-4d69-acaa-8f065c6b7da1 ```  #### Password grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=password&username=uname@foo.com&password=pwd123AZY&client_id=admin-cli ```  ### SDKs Modern API libraries are available for several common languages. These are available as open source at the links below, or you can choose to generate your own using our [OpenAPI spec file](https://raw.githubusercontent.com/p2-inc/phasetwo-docs/master/openapi.yaml).  | Language | Library | | --- | --- | | Java (and other JVM langs) | https://github.com/p2-inc/phasetwo-java | | JavaScript/TypeScript | https://github.com/p2-inc/phasetwo-js | | Python | https://github.com/p2-inc/phasetwo-python | 
+ * This is a REST API reference for the Phase Two Keycloak custom resources. These are extensions to the standard [Keycloak Admin REST API](https://www.keycloak.org/docs-api/latest/rest-api/index.html).  ### Base URI format Paths specified in the documentation are relative to the the base URI. - Format: `https://<host>:<port>/auth/realms` - Example: `https://app.phasetwo.io/auth/realms`  ### Authentication Authentication is achieved by using the `Authentication: Bearer <token>` header in all requests. This is either the access token received from a normal authentication, or by a request directly to the OpenID Connect token endpoint.  It is recommended that you use a Keycloak Admin Client, such as [this one for Javascript](https://github.com/keycloak/keycloak/tree/main/js/libs/keycloak-admin-client), as they take care of authentication, getting an access token, and refreshing it when it expires.  #### Client credentials grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=client_credentials&client_id=admin-cli&client_secret=fd649804-3a74-4d69-acaa-8f065c6b7da1 ```  #### Password grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=password&username=uname@foo.com&password=pwd123AZY&client_id=admin-cli ```  ### SDKs Modern API libraries are available for several common languages. These are available as open source at the links below, or you can choose to generate your own using our [OpenAPI spec file](https://raw.githubusercontent.com/p2-inc/phasetwo-docs/main/openapi.yaml).  | Language | Library | | --- | --- | | Java (and other JVM langs) | https://github.com/p2-inc/phasetwo-java | | JavaScript/TypeScript | https://github.com/p2-inc/phasetwo-js | | Python | https://github.com/p2-inc/phasetwo-python | 
  *
  * The version of the OpenAPI document: v1
  * 
@@ -12,46 +12,196 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  EventRepresentation,
-  WebhookRepresentation,
-} from '../models/index';
 import {
+    type CredentialRepresentation,
+    CredentialRepresentationFromJSON,
+    CredentialRepresentationToJSON,
+} from '../models/CredentialRepresentation';
+import {
+    type EventRepresentation,
     EventRepresentationFromJSON,
     EventRepresentationToJSON,
+} from '../models/EventRepresentation';
+import {
+    type WebhookRepresentation,
     WebhookRepresentationFromJSON,
     WebhookRepresentationToJSON,
-} from '../models/index';
+} from '../models/WebhookRepresentation';
+import {
+    type WebhookSendRepresentation,
+    WebhookSendRepresentationFromJSON,
+    WebhookSendRepresentationToJSON,
+} from '../models/WebhookSendRepresentation';
 
 export interface CreateEventRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * 
+     */
     eventRepresentation: EventRepresentation;
 }
 
 export interface CreateWebhookRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * 
+     */
     webhookRepresentation: WebhookRepresentation;
 }
 
 export interface DeleteWebhookRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * webhook id
+     */
     webhookId: string;
+}
+
+export interface GetPayloadByKeycloakTypeAndIdRequest {
+    /**
+     * realm name (not id!)
+     */
+    realm: string;
+    /**
+     * keycloak event type
+     */
+    type: string;
+    /**
+     * keycloak event id
+     */
+    kid: string;
 }
 
 export interface GetWebhookByIdRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * webhook id
+     */
     webhookId: string;
+}
+
+export interface GetWebhookSecretByIdRequest {
+    /**
+     * realm name (not id!)
+     */
+    realm: string;
+    /**
+     * webhook id
+     */
+    webhookId: string;
+}
+
+export interface GetWebhookSendByIdRequest {
+    /**
+     * realm name (not id!)
+     */
+    realm: string;
+    /**
+     * webhook id
+     */
+    webhookId: string;
+    /**
+     * send id
+     */
+    sendId: string;
+}
+
+export interface GetWebhookSendsRequest {
+    /**
+     * realm name (not id!)
+     */
+    realm: string;
+    /**
+     * webhook id
+     */
+    webhookId: string;
+    /**
+     * 
+     */
+    first?: number;
+    /**
+     * 
+     */
+    max?: number;
+}
+
+export interface GetWebhookSendsByKeycloakTypeAndIdRequest {
+    /**
+     * realm name (not id!)
+     */
+    realm: string;
+    /**
+     * keycloak event type
+     */
+    type: string;
+    /**
+     * keycloak event id
+     */
+    kid: string;
 }
 
 export interface GetWebhooksRequest {
+    /**
+     * realm name (not id!)
+     */
+    realm: string;
+    /**
+     * 
+     */
+    first?: number;
+    /**
+     * 
+     */
+    max?: number;
+}
+
+export interface GetWebhooksCountRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
 }
 
-export interface UpdateWebhookRequest {
+export interface ResendWebhookByIdRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * webhook id
+     */
     webhookId: string;
+    /**
+     * send id
+     */
+    sendId: string;
+}
+
+export interface UpdateWebhookRequest {
+    /**
+     * realm name (not id!)
+     */
+    realm: string;
+    /**
+     * webhook id
+     */
+    webhookId: string;
+    /**
+     * 
+     */
     webhookRepresentation: WebhookRepresentation;
 }
 
@@ -61,9 +211,9 @@ export interface UpdateWebhookRequest {
 export class EventsApi extends runtime.BaseAPI {
 
     /**
-     * Create a new audit log event
+     * Creates request options for createEvent without sending the request
      */
-    async createEventRaw(requestParameters: CreateEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async createEventRequestOpts(requestParameters: CreateEventRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -92,13 +242,25 @@ export class EventsApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/events`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))),
+
+        let urlPath = `/{realm}/events`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+
+        return {
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: EventRepresentationToJSON(requestParameters['eventRepresentation']),
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new audit log event
+     */
+    async createEventRaw(requestParameters: CreateEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.createEventRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -111,9 +273,9 @@ export class EventsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new webhook
+     * Creates request options for createWebhook without sending the request
      */
-    async createWebhookRaw(requestParameters: CreateWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async createWebhookRequestOpts(requestParameters: CreateWebhookRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -142,13 +304,25 @@ export class EventsApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/webhooks`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))),
+
+        let urlPath = `/{realm}/webhooks`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+
+        return {
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: WebhookRepresentationToJSON(requestParameters['webhookRepresentation']),
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new webhook
+     */
+    async createWebhookRaw(requestParameters: CreateWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.createWebhookRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -161,9 +335,9 @@ export class EventsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the webhook
+     * Creates request options for deleteWebhook without sending the request
      */
-    async deleteWebhookRaw(requestParameters: DeleteWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteWebhookRequestOpts(requestParameters: DeleteWebhookRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -190,12 +364,25 @@ export class EventsApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/webhooks/{webhookId}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId']))),
+
+        let urlPath = `/{realm}/webhooks/{webhookId}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{webhookId}', encodeURIComponent(String(requestParameters['webhookId'])));
+
+        return {
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the webhook
+     */
+    async deleteWebhookRaw(requestParameters: DeleteWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteWebhookRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -208,9 +395,78 @@ export class EventsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get webhook by id
+     * Creates request options for getPayloadByKeycloakTypeAndId without sending the request
      */
-    async getWebhookByIdRaw(requestParameters: GetWebhookByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WebhookRepresentation>> {
+    async getPayloadByKeycloakTypeAndIdRequestOpts(requestParameters: GetPayloadByKeycloakTypeAndIdRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['realm'] == null) {
+            throw new runtime.RequiredError(
+                'realm',
+                'Required parameter "realm" was null or undefined when calling getPayloadByKeycloakTypeAndId().'
+            );
+        }
+
+        if (requestParameters['type'] == null) {
+            throw new runtime.RequiredError(
+                'type',
+                'Required parameter "type" was null or undefined when calling getPayloadByKeycloakTypeAndId().'
+            );
+        }
+
+        if (requestParameters['kid'] == null) {
+            throw new runtime.RequiredError(
+                'kid',
+                'Required parameter "kid" was null or undefined when calling getPayloadByKeycloakTypeAndId().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("access_token", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/{realm}/webhooks/payload/{type}/{kid}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{type}', encodeURIComponent(String(requestParameters['type'])));
+        urlPath = urlPath.replace('{kid}', encodeURIComponent(String(requestParameters['kid'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Get a payload by Keycloak type and id
+     */
+    async getPayloadByKeycloakTypeAndIdRaw(requestParameters: GetPayloadByKeycloakTypeAndIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EventRepresentation>> {
+        const requestOptions = await this.getPayloadByKeycloakTypeAndIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EventRepresentationFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a payload by Keycloak type and id
+     */
+    async getPayloadByKeycloakTypeAndId(requestParameters: GetPayloadByKeycloakTypeAndIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EventRepresentation> {
+        const response = await this.getPayloadByKeycloakTypeAndIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for getWebhookById without sending the request
+     */
+    async getWebhookByIdRequestOpts(requestParameters: GetWebhookByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -237,12 +493,25 @@ export class EventsApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/webhooks/{webhookId}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId']))),
+
+        let urlPath = `/{realm}/webhooks/{webhookId}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{webhookId}', encodeURIComponent(String(requestParameters['webhookId'])));
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get webhook by id
+     */
+    async getWebhookByIdRaw(requestParameters: GetWebhookByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WebhookRepresentation>> {
+        const requestOptions = await this.getWebhookByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => WebhookRepresentationFromJSON(jsonValue));
     }
@@ -256,14 +525,20 @@ export class EventsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a list of webhooks for this realm
-     * Get webhooks
+     * Creates request options for getWebhookSecretById without sending the request
      */
-    async getWebhooksRaw(requestParameters: GetWebhooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<WebhookRepresentation>>> {
+    async getWebhookSecretByIdRequestOpts(requestParameters: GetWebhookSecretByIdRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
-                'Required parameter "realm" was null or undefined when calling getWebhooks().'
+                'Required parameter "realm" was null or undefined when calling getWebhookSecretById().'
+            );
+        }
+
+        if (requestParameters['webhookId'] == null) {
+            throw new runtime.RequiredError(
+                'webhookId',
+                'Required parameter "webhookId" was null or undefined when calling getWebhookSecretById().'
             );
         }
 
@@ -279,12 +554,294 @@ export class EventsApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/webhooks`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))),
+
+        let urlPath = `/{realm}/webhooks/{webhookId}/secret`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{webhookId}', encodeURIComponent(String(requestParameters['webhookId'])));
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get webhook secret by id
+     */
+    async getWebhookSecretByIdRaw(requestParameters: GetWebhookSecretByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CredentialRepresentation>> {
+        const requestOptions = await this.getWebhookSecretByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CredentialRepresentationFromJSON(jsonValue));
+    }
+
+    /**
+     * Get webhook secret by id
+     */
+    async getWebhookSecretById(requestParameters: GetWebhookSecretByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CredentialRepresentation> {
+        const response = await this.getWebhookSecretByIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for getWebhookSendById without sending the request
+     */
+    async getWebhookSendByIdRequestOpts(requestParameters: GetWebhookSendByIdRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['realm'] == null) {
+            throw new runtime.RequiredError(
+                'realm',
+                'Required parameter "realm" was null or undefined when calling getWebhookSendById().'
+            );
+        }
+
+        if (requestParameters['webhookId'] == null) {
+            throw new runtime.RequiredError(
+                'webhookId',
+                'Required parameter "webhookId" was null or undefined when calling getWebhookSendById().'
+            );
+        }
+
+        if (requestParameters['sendId'] == null) {
+            throw new runtime.RequiredError(
+                'sendId',
+                'Required parameter "sendId" was null or undefined when calling getWebhookSendById().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("access_token", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/{realm}/webhooks/{webhookId}/sends/{sendId}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{webhookId}', encodeURIComponent(String(requestParameters['webhookId'])));
+        urlPath = urlPath.replace('{sendId}', encodeURIComponent(String(requestParameters['sendId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Get webhook send by id
+     */
+    async getWebhookSendByIdRaw(requestParameters: GetWebhookSendByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WebhookSendRepresentation>> {
+        const requestOptions = await this.getWebhookSendByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => WebhookSendRepresentationFromJSON(jsonValue));
+    }
+
+    /**
+     * Get webhook send by id
+     */
+    async getWebhookSendById(requestParameters: GetWebhookSendByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WebhookSendRepresentation> {
+        const response = await this.getWebhookSendByIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for getWebhookSends without sending the request
+     */
+    async getWebhookSendsRequestOpts(requestParameters: GetWebhookSendsRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['realm'] == null) {
+            throw new runtime.RequiredError(
+                'realm',
+                'Required parameter "realm" was null or undefined when calling getWebhookSends().'
+            );
+        }
+
+        if (requestParameters['webhookId'] == null) {
+            throw new runtime.RequiredError(
+                'webhookId',
+                'Required parameter "webhookId" was null or undefined when calling getWebhookSends().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['first'] != null) {
+            queryParameters['first'] = requestParameters['first'];
+        }
+
+        if (requestParameters['max'] != null) {
+            queryParameters['max'] = requestParameters['max'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("access_token", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/{realm}/webhooks/{webhookId}/sends`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{webhookId}', encodeURIComponent(String(requestParameters['webhookId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Get webhook sends
+     */
+    async getWebhookSendsRaw(requestParameters: GetWebhookSendsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<WebhookSendRepresentation>>> {
+        const requestOptions = await this.getWebhookSendsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(WebhookSendRepresentationFromJSON));
+    }
+
+    /**
+     * Get webhook sends
+     */
+    async getWebhookSends(requestParameters: GetWebhookSendsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<WebhookSendRepresentation>> {
+        const response = await this.getWebhookSendsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for getWebhookSendsByKeycloakTypeAndId without sending the request
+     */
+    async getWebhookSendsByKeycloakTypeAndIdRequestOpts(requestParameters: GetWebhookSendsByKeycloakTypeAndIdRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['realm'] == null) {
+            throw new runtime.RequiredError(
+                'realm',
+                'Required parameter "realm" was null or undefined when calling getWebhookSendsByKeycloakTypeAndId().'
+            );
+        }
+
+        if (requestParameters['type'] == null) {
+            throw new runtime.RequiredError(
+                'type',
+                'Required parameter "type" was null or undefined when calling getWebhookSendsByKeycloakTypeAndId().'
+            );
+        }
+
+        if (requestParameters['kid'] == null) {
+            throw new runtime.RequiredError(
+                'kid',
+                'Required parameter "kid" was null or undefined when calling getWebhookSendsByKeycloakTypeAndId().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("access_token", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/{realm}/webhooks/sends/{type}/{kid}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{type}', encodeURIComponent(String(requestParameters['type'])));
+        urlPath = urlPath.replace('{kid}', encodeURIComponent(String(requestParameters['kid'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Get all webhook sends triggered by a Keycloak event
+     */
+    async getWebhookSendsByKeycloakTypeAndIdRaw(requestParameters: GetWebhookSendsByKeycloakTypeAndIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<WebhookSendRepresentation>>> {
+        const requestOptions = await this.getWebhookSendsByKeycloakTypeAndIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(WebhookSendRepresentationFromJSON));
+    }
+
+    /**
+     * Get all webhook sends triggered by a Keycloak event
+     */
+    async getWebhookSendsByKeycloakTypeAndId(requestParameters: GetWebhookSendsByKeycloakTypeAndIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<WebhookSendRepresentation>> {
+        const response = await this.getWebhookSendsByKeycloakTypeAndIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for getWebhooks without sending the request
+     */
+    async getWebhooksRequestOpts(requestParameters: GetWebhooksRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['realm'] == null) {
+            throw new runtime.RequiredError(
+                'realm',
+                'Required parameter "realm" was null or undefined when calling getWebhooks().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['first'] != null) {
+            queryParameters['first'] = requestParameters['first'];
+        }
+
+        if (requestParameters['max'] != null) {
+            queryParameters['max'] = requestParameters['max'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("access_token", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/{realm}/webhooks`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Get a list of webhooks for this realm
+     * Get webhooks
+     */
+    async getWebhooksRaw(requestParameters: GetWebhooksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<WebhookRepresentation>>> {
+        const requestOptions = await this.getWebhooksRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(WebhookRepresentationFromJSON));
     }
@@ -299,9 +856,136 @@ export class EventsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update this webhook by id
+     * Creates request options for getWebhooksCount without sending the request
      */
-    async updateWebhookRaw(requestParameters: UpdateWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async getWebhooksCountRequestOpts(requestParameters: GetWebhooksCountRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['realm'] == null) {
+            throw new runtime.RequiredError(
+                'realm',
+                'Required parameter "realm" was null or undefined when calling getWebhooksCount().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("access_token", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/{realm}/webhooks/count`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Get a count of webhooks.
+     * Get webhooks count
+     */
+    async getWebhooksCountRaw(requestParameters: GetWebhooksCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>> {
+        const requestOptions = await this.getWebhooksCountRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<number>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Get a count of webhooks.
+     * Get webhooks count
+     */
+    async getWebhooksCount(requestParameters: GetWebhooksCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<number> {
+        const response = await this.getWebhooksCountRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for resendWebhookById without sending the request
+     */
+    async resendWebhookByIdRequestOpts(requestParameters: ResendWebhookByIdRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['realm'] == null) {
+            throw new runtime.RequiredError(
+                'realm',
+                'Required parameter "realm" was null or undefined when calling resendWebhookById().'
+            );
+        }
+
+        if (requestParameters['webhookId'] == null) {
+            throw new runtime.RequiredError(
+                'webhookId',
+                'Required parameter "webhookId" was null or undefined when calling resendWebhookById().'
+            );
+        }
+
+        if (requestParameters['sendId'] == null) {
+            throw new runtime.RequiredError(
+                'sendId',
+                'Required parameter "sendId" was null or undefined when calling resendWebhookById().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("access_token", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/{realm}/webhooks/{webhookId}/sends/{sendId}/resend`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{webhookId}', encodeURIComponent(String(requestParameters['webhookId'])));
+        urlPath = urlPath.replace('{sendId}', encodeURIComponent(String(requestParameters['sendId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Resend a webhook by send ID
+     */
+    async resendWebhookByIdRaw(requestParameters: ResendWebhookByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.resendWebhookByIdRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Resend a webhook by send ID
+     */
+    async resendWebhookById(requestParameters: ResendWebhookByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.resendWebhookByIdRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for updateWebhook without sending the request
+     */
+    async updateWebhookRequestOpts(requestParameters: UpdateWebhookRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -337,13 +1021,26 @@ export class EventsApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/webhooks/{webhookId}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"webhookId"}}`, encodeURIComponent(String(requestParameters['webhookId']))),
+
+        let urlPath = `/{realm}/webhooks/{webhookId}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{webhookId}', encodeURIComponent(String(requestParameters['webhookId'])));
+
+        return {
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: WebhookRepresentationToJSON(requestParameters['webhookRepresentation']),
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update this webhook by id
+     */
+    async updateWebhookRaw(requestParameters: UpdateWebhookRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateWebhookRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

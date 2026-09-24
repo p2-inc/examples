@@ -14,86 +14,74 @@
 
 import { mapValues } from '../runtime';
 /**
+ * Bearer-style shared secret. The client sends
+ * `Authorization: Bearer <secret>`; the server compares the value
+ * against a stored Argon2id hash.
  * 
  * @export
- * @interface OrganizationRepresentation
+ * @interface ExternalSecretScimAuth
  */
-export interface OrganizationRepresentation {
+export interface ExternalSecretScimAuth {
     /**
      * 
      */
-    id?: string;
+    type: ExternalSecretScimAuthTypeEnum;
     /**
+     * Random opaque value. Cleartext on submit; hashed at rest. Omit
+     * on update to keep the existing secret.
      * 
      */
-    name?: string;
-    /**
-     * 
-     */
-    displayName?: string;
-    /**
-     * 
-     */
-    url?: string;
-    /**
-     * 
-     */
-    realm?: string;
-    /**
-     * 
-     */
-    domains?: Array<string>;
-    /**
-     * 
-     */
-    attributes?: { [key: string]: Array<string>; };
+    sharedSecret?: string;
 }
 
+
 /**
- * Check if a given object implements the OrganizationRepresentation interface.
+ * @export
  */
-export function instanceOfOrganizationRepresentation(value: object): value is OrganizationRepresentation {
+export const ExternalSecretScimAuthTypeEnum = {
+    ExternalSecret: 'EXTERNAL_SECRET',
+} as const;
+export type ExternalSecretScimAuthTypeEnum = typeof ExternalSecretScimAuthTypeEnum[keyof typeof ExternalSecretScimAuthTypeEnum];
+
+
+/**
+ * Check if a given object implements the ExternalSecretScimAuth interface.
+ */
+export function instanceOfExternalSecretScimAuth(value: object): value is ExternalSecretScimAuth {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (value['type'] !== 'EXTERNAL_SECRET') return false;
+    
     return true;
 }
 
-export function OrganizationRepresentationFromJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationFromJSONTyped(json, false);
+export function ExternalSecretScimAuthFromJSON(json: any): ExternalSecretScimAuth {
+    return ExternalSecretScimAuthFromJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRepresentation {
+export function ExternalSecretScimAuthFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExternalSecretScimAuth {
     if (json == null) {
         return json;
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'displayName': json['displayName'] == null ? undefined : json['displayName'],
-        'url': json['url'] == null ? undefined : json['url'],
-        'realm': json['realm'] == null ? undefined : json['realm'],
-        'domains': json['domains'] == null ? undefined : json['domains'],
-        'attributes': json['attributes'] == null ? undefined : json['attributes'],
+        'type': json['type'],
+        'sharedSecret': json['shared_secret'] == null ? undefined : json['shared_secret'],
     };
 }
 
-export function OrganizationRepresentationToJSON(json: any): OrganizationRepresentation {
-    return OrganizationRepresentationToJSONTyped(json, false);
+export function ExternalSecretScimAuthToJSON(json: any): ExternalSecretScimAuth {
+    return ExternalSecretScimAuthToJSONTyped(json, false);
 }
 
-export function OrganizationRepresentationToJSONTyped(value?: OrganizationRepresentation | null, ignoreDiscriminator: boolean = false): any {
+export function ExternalSecretScimAuthToJSONTyped(value?: ExternalSecretScimAuth | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
-        'id': value['id'],
-        'name': value['name'],
-        'displayName': value['displayName'],
-        'url': value['url'],
-        'realm': value['realm'],
-        'domains': value['domains'],
-        'attributes': value['attributes'],
+        'type': value['type'],
+        'shared_secret': value['sharedSecret'],
     };
 }
 
