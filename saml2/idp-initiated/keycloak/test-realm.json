@@ -1,0 +1,118 @@
+{
+  "realm": "test-realm",
+  "displayName": "SAML IdP-initiated example",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "clients": [
+    {
+      "clientId": "http://localhost:8081/saml2/metadata",
+      "name": "Spring Boot SAML service provider",
+      "protocol": "saml",
+      "enabled": true,
+      "frontchannelLogout": true,
+      "fullScopeAllowed": true,
+      "redirectUris": ["http://localhost:8081/*"],
+      "attributes": {
+        "saml_idp_initiated_sso_url_name": "okta-client",
+        "saml_assertion_consumer_url_post": "http://localhost:8081/login/saml2/sso",
+        "saml_single_logout_service_url_post": "http://localhost:8081/logout/saml2/slo",
+        "saml_name_id_format": "username",
+        "saml_force_name_id_format": "false",
+        "saml.force.post.binding": "true",
+        "saml.server.signature": "true",
+        "saml.signature.algorithm": "RSA_SHA256",
+        "saml.assertion.signature": "false",
+        "saml.client.signature": "false",
+        "saml.encrypt": "false",
+        "saml.authnstatement": "true"
+      },
+      "protocolMappers": [
+        {
+          "name": "email",
+          "protocol": "saml",
+          "protocolMapper": "saml-user-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "email",
+            "attribute.name": "email",
+            "friendly.name": "email",
+            "attribute.nameformat": "Basic"
+          }
+        },
+        {
+          "name": "firstName",
+          "protocol": "saml",
+          "protocolMapper": "saml-user-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "firstName",
+            "attribute.name": "firstName",
+            "friendly.name": "firstName",
+            "attribute.nameformat": "Basic"
+          }
+        },
+        {
+          "name": "lastName",
+          "protocol": "saml",
+          "protocolMapper": "saml-user-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "lastName",
+            "attribute.name": "lastName",
+            "friendly.name": "lastName",
+            "attribute.nameformat": "Basic"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "test",
+      "email": "test@example.com",
+      "firstName": "Test",
+      "lastName": "User",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "test",
+          "temporary": false
+        }
+      ]
+    }
+  ],
+  "identityProviders": [
+    {
+      "alias": "okta-broker",
+      "displayName": "Okta",
+      "providerId": "saml",
+      "enabled": false,
+      "hideOnLogin": true,
+      "trustEmail": false,
+      "storeToken": false,
+      "linkOnly": false,
+      "config": {
+        "entityId": "http://localhost:8080/realms/test-realm",
+        "idpEntityId": "http://www.okta.com/your-okta-app-id",
+        "singleSignOnServiceUrl": "https://your-okta-domain.okta.com/app/your-okta-app/your-okta-app-id/sso/saml",
+        "nameIDPolicyFormat": "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified",
+        "principalType": "SUBJECT",
+        "postBindingResponse": "true",
+        "postBindingAuthnRequest": "true",
+        "postBindingLogout": "false",
+        "wantAuthnRequestsSigned": "false",
+        "wantAssertionsSigned": "false",
+        "wantAssertionsEncrypted": "false",
+        "validateSignature": "true",
+        "allowCreate": "true",
+        "syncMode": "IMPORT"
+      }
+    }
+  ]
+}
