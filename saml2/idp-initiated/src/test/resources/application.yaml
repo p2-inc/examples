@@ -1,5 +1,3 @@
-server:
-  port: 8081
 spring:
   application:
     name: idp-initiated
@@ -13,9 +11,7 @@ spring:
               location: "{baseUrl}/login/saml2/sso"
             singlelogout:
               url: "{baseUrl}/logout/saml2/slo"
-            signing:
-              credentials:
-                - private-key-location: classpath:credentials/private.key
-                  certificate-location: classpath:credentials/cert.crt
             assertingparty:
-              metadata-uri: http://localhost:8080/realms/test-realm/protocol/saml/descriptor
+              metadata-uri: classpath:test-realm-descriptor.xml
+              singlesignon:
+                sign-request: false
