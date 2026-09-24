@@ -1,31 +1,25 @@
 "use client";
 
 import { signIn, signOut } from "next-auth/react";
-import Link from "next/link";
 
-const classes =
-  "rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600";
+const buttonClasses =
+  "cursor-pointer rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600";
 
-export const LoginButton = () => {
+export function LoginButton() {
   return (
-    <button className={classes} onClick={() => signIn("keycloak")}>
-      Sign in
+    <button className={buttonClasses} onClick={() => signIn("keycloak")}>
+      Log in
     </button>
   );
-};
+}
 
-export const RegisterButton = () => {
-  return <Link href="/register">Register</Link>;
-};
-
-export const LogoutButton = () => {
+export function LogoutButton() {
   return (
-    <button className={classes} onClick={() => signOut()}>
-      Sign Out
+    <button
+      className={buttonClasses}
+      onClick={() => signOut({ callbackUrl: "/" })}
+    >
+      Log out
     </button>
   );
-};
-
-export const ProfileButton = () => {
-  return <Link href="/profile">Profile</Link>;
-};
+}

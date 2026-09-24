@@ -1,37 +1,34 @@
-# Phase Two Next.js Example
+# Phase Two Next.js example: NextAuth.js
 
-[View Deployed Example](https://phasetwo-nextjs-example.vercel.app/)
+[🚀 View the deployed example](https://phasetwo-nextjs-example.vercel.app/)
 
-## Getting Started
+A Next.js 16 app (App Router) that logs users in with Keycloak through [NextAuth.js](https://next-auth.js.org) and its Keycloak provider. The login runs on the server: tokens stay in an encrypted, HTTP-only session cookie and the browser only sees decoded claims. It is styled with [Tailwind CSS](https://tailwindcss.com).
 
-First, run the development server:
+- [src/auth.ts](./src/auth.ts) holds the NextAuth.js options: the Keycloak provider, refreshing the access token before it expires, the session content, and ending the Keycloak session on logout.
+- [src/app/api/auth/[...nextauth]/route.ts](./src/app/api/auth/[...nextauth]/route.ts) mounts NextAuth.js.
+- [src/app/page.tsx](./src/app/page.tsx) reads the session on the server with `getServerSession`, and [src/components/buttons.components.tsx](./src/components/buttons.components.tsx) has the Log in / Log out buttons.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
+## Configuration
+
+Copy [.env.example](./.env.example) to `.env`. It points at the [local Keycloak](../../keycloak/README.md).
+
+| Variable          | Description                                                                | Local value                                    |
+| ----------------- | -------------------------------------------------------------------------- | ---------------------------------------------- |
+| `NEXTAUTH_URL`    | Public URL of the app                                                      | `http://localhost:3000`                        |
+| `NEXTAUTH_SECRET` | Random secret that encrypts the session cookie (`openssl rand -base64 32`) | —                                              |
+| `KEYCLOAK_ID`     | Client ID of a confidential Keycloak client                                | `nextjs`                                       |
+| `KEYCLOAK_SECRET` | Secret of that client                                                      | `nextjs-local-dev-secret`                      |
+| `KEYCLOAK_ISSUER` | URL of your Keycloak realm                                                 | `http://localhost:8080/auth/realms/p2examples` |
+
+`NEXTAUTH_SECRET` is not the Keycloak client secret: generate your own random value. `.env` is ignored by git; never commit secrets.
+
+For your own realm, create an OpenID Connect client with client authentication on, the standard flow enabled, `http://localhost:3000/*` as valid redirect URI, and `+` as web origin and as valid post logout redirect URI.
+
+## Run it
+
+```sh
+pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-# Phase Two Next.js Example
-
-All Auth related items are in [Auth.tsx]("./src/Auth.tsx"). This example leverages [react-oidc-context](https://github.com/authts/react-oidc-context/tree/f175dcba6ab09871b027d6a2f2224a17712b67c5) (which uses [oidc-client-ts](https://github.com/authts/oidc-client-ts)) to provide hook and HOC support.
-
-## Available Scripts
-
-In the project directory, you can run:
-
-`npm run dev`
-
-Runs the app in the development mode.
-
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits. You will also see any lint errors in the console.
+Then open <http://localhost:3000>. `pnpm build && pnpm start` runs a production build. `pnpm typecheck`, `pnpm lint` and `pnpm format` are also available.

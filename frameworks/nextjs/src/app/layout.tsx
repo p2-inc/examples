@@ -1,25 +1,15 @@
-import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { NextAuthProvider as AuthProvider } from "./providers";
-
-const inter = Inter({ subsets: ["latin"] });
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Phase Two Keycloak + NextJs Example",
-  description: "Phase Two Keycloak + NextJs Example",
+  title: "Phase Two · Next.js + NextAuth.js",
+  description: "Keycloak login for a Next.js app with NextAuth.js",
 };
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <AuthProvider>{children}</AuthProvider>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
