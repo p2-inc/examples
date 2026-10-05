@@ -26,7 +26,7 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
-    "@iconify/react": "^5.2.1",
+    "@iconify/react": "^6.0.2",
     "@types/jsonwebtoken": "^9.0.10"
   }
 }
