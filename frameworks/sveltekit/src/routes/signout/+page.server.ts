@@ -1,4 +1,4 @@
-import { signOut } from "$src/auth.js"
-import type { Actions } from "./$types.js"
+import { signOut } from '../../auth';
+import type { Actions } from './$types';
 
-export const actions = { default: signOut } satisfies Actions
+export const actions = { default: signOut } satisfies Actions;

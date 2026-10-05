@@ -4,6 +4,8 @@ from django.test import TestCase
 
 
 from catalog.models import Author
+from django.conf import settings
+from django.shortcuts import resolve_url
 from django.urls import reverse
 
 
@@ -93,7 +95,8 @@ class LoanedBookInstancesByUserListViewTest(TestCase):
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(reverse('my-borrowed'))
-        self.assertRedirects(response, '/accounts/login/?next=/catalog/mybooks/')
+        self.assertRedirects(response, f'{resolve_url(settings.LOGIN_URL)}?next=/catalog/mybooks/',
+                             fetch_redirect_response=False)
 
     def test_logged_in_uses_correct_template(self):
         login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
@@ -229,7 +232,7 @@ class RenewBookInstancesViewTest(TestCase):
         response = self.client.get(reverse('renew-book-librarian', kwargs={'pk': self.test_bookinstance1.pk}))
         # Manually check redirect (Can't use assertRedirect, because the redirect URL is unpredictable)
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith('/accounts/login/'))
+        self.assertTrue(response.url.startswith(resolve_url(settings.LOGIN_URL)))
 
     def test_forbidden_if_logged_in_but_not_correct_permission(self):
         login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
@@ -274,7 +277,7 @@ class RenewBookInstancesViewTest(TestCase):
         response = self.client.post(reverse('renew-book-librarian', kwargs={'pk': self.test_bookinstance1.pk}),
                                     {'renewal_date': date_in_past})
         self.assertEqual(response.status_code, 200)
-        self.assertFormError(response, 'form', 'renewal_date', 'Invalid date - renewal in past')
+        self.assertFormError(response.context['form'], 'renewal_date', 'Invalid date - renewal in past')
 
     def test_form_invalid_renewal_date_future(self):
         login = self.client.login(username='testuser2', password='2HJ1vRV0Z&3iD')
@@ -283,7 +286,7 @@ class RenewBookInstancesViewTest(TestCase):
         response = self.client.post(reverse('renew-book-librarian', kwargs={'pk': self.test_bookinstance1.pk}),
                                     {'renewal_date': invalid_date_in_future})
         self.assertEqual(response.status_code, 200)
-        self.assertFormError(response, 'form', 'renewal_date', 'Invalid date - renewal more than 4 weeks ahead')
+        self.assertFormError(response.context['form'], 'renewal_date', 'Invalid date - renewal more than 4 weeks ahead')
 
     def test_redirects_to_all_borrowed_book_list_on_success(self):
         login = self.client.login(username='testuser2', password='2HJ1vRV0Z&3iD')
@@ -320,7 +323,8 @@ class AuthorCreateViewTest(TestCase):
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(reverse('author-create'))
-        self.assertRedirects(response, '/accounts/login/?next=/catalog/author/create/')
+        self.assertRedirects(response, f'{resolve_url(settings.LOGIN_URL)}?next=/catalog/author/create/',
+                             fetch_redirect_response=False)
 
     def test_forbidden_if_logged_in_but_not_correct_permission(self):
         login = self.client.login(username='testuser1', password='1X<ISRUkw+tuK')
