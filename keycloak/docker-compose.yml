@@ -2,7 +2,7 @@ name: p2-examples-keycloak
 
 services:
   keycloak:
-    image: quay.io/phasetwo/phasetwo-keycloak:26.6
+    image: quay.io/phasetwo/phasetwo-keycloak:26.8
     command: ["start-dev", "--import-realm"]
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
