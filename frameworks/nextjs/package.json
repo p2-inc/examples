@@ -15,7 +15,7 @@
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.14",
     "eslint": "8.46.0",
-    "eslint-config-next": "13.4.12",
+    "eslint-config-next": "15.5.27",
     "jsonwebtoken": "^9.0.3",
     "next": "^14.2.35",
     "next-auth": "^4.24.13",
