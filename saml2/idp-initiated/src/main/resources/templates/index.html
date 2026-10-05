@@ -1,46 +1,148 @@
-<!--
-  ~ Copyright 2002-2021 the original author or authors.
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~      https://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Phase Two SAML 2.0 IdP-initiated example</title>
     <style>
-        span {
-        font-weight: bold;
-        }
-    </style>
-    <title>SAML Login</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container">
+      :root {
+        --p2blue-200: #edf5fb;
+        --p2blue-500: #5b9fdd;
+        --p2blue-700: #1570c2;
+        --p2blue-900: #3c474e;
+      }
 
-    <main class="container">
-        <div class="row">
-            <h1>Authenticated Page</h1>
-        </div>
-        <div class="row">
-            <p>You are successfully logged in as <span th:text="${name}"></span></p>
-        </div>
-        <div class="row">
-            <form th:action="@{/logout}" method="post">
-                <button class="btn btn-primary" type="submit">Logout</button>
-            </form>
-        </div>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        color: var(--p2blue-900);
+        background: linear-gradient(180deg, var(--p2blue-200), #ffffff 60%);
+      }
+
+      header,
+      main,
+      footer {
+        max-width: 48rem;
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+        text-align: center;
+      }
+
+      a {
+        color: var(--p2blue-700);
+      }
+
+      .brand {
+        font-size: 2rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .subtitle {
+        font-size: 1.125rem;
+        color: var(--p2blue-700);
+      }
+
+      .status-label {
+        font-size: 1.25rem;
+        font-style: italic;
+      }
+
+      .status {
+        margin-bottom: 0.5rem;
+        font-size: 1.5rem;
+        color: var(--p2blue-700);
+      }
+
+      button {
+        cursor: pointer;
+        border: 0;
+        border-radius: 0.375rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #ffffff;
+        background: var(--p2blue-700);
+      }
+
+      button:hover {
+        background: var(--p2blue-500);
+      }
+
+      section {
+        margin-top: 2rem;
+        text-align: left;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #ffffff;
+      }
+
+      th,
+      td {
+        border: 1px solid var(--p2blue-200);
+        padding: 0.5rem 0.75rem;
+        vertical-align: top;
+        overflow-wrap: anywhere;
+      }
+
+      th {
+        width: 30%;
+        text-align: left;
+      }
+
+      footer a {
+        margin: 0 0.75rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="https://phasetwo.io" target="_blank" rel="noreferrer">Phase Two</a>
+      <p class="subtitle">Spring Boot · SAML 2.0 service provider · IdP-initiated SSO</p>
+      <a href="https://github.com/p2-inc/examples/tree/main/saml2/idp-initiated" target="_blank" rel="noreferrer">
+        Source code on GitHub
+      </a>
+    </header>
+    <main>
+      <p class="status-label">Your current status is:</p>
+      <p class="status">Authenticated</p>
+      <p>Logged in as <strong sec:authentication="name">user</strong></p>
+      <form th:action="@{/logout}" method="post">
+        <button type="submit">Log out</button>
+      </form>
+      <section>
+        <h2>SAML assertion (decoded)</h2>
+        <table aria-label="SAML assertion (decoded)">
+          <tbody>
+            <tr>
+              <th scope="row">Relying party registration</th>
+              <td th:text="${registrationId}">keycloak</td>
+            </tr>
+            <tr>
+              <th scope="row">NameID</th>
+              <td th:text="${nameId}">user</td>
+            </tr>
+            <tr>
+              <th scope="row">Session index</th>
+              <td th:text="${#strings.listJoin(sessionIndexes, ', ')}">index</td>
+            </tr>
+            <tr th:each="attribute : ${attributes}">
+              <th scope="row" th:text="${attribute.key}">attribute</th>
+              <td th:text="${#strings.listJoin(attribute.value, ', ')}">value</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
     </main>
-</div>
-</body>
+    <footer>
+      <a href="https://phasetwo.io/docs/introduction/" target="_blank" rel="noreferrer">Docs</a>
+      <a href="https://github.com/p2-inc/" target="_blank" rel="noreferrer">Github</a>
+      <a href="https://phasetwo.io/blog/" target="_blank" rel="noreferrer">Blog</a>
+      <a href="mailto:support@phasetwo.io">Contact</a>
+    </footer>
+  </body>
 </html>

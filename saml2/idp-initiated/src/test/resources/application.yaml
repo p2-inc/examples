@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: idp-initiated
+  security:
+    saml2:
+      relyingparty:
+        registration:
+          keycloak:
+            entity-id: "{baseUrl}/saml2/metadata"
+            acs:
+              location: "{baseUrl}/login/saml2/sso"
+            singlelogout:
+              url: "{baseUrl}/logout/saml2/slo"
+            assertingparty:
+              metadata-uri: classpath:test-realm-descriptor.xml
+              singlesignon:
+                sign-request: false

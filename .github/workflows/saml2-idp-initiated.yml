@@ -1,0 +1,27 @@
+name: SAML 2.0 IdP-initiated (Spring Boot)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "saml2/idp-initiated/**"
+      - ".github/workflows/saml2-idp-initiated.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "saml2/idp-initiated/**"
+      - ".github/workflows/saml2-idp-initiated.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  ci:
+    uses: ./.github/workflows/_gradle-ci.yml
+    with:
+      working-directory: saml2/idp-initiated

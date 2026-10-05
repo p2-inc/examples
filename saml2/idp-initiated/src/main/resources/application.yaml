@@ -7,11 +7,15 @@ spring:
     saml2:
       relyingparty:
         registration:
-          okta-app:
+          keycloak:
             entity-id: "{baseUrl}/saml2/metadata"
-            acs.location: "{baseUrl}/login/saml2/sso"
-            signing.credentials:
-              - private-key-location: classpath:credentials/private.key # you need replace this with private key from keycloak saml client in order to validate signature
-                certificate-location: classpath:credentials/cert.crt # you need replace this with cert from keycloak saml client in order to validate signature
-            idp-entity-id: http://localhost:8080/realms/test-realm
-            assertingparty.metadata-uri: http://localhost:8080/realms/test-realm/protocol/saml/descriptor
+            acs:
+              location: "{baseUrl}/login/saml2/sso"
+            singlelogout:
+              url: "{baseUrl}/logout/saml2/slo"
+            signing:
+              credentials:
+                - private-key-location: file:credentials/private.key
+                  certificate-location: file:credentials/cert.crt
+            assertingparty:
+              metadata-uri: http://localhost:8080/realms/test-realm/protocol/saml/descriptor
