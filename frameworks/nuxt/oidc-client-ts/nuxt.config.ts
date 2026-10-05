@@ -1,27 +1,33 @@
-require("dotenv").config();
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from "@tailwindcss/vite";
+
 export default defineNuxtConfig({
+  compatibilityDate: "2025-07-15",
   ssr: false,
-  devtools: { enabled: true },
+  modules: ["@pinia/nuxt", "@nuxt/eslint"],
   css: ["~/assets/css/main.css"],
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
+  vite: {
+    plugins: [tailwindcss()],
   },
-  modules: ["@pinia/nuxt"],
+  devServer: {
+    port: 3000,
+  },
   app: {
     head: {
-      title: "Phase Two Nuxt.js Keycloak Example (oidc-client-ts)",
+      title: "Phase Two · Nuxt + oidc-client-ts",
+      htmlAttrs: { lang: "en" },
+      link: [{ rel: "icon", href: "/favicon.ico" }],
+      meta: [
+        {
+          name: "description",
+          content: "Keycloak login for a Nuxt app with oidc-client-ts",
+        },
+      ],
     },
   },
   runtimeConfig: {
-    clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,
     public: {
-      keycloakIssuer: process.env.KEYCLOAK_ISSUER,
-      realm: process.env.KEYCLOAK_REALM,
-      clientId: process.env.KEYCLOAK_CLIENT_ID,
+      oidcIssuerUri: "https://app.phasetwo.io/auth/realms/p2examples",
+      oidcClientId: "nuxt-oidc-client-ts-example",
     },
   },
   nitro: {

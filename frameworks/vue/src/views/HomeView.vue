@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import User from '../components/User.vue'
+import UserStatus from '@/components/UserStatus.vue'
 </script>
 
 <template>
-  <User />
+  <UserStatus />
 </template>

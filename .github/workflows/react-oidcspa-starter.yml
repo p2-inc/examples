@@ -1,0 +1,27 @@
+name: React (oidc-spa tutorial starter)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "frameworks/reactjs/oidc-spa-starter/**"
+      - ".github/workflows/react-oidcspa-starter.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "frameworks/reactjs/oidc-spa-starter/**"
+      - ".github/workflows/react-oidcspa-starter.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  ci:
+    uses: ./.github/workflows/_node-ci.yml
+    with:
+      working-directory: frameworks/reactjs/oidc-spa-starter

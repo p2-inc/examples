@@ -1,23 +1,24 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es2015",
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "moduleResolution": "bundler",
+    "moduleDetection": "force",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
     "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
+    "verbatimModuleSyntax": true,
+    "noFallthroughCasesInSwitch": true,
+    "types": [],
     "paths": {
-      "@multitenant/api-manager": ["libs/api-manager/src/index.ts"],
-      "@multitenant/phasetwo-orgs-api": ["libs/phasetwo-orgs-api/src/index.ts"],
-      "@multitenant/ui-shared": ["libs/ui-shared/src/index.ts"]
+      "@multitenant/api-manager": ["./libs/api-manager/src/index.ts"],
+      "@multitenant/phasetwo-orgs-api": [
+        "./libs/phasetwo-orgs-api/src/index.ts"
+      ],
+      "@multitenant/ui-shared": ["./libs/ui-shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

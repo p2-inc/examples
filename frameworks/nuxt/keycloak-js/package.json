@@ -1,23 +1,42 @@
 {
-  "name": "nuxt-app",
+  "name": "phasetwo-nuxt-keycloak-js-example",
   "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
-    "build": "nuxt build",
     "dev": "nuxt dev",
+    "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "devDependencies": {
-    "@nuxt/devtools": "latest",
-    "autoprefixer": "^10.4.23",
-    "nuxt": "^3.20.2",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.19"
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck",
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "dependencies": {
-    "iconify-icon": "^2.3.0",
-    "jwt-decode": "^4.0.0",
-    "keycloak-js": "^25.0.6"
+    "keycloak-js": "^26.2.4",
+    "nuxt": "^4.5.2",
+    "vue": "^3.5.43",
+    "vue-router": "^5.3.1"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.17.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "eslint": "^10.11.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.9",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.3",
+    "vue-tsc": "^3.3.11"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "unrs-resolver"
+    ]
   }
 }

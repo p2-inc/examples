@@ -1,10 +1,10 @@
-<template></template>
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import { userManager } from '@/auth'
 
-<script>
-export default {
-  name: 'SilentRefresh',
-  async mounted() {
-    await this.$auth.renewToken()
-  }
-}
+onMounted(() => userManager.signinSilentCallback())
 </script>
+
+<template>
+  <div></div>
+</template>

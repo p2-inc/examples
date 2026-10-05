@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Phase Two Admin REST API
- * This is a REST API reference for the Phase Two Keycloak custom resources. These are extensions to the standard [Keycloak Admin REST API](https://www.keycloak.org/docs-api/17.0/rest-api/index.html).  ### Base URI format Paths specified in the documentation are relative to the the base URI. - Format: `https://<host>:<port>/auth/realms` - Example: `https://app.phasetwo.io/auth/realms`  ### Authentication Authentication is achieved by using the `Authentication: Bearer <token>` header in all requests. This is either the access token received from a normal authentication, or by a request directly to the OpenID Connect token endpoint.  It is recommended that you use a Keycloak Admin Client, such as [this one for Javascript](https://github.com/keycloak/keycloak-nodejs-admin-client), as they take care of authentication, getting an access token, and refreshing it when it expires.  #### Client credentials grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=client_credentials&client_id=admin-cli&client_secret=fd649804-3a74-4d69-acaa-8f065c6b7da1 ```  #### Password grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=password&username=uname@foo.com&password=pwd123AZY&client_id=admin-cli ```  ### SDKs Modern API libraries are available for several common languages. These are available as open source at the links below, or you can choose to generate your own using our [OpenAPI spec file](https://raw.githubusercontent.com/p2-inc/phasetwo-docs/master/openapi.yaml).  | Language | Library | | --- | --- | | Java (and other JVM langs) | https://github.com/p2-inc/phasetwo-java | | JavaScript/TypeScript | https://github.com/p2-inc/phasetwo-js | | Python | https://github.com/p2-inc/phasetwo-python | 
+ * This is a REST API reference for the Phase Two Keycloak custom resources. These are extensions to the standard [Keycloak Admin REST API](https://www.keycloak.org/docs-api/latest/rest-api/index.html).  ### Base URI format Paths specified in the documentation are relative to the the base URI. - Format: `https://<host>:<port>/auth/realms` - Example: `https://app.phasetwo.io/auth/realms`  ### Authentication Authentication is achieved by using the `Authentication: Bearer <token>` header in all requests. This is either the access token received from a normal authentication, or by a request directly to the OpenID Connect token endpoint.  It is recommended that you use a Keycloak Admin Client, such as [this one for Javascript](https://github.com/keycloak/keycloak/tree/main/js/libs/keycloak-admin-client), as they take care of authentication, getting an access token, and refreshing it when it expires.  #### Client credentials grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=client_credentials&client_id=admin-cli&client_secret=fd649804-3a74-4d69-acaa-8f065c6b7da1 ```  #### Password grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=password&username=uname@foo.com&password=pwd123AZY&client_id=admin-cli ```  ### SDKs Modern API libraries are available for several common languages. These are available as open source at the links below, or you can choose to generate your own using our [OpenAPI spec file](https://raw.githubusercontent.com/p2-inc/phasetwo-docs/main/openapi.yaml).  | Language | Library | | --- | --- | | Java (and other JVM langs) | https://github.com/p2-inc/phasetwo-java | | JavaScript/TypeScript | https://github.com/p2-inc/phasetwo-js | | Python | https://github.com/p2-inc/phasetwo-python | 
  *
  * The version of the OpenAPI document: v1
  * 
@@ -12,86 +12,231 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  IdentityProviderMapperRepresentation,
-  IdentityProviderRepresentation,
-} from '../models/index';
 import {
+    type IdentityProviderMapperRepresentation,
     IdentityProviderMapperRepresentationFromJSON,
     IdentityProviderMapperRepresentationToJSON,
+} from '../models/IdentityProviderMapperRepresentation';
+import {
+    type IdentityProviderRepresentation,
     IdentityProviderRepresentationFromJSON,
     IdentityProviderRepresentationToJSON,
-} from '../models/index';
+} from '../models/IdentityProviderRepresentation';
+import {
+    type LinkIdentityProviderRepresentation,
+    LinkIdentityProviderRepresentationFromJSON,
+    LinkIdentityProviderRepresentationToJSON,
+} from '../models/LinkIdentityProviderRepresentation';
 
 export interface AddIdpMapperRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
+    /**
+     * 
+     */
     alias: string;
+    /**
+     * 
+     */
     identityProviderMapperRepresentation: IdentityProviderMapperRepresentation;
 }
 
 export interface CreateIdpRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
+    /**
+     * 
+     */
     identityProviderRepresentation: IdentityProviderRepresentation;
 }
 
 export interface DeleteIdpRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
+    /**
+     * Identity Provider alias
+     */
     alias: string;
 }
 
 export interface DeleteIdpMapperRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
+    /**
+     * 
+     */
     alias: string;
+    /**
+     * Mapper id
+     */
     id: string;
 }
 
 export interface GetIdpRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
+    /**
+     * Identity Provider alias
+     */
     alias: string;
 }
 
 export interface GetIdpMapperRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
+    /**
+     * 
+     */
     alias: string;
+    /**
+     * Mapper id
+     */
     id: string;
 }
 
 export interface GetIdpMappersRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
+    /**
+     * 
+     */
     alias: string;
 }
 
 export interface GetIdpsRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
 }
 
 export interface ImportIdpJsonRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
 }
 
-export interface UpdateIdpRequest {
+export interface LinkIdpRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
+    /**
+     * 
+     */
+    linkIdentityProviderRepresentation: LinkIdentityProviderRepresentation;
+}
+
+export interface UnlinkIdpRequest {
+    /**
+     * realm name (not id!)
+     */
+    realm: string;
+    /**
+     * organization id
+     */
+    orgId: string;
+    /**
+     * idp alias
+     */
     alias: string;
+}
+
+export interface UpdateIdpRequest {
+    /**
+     * realm name (not id!)
+     */
+    realm: string;
+    /**
+     * organization id
+     */
+    orgId: string;
+    /**
+     * Identity Provider alias
+     */
+    alias: string;
+    /**
+     * 
+     */
     identityProviderRepresentation: IdentityProviderRepresentation;
 }
 
 export interface UpdateIdpMapperRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
+    /**
+     * 
+     */
     alias: string;
+    /**
+     * Mapper id
+     */
     id: string;
+    /**
+     * 
+     */
     identityProviderMapperRepresentation: IdentityProviderMapperRepresentation;
 }
 
@@ -101,9 +246,9 @@ export interface UpdateIdpMapperRequest {
 export class IdentityProvidersApi extends runtime.BaseAPI {
 
     /**
-     * Add a mapper to identity provider
+     * Creates request options for addIdpMapper without sending the request
      */
-    async addIdpMapperRaw(requestParameters: AddIdpMapperRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addIdpMapperRequestOpts(requestParameters: AddIdpMapperRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -146,13 +291,27 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/idps/{alias}/mappers`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"alias"}}`, encodeURIComponent(String(requestParameters['alias']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/idps/{alias}/mappers`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{alias}', encodeURIComponent(String(requestParameters['alias'])));
+
+        return {
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: IdentityProviderMapperRepresentationToJSON(requestParameters['identityProviderMapperRepresentation']),
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add a mapper to identity provider
+     */
+    async addIdpMapperRaw(requestParameters: AddIdpMapperRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addIdpMapperRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -165,9 +324,9 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new identity provider for this organization
+     * Creates request options for createIdp without sending the request
      */
-    async createIdpRaw(requestParameters: CreateIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async createIdpRequestOpts(requestParameters: CreateIdpRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -203,13 +362,26 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/idps`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/idps`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+
+        return {
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: IdentityProviderRepresentationToJSON(requestParameters['identityProviderRepresentation']),
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Create a new identity provider for this organization
+     */
+    async createIdpRaw(requestParameters: CreateIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.createIdpRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -222,9 +394,9 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete the identity provider
+     * Creates request options for deleteIdp without sending the request
      */
-    async deleteIdpRaw(requestParameters: DeleteIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteIdpRequestOpts(requestParameters: DeleteIdpRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -258,12 +430,26 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/idps/{alias}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"alias"}}`, encodeURIComponent(String(requestParameters['alias']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/idps/{alias}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{alias}', encodeURIComponent(String(requestParameters['alias'])));
+
+        return {
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete the identity provider
+     */
+    async deleteIdpRaw(requestParameters: DeleteIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteIdpRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -276,9 +462,9 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Delete a mapper for the identity provider
+     * Creates request options for deleteIdpMapper without sending the request
      */
-    async deleteIdpMapperRaw(requestParameters: DeleteIdpMapperRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteIdpMapperRequestOpts(requestParameters: DeleteIdpMapperRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -319,12 +505,27 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/idps/{alias}/mappers/{id}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"alias"}}`, encodeURIComponent(String(requestParameters['alias']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/idps/{alias}/mappers/{id}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{alias}', encodeURIComponent(String(requestParameters['alias'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Delete a mapper for the identity provider
+     */
+    async deleteIdpMapperRaw(requestParameters: DeleteIdpMapperRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteIdpMapperRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -337,9 +538,9 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get identity provider for this organization by alias
+     * Creates request options for getIdp without sending the request
      */
-    async getIdpRaw(requestParameters: GetIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IdentityProviderRepresentation>> {
+    async getIdpRequestOpts(requestParameters: GetIdpRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -373,12 +574,26 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/idps/{alias}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"alias"}}`, encodeURIComponent(String(requestParameters['alias']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/idps/{alias}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{alias}', encodeURIComponent(String(requestParameters['alias'])));
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get identity provider for this organization by alias
+     */
+    async getIdpRaw(requestParameters: GetIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IdentityProviderRepresentation>> {
+        const requestOptions = await this.getIdpRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => IdentityProviderRepresentationFromJSON(jsonValue));
     }
@@ -392,9 +607,9 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get mapper by id for the identity provider
+     * Creates request options for getIdpMapper without sending the request
      */
-    async getIdpMapperRaw(requestParameters: GetIdpMapperRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IdentityProviderMapperRepresentation>> {
+    async getIdpMapperRequestOpts(requestParameters: GetIdpMapperRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -435,12 +650,27 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/idps/{alias}/mappers/{id}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"alias"}}`, encodeURIComponent(String(requestParameters['alias']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/idps/{alias}/mappers/{id}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{alias}', encodeURIComponent(String(requestParameters['alias'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get mapper by id for the identity provider
+     */
+    async getIdpMapperRaw(requestParameters: GetIdpMapperRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<IdentityProviderMapperRepresentation>> {
+        const requestOptions = await this.getIdpMapperRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => IdentityProviderMapperRepresentationFromJSON(jsonValue));
     }
@@ -454,9 +684,9 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get mappers for identity provider
+     * Creates request options for getIdpMappers without sending the request
      */
-    async getIdpMappersRaw(requestParameters: GetIdpMappersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IdentityProviderMapperRepresentation>>> {
+    async getIdpMappersRequestOpts(requestParameters: GetIdpMappersRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -490,12 +720,26 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/idps/{alias}/mappers`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"alias"}}`, encodeURIComponent(String(requestParameters['alias']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/idps/{alias}/mappers`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{alias}', encodeURIComponent(String(requestParameters['alias'])));
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get mappers for identity provider
+     */
+    async getIdpMappersRaw(requestParameters: GetIdpMappersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IdentityProviderMapperRepresentation>>> {
+        const requestOptions = await this.getIdpMappersRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(IdentityProviderMapperRepresentationFromJSON));
     }
@@ -509,9 +753,9 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get identity providers for this organization
+     * Creates request options for getIdps without sending the request
      */
-    async getIdpsRaw(requestParameters: GetIdpsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IdentityProviderRepresentation>>> {
+    async getIdpsRequestOpts(requestParameters: GetIdpsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -538,12 +782,25 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/idps`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/idps`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get identity providers for this organization
+     */
+    async getIdpsRaw(requestParameters: GetIdpsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<IdentityProviderRepresentation>>> {
+        const requestOptions = await this.getIdpsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(IdentityProviderRepresentationFromJSON));
     }
@@ -557,9 +814,9 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Import identity provider from uploaded JSON file
+     * Creates request options for importIdpJson without sending the request
      */
-    async importIdpJsonRaw(requestParameters: ImportIdpJsonRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
+    async importIdpJsonRequestOpts(requestParameters: ImportIdpJsonRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -586,12 +843,25 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/idps/import-config`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/idps/import-config`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+
+        return {
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Import identity provider from uploaded JSON file
+     */
+    async importIdpJsonRaw(requestParameters: ImportIdpJsonRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: any; }>> {
+        const requestOptions = await this.importIdpJsonRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse<any>(response);
     }
@@ -605,9 +875,147 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update identity provider for this organization by alias
+     * Creates request options for linkIdp without sending the request
      */
-    async updateIdpRaw(requestParameters: UpdateIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async linkIdpRequestOpts(requestParameters: LinkIdpRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['realm'] == null) {
+            throw new runtime.RequiredError(
+                'realm',
+                'Required parameter "realm" was null or undefined when calling linkIdp().'
+            );
+        }
+
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling linkIdp().'
+            );
+        }
+
+        if (requestParameters['linkIdentityProviderRepresentation'] == null) {
+            throw new runtime.RequiredError(
+                'linkIdentityProviderRepresentation',
+                'Required parameter "linkIdentityProviderRepresentation" was null or undefined when calling linkIdp().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("access_token", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/{realm}/orgs/{orgId}/idps/link`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: LinkIdentityProviderRepresentationToJSON(requestParameters['linkIdentityProviderRepresentation']),
+        };
+    }
+
+    /**
+     * Link an existing identity provider to this organization
+     */
+    async linkIdpRaw(requestParameters: LinkIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.linkIdpRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Link an existing identity provider to this organization
+     */
+    async linkIdp(requestParameters: LinkIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.linkIdpRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for unlinkIdp without sending the request
+     */
+    async unlinkIdpRequestOpts(requestParameters: UnlinkIdpRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['realm'] == null) {
+            throw new runtime.RequiredError(
+                'realm',
+                'Required parameter "realm" was null or undefined when calling unlinkIdp().'
+            );
+        }
+
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling unlinkIdp().'
+            );
+        }
+
+        if (requestParameters['alias'] == null) {
+            throw new runtime.RequiredError(
+                'alias',
+                'Required parameter "alias" was null or undefined when calling unlinkIdp().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("access_token", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/{realm}/orgs/{orgId}/idps/{alias}/unlink`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{alias}', encodeURIComponent(String(requestParameters['alias'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Unlink an existing and linked identity provider from this organization
+     */
+    async unlinkIdpRaw(requestParameters: UnlinkIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.unlinkIdpRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Unlink an existing and linked identity provider from this organization
+     */
+    async unlinkIdp(requestParameters: UnlinkIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.unlinkIdpRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for updateIdp without sending the request
+     */
+    async updateIdpRequestOpts(requestParameters: UpdateIdpRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -650,13 +1058,27 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/idps/{alias}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"alias"}}`, encodeURIComponent(String(requestParameters['alias']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/idps/{alias}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{alias}', encodeURIComponent(String(requestParameters['alias'])));
+
+        return {
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: IdentityProviderRepresentationToJSON(requestParameters['identityProviderRepresentation']),
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update identity provider for this organization by alias
+     */
+    async updateIdpRaw(requestParameters: UpdateIdpRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateIdpRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -669,9 +1091,9 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Update a mapper for the identity provider
+     * Creates request options for updateIdpMapper without sending the request
      */
-    async updateIdpMapperRaw(requestParameters: UpdateIdpMapperRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async updateIdpMapperRequestOpts(requestParameters: UpdateIdpMapperRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -721,13 +1143,28 @@ export class IdentityProvidersApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/idps/{alias}/mappers/{id}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"alias"}}`, encodeURIComponent(String(requestParameters['alias']))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/idps/{alias}/mappers/{id}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{alias}', encodeURIComponent(String(requestParameters['alias'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: IdentityProviderMapperRepresentationToJSON(requestParameters['identityProviderMapperRepresentation']),
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Update a mapper for the identity provider
+     */
+    async updateIdpMapperRaw(requestParameters: UpdateIdpMapperRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.updateIdpMapperRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

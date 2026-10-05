@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Phase Two Admin REST API
- * This is a REST API reference for the Phase Two Keycloak custom resources. These are extensions to the standard [Keycloak Admin REST API](https://www.keycloak.org/docs-api/17.0/rest-api/index.html).  ### Base URI format Paths specified in the documentation are relative to the the base URI. - Format: `https://<host>:<port>/auth/realms` - Example: `https://app.phasetwo.io/auth/realms`  ### Authentication Authentication is achieved by using the `Authentication: Bearer <token>` header in all requests. This is either the access token received from a normal authentication, or by a request directly to the OpenID Connect token endpoint.  It is recommended that you use a Keycloak Admin Client, such as [this one for Javascript](https://github.com/keycloak/keycloak-nodejs-admin-client), as they take care of authentication, getting an access token, and refreshing it when it expires.  #### Client credentials grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=client_credentials&client_id=admin-cli&client_secret=fd649804-3a74-4d69-acaa-8f065c6b7da1 ```  #### Password grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=password&username=uname@foo.com&password=pwd123AZY&client_id=admin-cli ```  ### SDKs Modern API libraries are available for several common languages. These are available as open source at the links below, or you can choose to generate your own using our [OpenAPI spec file](https://raw.githubusercontent.com/p2-inc/phasetwo-docs/master/openapi.yaml).  | Language | Library | | --- | --- | | Java (and other JVM langs) | https://github.com/p2-inc/phasetwo-java | | JavaScript/TypeScript | https://github.com/p2-inc/phasetwo-js | | Python | https://github.com/p2-inc/phasetwo-python | 
+ * This is a REST API reference for the Phase Two Keycloak custom resources. These are extensions to the standard [Keycloak Admin REST API](https://www.keycloak.org/docs-api/latest/rest-api/index.html).  ### Base URI format Paths specified in the documentation are relative to the the base URI. - Format: `https://<host>:<port>/auth/realms` - Example: `https://app.phasetwo.io/auth/realms`  ### Authentication Authentication is achieved by using the `Authentication: Bearer <token>` header in all requests. This is either the access token received from a normal authentication, or by a request directly to the OpenID Connect token endpoint.  It is recommended that you use a Keycloak Admin Client, such as [this one for Javascript](https://github.com/keycloak/keycloak/tree/main/js/libs/keycloak-admin-client), as they take care of authentication, getting an access token, and refreshing it when it expires.  #### Client credentials grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=client_credentials&client_id=admin-cli&client_secret=fd649804-3a74-4d69-acaa-8f065c6b7da1 ```  #### Password grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=password&username=uname@foo.com&password=pwd123AZY&client_id=admin-cli ```  ### SDKs Modern API libraries are available for several common languages. These are available as open source at the links below, or you can choose to generate your own using our [OpenAPI spec file](https://raw.githubusercontent.com/p2-inc/phasetwo-docs/main/openapi.yaml).  | Language | Library | | --- | --- | | Java (and other JVM langs) | https://github.com/p2-inc/phasetwo-java | | JavaScript/TypeScript | https://github.com/p2-inc/phasetwo-js | | Python | https://github.com/p2-inc/phasetwo-python | 
  *
  * The version of the OpenAPI document: v1
  * 
@@ -12,44 +12,140 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  UserRepresentation,
-} from '../models/index';
 import {
-    UserRepresentationFromJSON,
-    UserRepresentationToJSON,
-} from '../models/index';
+    type OrganizationMemberAttributeRepresentation,
+    OrganizationMemberAttributeRepresentationFromJSON,
+    OrganizationMemberAttributeRepresentationToJSON,
+} from '../models/OrganizationMemberAttributeRepresentation';
+import {
+    type UserWithOrgsBriefRepresentation,
+    UserWithOrgsBriefRepresentationFromJSON,
+    UserWithOrgsBriefRepresentationToJSON,
+} from '../models/UserWithOrgsBriefRepresentation';
 
 export interface AddOrganizationMemberRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
+    /**
+     * user id
+     */
     userId: string;
 }
 
-export interface CheckOrganizationMembershipRequest {
+export interface AddOrganizationMemberAttributesRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
+    /**
+     * user id
+     */
+    userId: string;
+    /**
+     * 
+     */
+    organizationMemberAttributeRepresentation: OrganizationMemberAttributeRepresentation;
+}
+
+export interface CheckOrganizationMembershipRequest {
+    /**
+     * realm name (not id!)
+     */
+    realm: string;
+    /**
+     * organization id
+     */
+    orgId: string;
+    /**
+     * user id
+     */
+    userId: string;
+}
+
+export interface GetOrganizationMemberAttributesRequest {
+    /**
+     * realm name (not id!)
+     */
+    realm: string;
+    /**
+     * organization id
+     */
+    orgId: string;
+    /**
+     * user id
+     */
     userId: string;
 }
 
 export interface GetOrganizationMembershipsRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
+    /**
+     * 
+     */
     search?: string;
+    /**
+     * 
+     */
     first?: number;
+    /**
+     * 
+     */
     max?: number;
+    /**
+     * 
+     */
+    excludeAdminAccounts?: boolean;
+    /**
+     * 
+     */
+    includeOrgs?: boolean;
 }
 
 export interface GetOrganizationMembershipsCountRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
+    /**
+     * 
+     */
+    excludeAdminAccounts?: boolean;
 }
 
 export interface RemoveOrganizationMemberRequest {
+    /**
+     * realm name (not id!)
+     */
     realm: string;
+    /**
+     * organization id
+     */
     orgId: string;
+    /**
+     * user id
+     */
     userId: string;
 }
 
@@ -59,10 +155,9 @@ export interface RemoveOrganizationMemberRequest {
 export class OrganizationMembershipsApi extends runtime.BaseAPI {
 
     /**
-     * Add the specified user to the specified organization as a member
-     * Add an organization member
+     * Creates request options for addOrganizationMember without sending the request
      */
-    async addOrganizationMemberRaw(requestParameters: AddOrganizationMemberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addOrganizationMemberRequestOpts(requestParameters: AddOrganizationMemberRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -96,12 +191,27 @@ export class OrganizationMembershipsApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/members/{userId}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/members/{userId}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{userId}', encodeURIComponent(String(requestParameters['userId'])));
+
+        return {
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Add the specified user to the specified organization as a member
+     * Add an organization member
+     */
+    async addOrganizationMemberRaw(requestParameters: AddOrganizationMemberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.addOrganizationMemberRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -115,9 +225,90 @@ export class OrganizationMembershipsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Check if a user is a member of an organization
+     * Creates request options for addOrganizationMemberAttributes without sending the request
      */
-    async checkOrganizationMembershipRaw(requestParameters: CheckOrganizationMembershipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async addOrganizationMemberAttributesRequestOpts(requestParameters: AddOrganizationMemberAttributesRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['realm'] == null) {
+            throw new runtime.RequiredError(
+                'realm',
+                'Required parameter "realm" was null or undefined when calling addOrganizationMemberAttributes().'
+            );
+        }
+
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling addOrganizationMemberAttributes().'
+            );
+        }
+
+        if (requestParameters['userId'] == null) {
+            throw new runtime.RequiredError(
+                'userId',
+                'Required parameter "userId" was null or undefined when calling addOrganizationMemberAttributes().'
+            );
+        }
+
+        if (requestParameters['organizationMemberAttributeRepresentation'] == null) {
+            throw new runtime.RequiredError(
+                'organizationMemberAttributeRepresentation',
+                'Required parameter "organizationMemberAttributeRepresentation" was null or undefined when calling addOrganizationMemberAttributes().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("access_token", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/{realm}/orgs/{orgId}/members/{userId}/attributes`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{userId}', encodeURIComponent(String(requestParameters['userId'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: OrganizationMemberAttributeRepresentationToJSON(requestParameters['organizationMemberAttributeRepresentation']),
+        };
+    }
+
+    /**
+     * Add or update attributes for a specific member of an organization
+     * Add/update organization member attributes
+     */
+    async addOrganizationMemberAttributesRaw(requestParameters: AddOrganizationMemberAttributesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: Array<string>; }>> {
+        const requestOptions = await this.addOrganizationMemberAttributesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Add or update attributes for a specific member of an organization
+     * Add/update organization member attributes
+     */
+    async addOrganizationMemberAttributes(requestParameters: AddOrganizationMemberAttributesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: Array<string>; }> {
+        const response = await this.addOrganizationMemberAttributesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for checkOrganizationMembership without sending the request
+     */
+    async checkOrganizationMembershipRequestOpts(requestParameters: CheckOrganizationMembershipRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -151,12 +342,26 @@ export class OrganizationMembershipsApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/members/{userId}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/members/{userId}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{userId}', encodeURIComponent(String(requestParameters['userId'])));
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Check if a user is a member of an organization
+     */
+    async checkOrganizationMembershipRaw(requestParameters: CheckOrganizationMembershipRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.checkOrganizationMembershipRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -169,10 +374,80 @@ export class OrganizationMembershipsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a paginated list of users who are a member of the specified organization.
-     * Get organization memberships
+     * Creates request options for getOrganizationMemberAttributes without sending the request
      */
-    async getOrganizationMembershipsRaw(requestParameters: GetOrganizationMembershipsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<UserRepresentation>>> {
+    async getOrganizationMemberAttributesRequestOpts(requestParameters: GetOrganizationMemberAttributesRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['realm'] == null) {
+            throw new runtime.RequiredError(
+                'realm',
+                'Required parameter "realm" was null or undefined when calling getOrganizationMemberAttributes().'
+            );
+        }
+
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling getOrganizationMemberAttributes().'
+            );
+        }
+
+        if (requestParameters['userId'] == null) {
+            throw new runtime.RequiredError(
+                'userId',
+                'Required parameter "userId" was null or undefined when calling getOrganizationMemberAttributes().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("access_token", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/{realm}/orgs/{orgId}/members/{userId}/attributes`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{userId}', encodeURIComponent(String(requestParameters['userId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Get attributes for a specific member of an organization
+     * Get organization member attributes
+     */
+    async getOrganizationMemberAttributesRaw(requestParameters: GetOrganizationMemberAttributesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<{ [key: string]: Array<string>; }>> {
+        const requestOptions = await this.getOrganizationMemberAttributesRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Get attributes for a specific member of an organization
+     * Get organization member attributes
+     */
+    async getOrganizationMemberAttributes(requestParameters: GetOrganizationMemberAttributesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: Array<string>; }> {
+        const response = await this.getOrganizationMemberAttributesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Creates request options for getOrganizationMemberships without sending the request
+     */
+    async getOrganizationMembershipsRequestOpts(requestParameters: GetOrganizationMembershipsRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -201,6 +476,14 @@ export class OrganizationMembershipsApi extends runtime.BaseAPI {
             queryParameters['max'] = requestParameters['max'];
         }
 
+        if (requestParameters['excludeAdminAccounts'] != null) {
+            queryParameters['excludeAdminAccounts'] = requestParameters['excludeAdminAccounts'];
+        }
+
+        if (requestParameters['includeOrgs'] != null) {
+            queryParameters['includeOrgs'] = requestParameters['includeOrgs'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.accessToken) {
@@ -211,30 +494,43 @@ export class OrganizationMembershipsApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/members`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/members`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(UserRepresentationFromJSON));
+        };
     }
 
     /**
      * Get a paginated list of users who are a member of the specified organization.
      * Get organization memberships
      */
-    async getOrganizationMemberships(requestParameters: GetOrganizationMembershipsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<UserRepresentation>> {
+    async getOrganizationMembershipsRaw(requestParameters: GetOrganizationMembershipsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<UserWithOrgsBriefRepresentation>>> {
+        const requestOptions = await this.getOrganizationMembershipsRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(UserWithOrgsBriefRepresentationFromJSON));
+    }
+
+    /**
+     * Get a paginated list of users who are a member of the specified organization.
+     * Get organization memberships
+     */
+    async getOrganizationMemberships(requestParameters: GetOrganizationMembershipsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<UserWithOrgsBriefRepresentation>> {
         const response = await this.getOrganizationMembershipsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Get total number of members of a given organization
-     * Get organization members count
+     * Creates request options for getOrganizationMembershipsCount without sending the request
      */
-    async getOrganizationMembershipsCountRaw(requestParameters: GetOrganizationMembershipsCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>> {
+    async getOrganizationMembershipsCountRequestOpts(requestParameters: GetOrganizationMembershipsCountRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -251,6 +547,10 @@ export class OrganizationMembershipsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters['excludeAdminAccounts'] != null) {
+            queryParameters['excludeAdminAccounts'] = requestParameters['excludeAdminAccounts'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.accessToken) {
@@ -261,12 +561,26 @@ export class OrganizationMembershipsApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/members/count`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/members/count`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get total number of members of a given organization
+     * Get organization members count
+     */
+    async getOrganizationMembershipsCountRaw(requestParameters: GetOrganizationMembershipsCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>> {
+        const requestOptions = await this.getOrganizationMembershipsCountRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<number>(response);
@@ -285,10 +599,9 @@ export class OrganizationMembershipsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Remove the specified user from the specified organization as a member
-     * Remove an organization member
+     * Creates request options for removeOrganizationMember without sending the request
      */
-    async removeOrganizationMemberRaw(requestParameters: RemoveOrganizationMemberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async removeOrganizationMemberRequestOpts(requestParameters: RemoveOrganizationMemberRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['realm'] == null) {
             throw new runtime.RequiredError(
                 'realm',
@@ -322,12 +635,27 @@ export class OrganizationMembershipsApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/{realm}/orgs/{orgId}/members/{userId}`.replace(`{${"realm"}}`, encodeURIComponent(String(requestParameters['realm']))).replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId']))),
+
+        let urlPath = `/{realm}/orgs/{orgId}/members/{userId}`;
+        urlPath = urlPath.replace('{realm}', encodeURIComponent(String(requestParameters['realm'])));
+        urlPath = urlPath.replace('{orgId}', encodeURIComponent(String(requestParameters['orgId'])));
+        urlPath = urlPath.replace('{userId}', encodeURIComponent(String(requestParameters['userId'])));
+
+        return {
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Remove the specified user from the specified organization as a member
+     * Remove an organization member
+     */
+    async removeOrganizationMemberRaw(requestParameters: RemoveOrganizationMemberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.removeOrganizationMemberRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }

@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Phase Two Admin REST API
- * This is a REST API reference for the Phase Two Keycloak custom resources. These are extensions to the standard [Keycloak Admin REST API](https://www.keycloak.org/docs-api/17.0/rest-api/index.html).  ### Base URI format Paths specified in the documentation are relative to the the base URI. - Format: `https://<host>:<port>/auth/realms` - Example: `https://app.phasetwo.io/auth/realms`  ### Authentication Authentication is achieved by using the `Authentication: Bearer <token>` header in all requests. This is either the access token received from a normal authentication, or by a request directly to the OpenID Connect token endpoint.  It is recommended that you use a Keycloak Admin Client, such as [this one for Javascript](https://github.com/keycloak/keycloak-nodejs-admin-client), as they take care of authentication, getting an access token, and refreshing it when it expires.  #### Client credentials grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=client_credentials&client_id=admin-cli&client_secret=fd649804-3a74-4d69-acaa-8f065c6b7da1 ```  #### Password grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=password&username=uname@foo.com&password=pwd123AZY&client_id=admin-cli ```  ### SDKs Modern API libraries are available for several common languages. These are available as open source at the links below, or you can choose to generate your own using our [OpenAPI spec file](https://raw.githubusercontent.com/p2-inc/phasetwo-docs/master/openapi.yaml).  | Language | Library | | --- | --- | | Java (and other JVM langs) | https://github.com/p2-inc/phasetwo-java | | JavaScript/TypeScript | https://github.com/p2-inc/phasetwo-js | | Python | https://github.com/p2-inc/phasetwo-python | 
+ * This is a REST API reference for the Phase Two Keycloak custom resources. These are extensions to the standard [Keycloak Admin REST API](https://www.keycloak.org/docs-api/latest/rest-api/index.html).  ### Base URI format Paths specified in the documentation are relative to the the base URI. - Format: `https://<host>:<port>/auth/realms` - Example: `https://app.phasetwo.io/auth/realms`  ### Authentication Authentication is achieved by using the `Authentication: Bearer <token>` header in all requests. This is either the access token received from a normal authentication, or by a request directly to the OpenID Connect token endpoint.  It is recommended that you use a Keycloak Admin Client, such as [this one for Javascript](https://github.com/keycloak/keycloak/tree/main/js/libs/keycloak-admin-client), as they take care of authentication, getting an access token, and refreshing it when it expires.  #### Client credentials grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=client_credentials&client_id=admin-cli&client_secret=fd649804-3a74-4d69-acaa-8f065c6b7da1 ```  #### Password grant example ``` POST /auth/realms/test-realm/protocol/openid-connect/token Host: app.phasetwo.io Accept: application/json Content-type: application/x-www-form-urlencoded  grant_type=password&username=uname@foo.com&password=pwd123AZY&client_id=admin-cli ```  ### SDKs Modern API libraries are available for several common languages. These are available as open source at the links below, or you can choose to generate your own using our [OpenAPI spec file](https://raw.githubusercontent.com/p2-inc/phasetwo-docs/main/openapi.yaml).  | Language | Library | | --- | --- | | Java (and other JVM langs) | https://github.com/p2-inc/phasetwo-java | | JavaScript/TypeScript | https://github.com/p2-inc/phasetwo-js | | Python | https://github.com/p2-inc/phasetwo-python | 
  *
  * The version of the OpenAPI document: v1
  * 
@@ -11,7 +11,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
 
 export const BASE_PATH = "https://app.phasetwo.io/realms".replace(/\/+$/, "");
 
@@ -91,7 +90,7 @@ export const DefaultConfig = new Configuration();
  */
 export class BaseAPI {
 
-    private static readonly jsonRegex = new RegExp('^(:?application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$', 'i');
+    private static readonly jsonRegex = /^(:?application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$/i;
     private middleware: Middleware[];
 
     constructor(protected configuration = DefaultConfig) {
@@ -261,6 +260,12 @@ export class ResponseError extends Error {
     override name: "ResponseError" = "ResponseError";
     constructor(public response: Response, msg?: string) {
         super(msg);
+
+        // restore prototype chain
+        const actualProto = new.target.prototype;
+        if (Object.setPrototypeOf) {
+            Object.setPrototypeOf(this, actualProto);
+        }
     }
 }
 
@@ -268,6 +273,12 @@ export class FetchError extends Error {
     override name: "FetchError" = "FetchError";
     constructor(public cause: Error, msg?: string) {
         super(msg);
+
+        // restore prototype chain
+        const actualProto = new.target.prototype;
+        if (Object.setPrototypeOf) {
+            Object.setPrototypeOf(this, actualProto);
+        }
     }
 }
 
@@ -275,6 +286,12 @@ export class RequiredError extends Error {
     override name: "RequiredError" = "RequiredError";
     constructor(public field: string, msg?: string) {
         super(msg);
+
+        // restore prototype chain
+        const actualProto = new.target.prototype;
+        if (Object.setPrototypeOf) {
+            Object.setPrototypeOf(this, actualProto);
+        }
     }
 }
 
@@ -329,7 +346,7 @@ function querystringSingleKey(key: string, value: string | number | null | undef
         return querystringSingleKey(key, valueAsArray, keyPrefix);
     }
     if (value instanceof Date) {
-        return `${encodeURIComponent(fullKey)}=${encodeURIComponent(value.toISOString())}`;
+        return `${encodeURIComponent(fullKey)}=${encodeURIComponent(serializeDateTime(value))}`;
     }
     if (value instanceof Object) {
         return querystring(value as HTTPQuery, fullKey);
@@ -337,16 +354,78 @@ function querystringSingleKey(key: string, value: string | number | null | undef
     return `${encodeURIComponent(fullKey)}=${encodeURIComponent(String(value))}`;
 }
 
+export function exists(json: any, key: string) {
+    const value = json[key];
+    return value !== null && value !== undefined;
+}
+
+/**
+ * Every generated date call site routes through these.
+ *
+ * `format: date` is a calendar date, with no time and no offset, so it is converted
+ * against the local calendar on both ends: they have to agree or the date shifts by
+ * a day. `format: date-time` is an instant and uses UTC.
+ */
+export function serializeDateTime(value: Date): string {
+    return value.toISOString();
+}
+
+export function serializeDate(value: Date): string {
+    if (isNaN(value.getTime())) {
+        throw new RangeError('Invalid time value');
+    }
+    const year = ('000' + value.getFullYear()).slice(-4);
+    const month = ('0' + (value.getMonth() + 1)).slice(-2);
+    const day = ('0' + value.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+}
+
+
+export function parseDate(value: Date | string): Date {
+    if (value instanceof Date) {
+        return value;
+    }
+    // `new Date("2026-08-05")` would parse as UTC midnight: a different day west of UTC.
+    // Local midnight is the stated day everywhere. setFullYear avoids the 1900 offset the
+    // multi-argument constructor applies to years 0-99.
+    const fullDate = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value));
+    if (fullDate) {
+        const year = Number(fullDate[1]);
+        const month = Number(fullDate[2]) - 1;
+        const day = Number(fullDate[3]);
+        const date = new Date(0);
+        date.setFullYear(year, month, day);
+        date.setHours(0, 0, 0, 0);
+        // Out-of-range components (or a day the local zone skipped) silently roll over,
+        // which would hand back a date the server never sent.
+        if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
+            return new Date(NaN);
+        }
+        return date;
+    }
+    return new Date(value);
+}
+
+export function parseDateTime(value: any): Date {
+    return new Date(value);
+}
+
 export function mapValues(data: any, fn: (item: any) => any) {
-  return Object.keys(data).reduce(
-    (acc, key) => ({ ...acc, [key]: fn(data[key]) }),
-    {}
-  );
+    const result: { [key: string]: any } = {};
+    for (const key of Object.keys(data)) {
+        result[key] = fn(data[key]);
+    }
+    return result;
+}
+
+// Pass-through serializer for `any`-typed properties in form data. See #1877.
+export function anyToJSON(value: any): any {
+    return value;
 }
 
 export function canConsumeForm(consumes: Consume[]): boolean {
     for (const consume of consumes) {
-        if ('multipart/form-data' === consume.contentType) {
+        if (consume.contentType?.startsWith('multipart/form-data') == true) {
             return true;
         }
     }

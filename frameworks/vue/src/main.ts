@@ -2,13 +2,9 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
+import { initAuth } from './composables/useAuth'
 import router from './router'
-import Auth from '@/auth'
 
-const app = createApp(App)
+await initAuth()
 
-app.use(router)
-
-app.mount('#app')
-
-app.config.globalProperties.$auth = Auth
+createApp(App).use(router).mount('#app')

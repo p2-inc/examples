@@ -5,15 +5,13 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
+    "typecheck": {
+      "command": "tsc -p tsconfig.json",
       "options": {
-        "outputPath": "dist/libs/phasetwo-orgs-api",
-        "main": "libs/phasetwo-orgs-api/src/index.ts",
-        "tsConfig": "libs/phasetwo-orgs-api/tsconfig.lib.json",
-        "assets": ["libs/phasetwo-orgs-api/*.md"]
-      }
+        "cwd": "{projectRoot}"
+      },
+      "cache": true,
+      "inputs": ["production", "^production"]
     }
   }
 }

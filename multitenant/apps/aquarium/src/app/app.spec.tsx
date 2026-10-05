@@ -1,15 +1,13 @@
-import { render } from '@testing-library/react';
-
-import App from './app';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import { App } from './app';
 
 describe('App', () => {
-  it('should render successfully', () => {
-    const { baseElement } = render(<App />);
-    expect(baseElement).toBeTruthy();
-  });
+  it('shows the logged out state', async () => {
+    render(<App />);
 
-  it('should have a greeting as the title', () => {
-    const { getByText } = render(<App />);
-    expect(getByText(/Welcome zoo/gi)).toBeTruthy();
+    expect(await screen.findByText('Not authenticated.')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Log in' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Aquarium' })).toBeTruthy();
   });
 });
