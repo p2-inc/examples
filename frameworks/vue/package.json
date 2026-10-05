@@ -12,7 +12,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "iconify-icon": "^2.3.0",
+    "iconify-icon": "^3.0.3",
     "jwt-decode": "^4.0.0",
     "oidc-client-ts": "^2.5.0",
     "vue": "^3.5.27",
