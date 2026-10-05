@@ -24,6 +24,25 @@ This is a repo for code examples showing how to integrate Keycloak with various 
 
 [Demo Apps](./multitenant/README.md) to be used as a starting point for a multi-tenant setup with [Phase Two Organizations](https://phasetwo.io/docs/organizations/). Uses `nx` to manage the apps and `oidc-spa`. Tutorial: [Implement Multi-Tenancy Applications with Keycloak Organizations](https://phasetwo.io/blog/multi-tenancy-with-keycloak-organizations).
 
+## Build status
+
+| Example                                      | Status                                                                                                                                                                                                           |
+| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| React (oidc-client-ts)                       | [![React (oidc-client-ts)](https://github.com/p2-inc/examples/actions/workflows/react-oidc.yml/badge.svg)](https://github.com/p2-inc/examples/actions/workflows/react-oidc.yml)                                  |
+| React (oidc-spa)                             | [![React (oidc-spa)](https://github.com/p2-inc/examples/actions/workflows/react-oidcspa.yml/badge.svg)](https://github.com/p2-inc/examples/actions/workflows/react-oidcspa.yml)                                  |
+| React (oidc-spa tutorial starter)            | [![React (oidc-spa tutorial starter)](https://github.com/p2-inc/examples/actions/workflows/react-oidcspa-starter.yml/badge.svg)](https://github.com/p2-inc/examples/actions/workflows/react-oidcspa-starter.yml) |
+| Next.js (NextAuth.js)                        | [![Next.js (NextAuth.js)](https://github.com/p2-inc/examples/actions/workflows/nextjs.yml/badge.svg)](https://github.com/p2-inc/examples/actions/workflows/nextjs.yml)                                           |
+| React Router v7, formerly Remix (remix-auth) | [![React Router v7, formerly Remix (remix-auth)](https://github.com/p2-inc/examples/actions/workflows/remix.yml/badge.svg)](https://github.com/p2-inc/examples/actions/workflows/remix.yml)                      |
+| Vue (oidc-client-ts)                         | [![Vue (oidc-client-ts)](https://github.com/p2-inc/examples/actions/workflows/vue.yml/badge.svg)](https://github.com/p2-inc/examples/actions/workflows/vue.yml)                                                  |
+| Nuxt (keycloak-js)                           | [![Nuxt (keycloak-js)](https://github.com/p2-inc/examples/actions/workflows/nuxt-keycloakjs.yml/badge.svg)](https://github.com/p2-inc/examples/actions/workflows/nuxt-keycloakjs.yml)                            |
+| Nuxt (oidc-client-ts)                        | [![Nuxt (oidc-client-ts)](https://github.com/p2-inc/examples/actions/workflows/nuxt-oidc.yml/badge.svg)](https://github.com/p2-inc/examples/actions/workflows/nuxt-oidc.yml)                                     |
+| SvelteKit (Auth.js)                          | [![SvelteKit (Auth.js)](https://github.com/p2-inc/examples/actions/workflows/sveltekit.yml/badge.svg)](https://github.com/p2-inc/examples/actions/workflows/sveltekit.yml)                                       |
+| Angular (angular-oauth2-oidc)                | [![Angular (angular-oauth2-oidc)](https://github.com/p2-inc/examples/actions/workflows/angular.yml/badge.svg)](https://github.com/p2-inc/examples/actions/workflows/angular.yml)                                 |
+| Django (mozilla-django-oidc)                 | [![Django (mozilla-django-oidc)](https://github.com/p2-inc/examples/actions/workflows/django.yml/badge.svg)](https://github.com/p2-inc/examples/actions/workflows/django.yml)                                    |
+| Spring Boot + Angular                        | [![Spring Boot + Angular](https://github.com/p2-inc/examples/actions/workflows/spring-boot-keycloak.yml/badge.svg)](https://github.com/p2-inc/examples/actions/workflows/spring-boot-keycloak.yml)               |
+| SAML IdP-initiated SSO (Spring Boot)         | [![SAML IdP-initiated SSO (Spring Boot)](https://github.com/p2-inc/examples/actions/workflows/saml2-idp-initiated.yml/badge.svg)](https://github.com/p2-inc/examples/actions/workflows/saml2-idp-initiated.yml)  |
+| Multi-tenant (Nx)                            | [![Multi-tenant (Nx)](https://github.com/p2-inc/examples/actions/workflows/multitenant.yml/badge.svg)](https://github.com/p2-inc/examples/actions/workflows/multitenant.yml)                                     |
+
 ## Running an example
 
 Each example's README has its exact steps. They all need:
