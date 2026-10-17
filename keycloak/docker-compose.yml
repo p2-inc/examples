@@ -28,7 +28,7 @@ services:
 
   seed-orgs:
     profiles: ["orgs"]
-    image: node:24-alpine
+    image: node:26-alpine
     depends_on:
       keycloak:
         condition: service_healthy
